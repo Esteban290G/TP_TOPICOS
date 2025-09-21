@@ -3,9 +3,9 @@ Apellido:Raspa, Facundo Miguel
 DNI:42774804
 Entrega:Si
 
-Apellido:
-DNI:
-Entrega:
+Apellido: Rivero, Lucas Gustavo
+DNI: 41765510
+Entrega: Si
 
 Apellido:
 DNI:
