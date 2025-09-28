@@ -1,15 +1,15 @@
 /*
-Apellido:
-DNI:
-Entrega:
+Apellido:Raspa, Facundo Miguel
+DNI:42774804
+Entrega:Si
+
+Apellido: Rivero, Lucas Gustavo
+DNI: 41765510
+Entrega: Si
 
 Apellido: Gonzalez, Esteban Gabriel
 DNI: 42888511
 Entrega: Si
-
-Apellido:
-DNI:
-Entrega:
 
 */
 #include <stdio.h>
