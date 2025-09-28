@@ -1,8 +1,12 @@
 # depslib dependency file v1.0
-1759092783 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1759096813 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
+	<stdbool.h>
 	<SDL2/SDL.h>
+	<SDL2/SDL_mixer.h>
+	"graficos.h"
+	"menus.h"
 
 1758397106 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -445,4 +449,29 @@
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
+
+1759098295 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.c
+	"graficos.h"
+
+1759096673 c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.h
+	<SDL2/SDL.h>
+	"menus.h"
+
+1759093816 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
+
+1738973080 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
+	"SDL_stdinc.h"
+	"SDL_rwops.h"
+	"SDL_audio.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1759098991 c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.h
+	<SDL2/SDL.h>
+
+1759098978 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.c
+	"menus.h"
+	"graficos.h"
 
