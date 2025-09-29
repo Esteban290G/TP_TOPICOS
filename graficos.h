@@ -10,7 +10,7 @@
 #define PX_PADDING 4
 
 void colorPantalla(SDL_Renderer *renderer, SDL_Color color);
-void dibujar(SDL_Renderer *renderer, botonMenu* botonRect);
+void dibujar(SDL_Renderer *renderer, botonMenu* botonRect, size_t ce);
 
 
 

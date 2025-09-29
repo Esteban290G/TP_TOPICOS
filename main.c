@@ -20,13 +20,13 @@ Entrega: Si
 #include "graficos.h"
 #include "menus.h"
 
-#define MENU    1
-#define JUGAR   2
+
 
 int main(int argc,char* argv[])
 {
     bool corriendo = true;
-    int estado = MENU;
+    unsigned int estado = MENU;
+    size_t ce;
 
     ///Inicializaciones
 
@@ -55,27 +55,60 @@ int main(int argc,char* argv[])
     }
 
 
+    SDL_Event evento;
+    botonMenu botones_menu[CANTIDAD_BOTON_MENU];
+    botonMenu botones_opciones[CANTIDAD_BOTON_OPCIONES];
+    botonMenu botones_jugar[CANTIDAD_BOTON_JUGAR];
+    botonMenu botones_estadistica[CANTIDAD_BOTON_ESTADISTICA];
+
+    botonMenu *p_boton;
+
+
+
     while(corriendo)
     {
         if(estado == MENU)
         {
-            menuPantalla(renderer,(SDL_Color){255,0,0,0});
-            printf("\nEstado actual: Menu Principal");
+            ce= CANTIDAD_BOTON_MENU;
+            menuPantalla(renderer,(SDL_Color){0,0,0,255},botones_menu,ce);
+            p_boton = botones_menu;
+            SDL_RenderClear(renderer);
         }
-
-        if(estado == JUGAR)
+        else if(estado == JUGAR)
         {
-            menuPantalla(renderer,(SDL_Color){0,0,255,0});
-            printf("\nEstado actual: Menu Jugar");
+            ce= CANTIDAD_BOTON_JUGAR;
+            menuJugar(renderer,(SDL_Color){255,255,255,255},botones_jugar,ce);
+            p_boton = botones_jugar;
+            SDL_RenderClear(renderer);
         }
+        else if(estado == OPCIONES)
+        {
+            ce= CANTIDAD_BOTON_OPCIONES;
+            menuOpciones(renderer,(SDL_Color){100,100,100,255},botones_opciones,ce);
+            p_boton = botones_opciones;
+            SDL_RenderClear(renderer);
 
-
-        SDL_Delay(2000);
-        //SDL_Delay(16);
-        corriendo = false;
+        }
+        else if(estado == ESTADISTICA)
+        {
+            ce = CANTIDAD_BOTON_ESTADISTICA;
+            menuEstadistica(renderer,(SDL_Color){200,200,200,255},botones_estadistica,ce);
+            p_boton = botones_estadistica;
+            SDL_RenderClear(renderer);
+        }
+        else if(estado == SALIR)
+        {
+            corriendo = false;
+        }
+        SDL_Delay(16);
+        estado = controlEventos(&evento,p_boton,ce);
     }
 
 
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(ventana);
+
+    SDL_Quit();
 
     return 0;
 }
