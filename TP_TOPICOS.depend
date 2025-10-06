@@ -475,12 +475,16 @@
 	"menus.h"
 	"graficos.h"
 
-1759119376 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\graficos.c
+1759726165 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\graficos.c
 	"graficos.h"
 
-1759119376 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\graficos.h
+1759567399 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\graficos.h
 	<SDL2/SDL.h>
+	<time.h>
+	<math.h>
 	"menus.h"
+	"sistemasSDL.h"
+	"constantes.h"
 
 1759103265 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -924,19 +928,27 @@
 	"begin_code.h"
 	"close_code.h"
 
-1759119376 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\menus.h
+1759725232 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\menus.h
 	<SDL2/SDL.h>
 	<stdio.h>
 	<stdbool.h>
+	<math.h>
+	"sistemasSDL.h"
+	"constantes.h"
 
-1759119436 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\main.c
+1759728314 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
+	<SDL2/SDL_ttf.h>
+	<time.h>
 	"graficos.h"
 	"menus.h"
+	"sistemasSDL.h"
+	"constantes.h"
+	"juego.h"
 
 1759103266 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
 	"SDL_stdinc.h"
@@ -947,7 +959,40 @@
 	"begin_code.h"
 	"close_code.h"
 
-1759119168 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\menus.c
+1759727586 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\menus.c
+	"menus.h"
+	"graficos.h"
+
+1759728044 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\sistemassdl.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	<stdbool.h>
+	<stdio.h>
+
+1759090592 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\lib\sdl2_ttf-2.24.0\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1759728382 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\sistemassdl.c
+	"sistemasSDL.h"
+
+1759724150 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\constantes.h
+
+1759726797 c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\juego.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	<stdbool.h>
+	<stdio.h>
+	<time.h>
+	"sistemasSDL.h"
+	"constantes.h"
+	"graficos.h"
+
+1759727199 source:c:\program files (x86)\codeblock\proyecto\trabajo\tp_topicos\juego.c
+	"juego.h"
 	"menus.h"
 	"graficos.h"
 

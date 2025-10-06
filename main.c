@@ -17,98 +17,133 @@ Entrega: Si
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
+#include <time.h>
 #include "graficos.h"
 #include "menus.h"
+#include "sistemasSDL.h"
+#include "constantes.h"
+#include "juego.h"
 
 
 
 int main(int argc,char* argv[])
 {
+    //Variables para que funcione el programa
     bool corriendo = true;
     unsigned int estado = MENU;
-    size_t ce;
-
-    ///Inicializaciones
-
-    //Ventana
     char nombreVentana[100];
     sprintf(nombreVentana, "TP Virus Simon");
 
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+    tSistemaSDL sdl;
 
-    SDL_Window *ventana = SDL_CreateWindow(nombreVentana,
-                                           SDL_WINDOWPOS_CENTERED,
-                                           SDL_WINDOWPOS_CENTERED,
-                                           TAM_GRILLA * TAM_PIXEL * PIXELES_X_LADO  + TAM_GRILLA * PX_PADDING,
-                                           TAM_GRILLA * TAM_PIXEL * PIXELES_X_LADO  + TAM_GRILLA * PX_PADDING,
-                                           2);
-
-    SDL_Renderer *renderer = SDL_CreateRenderer(ventana, -1, SDL_RENDERER_ACCELERATED);
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-
-    //Sonido
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    if(!inicializarSDL(&sdl,nombreVentana,ANCHO,LARGO))
     {
-
-        printf("[ERROR] No se pudo inicializar el audio: %s\n", Mix_GetError());
-        corriendo = false;
+        printf("Error, no se pudo inicializar SDL\n");
+        return 1;
     }
 
+    reproducirMusica(&sdl);
+
+
+    //Vector colore
+    SDL_Color colores[5] = {{255,0,0,255},{0,255,0,255},{0,0,255,255},{255,0,255,255},{255,0,255,255}};
+    SDL_Color colores_luz[3] = {{255,255,255,255},{255,255,255,255},{255,255,255,255}};
+
+    //vector valores para los botones de la pantalla
+    int vector_valores_menu[] = {JUGAR, OPCIONES, ESTADISTICA, SALIR};
+    int vector_valores_opcines[] = {OPCIONES_BOTONES, MENU};
+    int vector_valores_estadistica[] = {MENU};
+    int vector_valores_jugar[] = {SCHONBERG,MOZART,MENU};
+    int vector_valores_simon[] = {BOTON_1,BOTON_2,BOTON_3};
+
+    ///AUX
+    int vector_valores_aux_simon[] = {JUGAR,SALIR};
+
+    //Vector de textos
+    char* texto_menu[] = {"jugar","opciones","estadistica","salir"};
+    char* texto_opciones[] = {"Modificar","Volver"};
+    char* texto_estadistica[] = {"Volver"};
+    char* texto_jugar[] = {"Modo Schonberg", "Modo Mozart", "Volver"};
+
+    ///AUX
+    char* texto_aux_simon[] = {"Volver","Salir"};
 
     SDL_Event evento;
-    botonMenu botones_menu[CANTIDAD_BOTON_MENU];
-    botonMenu botones_opciones[CANTIDAD_BOTON_OPCIONES];
-    botonMenu botones_jugar[CANTIDAD_BOTON_JUGAR];
-    botonMenu botones_estadistica[CANTIDAD_BOTON_ESTADISTICA];
 
-    botonMenu *p_boton;
+    //El bicho
+    tSistemaCrab bicho_crab;
+    srand(time(NULL));
+    inicializartSistemaCrab(&bicho_crab);
 
+    //Cargamos datos a los botones
+    tBoton botones_menu[CANTIDAD_BOTON_MENU];
+    cargarDatosBotones(botones_menu,CANTIDAD_BOTON_MENU,colores, vector_valores_menu,texto_menu);
 
+    tBoton botones_opciones[CANTIDAD_BOTON_OPCIONES];
+    cargarDatosBotones(botones_opciones, CANTIDAD_BOTON_OPCIONES, colores,vector_valores_opcines,texto_opciones);
+
+    tBoton botones_jugar[CANTIDAD_BOTON_JUGAR];
+    cargarDatosBotones(botones_jugar,CANTIDAD_BOTON_JUGAR,colores,vector_valores_jugar,texto_jugar);
+
+    tBoton botones_estadistica[CANTIDAD_BOTON_ESTADISTICA];
+    cargarDatosBotones(botones_estadistica,CANTIDAD_BOTON_ESTADISTICA,colores,vector_valores_estadistica,texto_estadistica);
+
+    ///AUX
+    tBoton botones_aux_simon[2];
+    cargarDatosBotones(botones_aux_simon,2,colores,vector_valores_aux_simon,texto_aux_simon);
+    botones_aux_simon[0].rectangulo.x = 10;
+    botones_aux_simon[0].rectangulo.y = 10;
+    botones_aux_simon[1].rectangulo.x = 500;
+    botones_aux_simon[1].rectangulo.y = 10;
+
+    //No se porque esta esto, pero bueno, son auxiliares por el momento
+    SDL_Color fondo = (SDL_Color){0,0,0,255};
+
+    //Cargamos los datos al boton_simon
+    tBotonSimon boton_simon[3];
+
+    cargarBotonSimon(boton_simon, colores, colores_luz, 3,vector_valores_simon);
 
     while(corriendo)
     {
-        if(estado == MENU)
+        switch(estado)
         {
-            ce= CANTIDAD_BOTON_MENU;
-            menuPantalla(renderer,(SDL_Color){0,0,0,255},botones_menu,ce);
-            p_boton = botones_menu;
-            SDL_RenderClear(renderer);
-        }
-        else if(estado == JUGAR)
-        {
-            ce= CANTIDAD_BOTON_JUGAR;
-            menuJugar(renderer,(SDL_Color){255,255,255,255},botones_jugar,ce);
-            p_boton = botones_jugar;
-            SDL_RenderClear(renderer);
-        }
-        else if(estado == OPCIONES)
-        {
-            ce= CANTIDAD_BOTON_OPCIONES;
-            menuOpciones(renderer,(SDL_Color){100,100,100,255},botones_opciones,ce);
-            p_boton = botones_opciones;
-            SDL_RenderClear(renderer);
+        case MENU:
+            estado = controlEventos(&evento,botones_menu,CANTIDAD_BOTON_MENU,estado);
+            Pantalla(&sdl,(SDL_Color){0,0,0,255},botones_menu,CANTIDAD_BOTON_MENU,&bicho_crab,estado);
+            break;
 
-        }
-        else if(estado == ESTADISTICA)
-        {
-            ce = CANTIDAD_BOTON_ESTADISTICA;
-            menuEstadistica(renderer,(SDL_Color){200,200,200,255},botones_estadistica,ce);
-            p_boton = botones_estadistica;
-            SDL_RenderClear(renderer);
-        }
-        else if(estado == SALIR)
-        {
+        case JUGAR:
+            reanudarMusica(&sdl);
+            estado = controlEventos(&evento,botones_jugar,CANTIDAD_BOTON_JUGAR,estado);
+            Pantalla(&sdl,(SDL_Color){155,0,0,255},botones_jugar,CANTIDAD_BOTON_JUGAR,&bicho_crab,estado);
+            break;
+
+        case OPCIONES:
+            estado = controlEventos(&evento,botones_opciones,CANTIDAD_BOTON_OPCIONES,estado);
+            Pantalla(&sdl,(SDL_Color){0,155,0,255},botones_opciones,CANTIDAD_BOTON_OPCIONES,&bicho_crab,estado);
+            break;
+
+        case ESTADISTICA:
+            estado = controlEventos(&evento,botones_estadistica,CANTIDAD_BOTON_ESTADISTICA,estado);
+            Pantalla(&sdl,(SDL_Color){0,0,155,255},botones_estadistica,CANTIDAD_BOTON_ESTADISTICA,&bicho_crab,estado);
+            break;
+
+        case SCHONBERG:
+            pausarMusica(&sdl);
+            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2);
+            dibujarPantallaJuego(&sdl,fondo,boton_simon,3,botones_aux_simon,2);
+            break;
+        case SALIR:
             corriendo = false;
+            break;
         }
+        SDL_RenderPresent(sdl.renderer);
         SDL_Delay(16);
-        estado = controlEventos(&evento,p_boton,ce);
     }
 
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(ventana);
-
-    SDL_Quit();
+    limpiarSDL(&sdl);
 
     return 0;
 }
