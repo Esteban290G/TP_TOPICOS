@@ -42,7 +42,7 @@ int main(int argc,char* argv[])
         return 1;
     }
 
-    //reproducirMusica(&sdl);
+    ///reproducirMusica(&sdl);
 
     // Generacion de tonos
     Mix_Chunk* sonidos[2];
@@ -50,7 +50,7 @@ int main(int argc,char* argv[])
 
     //Vector colores
     SDL_Color colores[5] = {{255,0,0,255},{0,255,0,255},{0,0,255,255},{255,0,255,255},{255,0,255,255}};
-    SDL_Color colores_luz[3] = {{255,255,255,128},{255,255,255,128},{255,255,255,128}};
+    SDL_Color colores_luz[3] = {{255,76,76,255},{76,255,76,255},{76,76,255,255}};
 
     //vector valores para los botones de la pantalla
     int vector_valores_menu[] = {JUGAR, OPCIONES, ESTADISTICA, SALIR};
@@ -120,7 +120,7 @@ int main(int argc,char* argv[])
             break;
 
         case JUGAR:
-            //reanudarMusica(&sdl);
+            ///reanudarMusica(&sdl);
             estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado);
             mostrarPantallaJuego(&sdl,&pantalla_jugador);
             break;
@@ -137,7 +137,7 @@ int main(int argc,char* argv[])
 
         case SCHONBERG:
             pausarMusica(&sdl);
-            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2);
+            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2,sonidos);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,3,botones_aux_simon,2);
             break;
         case SALIR:
