@@ -12,7 +12,6 @@ void dibujar(tSistemaSDL* sdl, tBoton* botonRect, size_t ce)
     {
         renderizarTexto(sdl,i);
     }
-    //SDL_RenderPresent(sdl->renderer);
 }
 
 void renderizarTexto(tSistemaSDL* sdl,tBoton* boton)

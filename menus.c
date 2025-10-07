@@ -9,6 +9,20 @@ bool _verificarMouseBoton(SDL_Rect boton, int mouse_x, int mouse_y)
     return false;
 }
 
+void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado)
+{
+    actualizarCrab(bicho);
+    colorPantalla(sdl, color);
+
+    if(estado == MENU)
+    {
+        dibujarTitulo(sdl);
+        dibujarCrab(sdl,bicho);
+    }
+    dibujar(sdl, boton, ce);
+}
+
+
 void cargarDatosBotones(tBoton *boton, size_t ce,SDL_Color *colores,int vector_valores[], char* txt[])
 {
     SDL_Color *pcolor = colores;
@@ -18,7 +32,6 @@ void cargarDatosBotones(tBoton *boton, size_t ce,SDL_Color *colores,int vector_v
 
     for(tBoton* i = boton; i < boton + ce; i++)
     {
-        i->color = *pcolor;
         i->rectangulo = (SDL_Rect){POSICION_X,POSICION_Y + padding, LARGO_RECT, ANCHO_RECT};
         i->valor_boton = *pvec;
         strcpy(i->texto_boton,*ptxt);
@@ -31,20 +44,6 @@ void cargarDatosBotones(tBoton *boton, size_t ce,SDL_Color *colores,int vector_v
         pvec++;
     }
 }
-
-void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado)
-{
-    actualizarCrab(bicho);
-    colorPantalla(sdl, color);
-
-    if(estado == MENU)
-    {
-        dibujarCrab(sdl, bicho);
-        dibujarTitulo(sdl);
-    }
-    dibujar(sdl, boton, ce);
-}
-
 
 
 unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,unsigned int estado_actual)
@@ -92,9 +91,15 @@ unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,unsigned
     return bandera;
 }
 
+
+///IMPORTANTE
+//Habria que modificar la funcion para que pueda recibir distintos tiutlos
+//Y de esa manera poder evitar tener que identificar si se trata de un boton u otro
+//Y mejorar la logica obviamente
+//Pensar quizas una structura pantalla (una idea)
 void dibujarTitulo(tSistemaSDL* sdl)
 {
-    int x,y;
+     int x,y;
 
     Uint32 tiempo_actual = SDL_GetTicks();
 

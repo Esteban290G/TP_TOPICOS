@@ -32,7 +32,7 @@ void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon* boton_
 void cargarBotonSimon(tBotonSimon* boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t ce, int* v_valor);
 
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual,tBoton *boton_normal, size_t ce_normal,Mix_Chunk* sonidos[]);
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual,tBoton *boton_normal, size_t ce_normal);
 
 
 #endif // JUEGO_H_INCLUDED

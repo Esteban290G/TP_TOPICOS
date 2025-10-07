@@ -16,7 +16,6 @@ void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton,size_t ce)
         SDL_SetRenderDrawColor(sdl->renderer, i->color_base.r, i->color_base.g, i->color_base.b, i->color_base.a);
         SDL_RenderFillRect(sdl->renderer, &i->rectangulo);
     }
-    //SDL_RenderPresent(sdl->renderer);
 }
 
 void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon* boton_simon, size_t ce_simon, tBoton*boton_normal, size_t ce_normal)
@@ -48,7 +47,7 @@ void cargarBotonSimon(tBotonSimon* boton_simon, SDL_Color *color_1, SDL_Color *c
     }
 }
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk* sonidos[])
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal)
 {
     unsigned int bandera = estado_actual;
     while(SDL_PollEvent(evento))
@@ -66,10 +65,6 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,siz
                     if(_verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y))
                     {
                         printf("\nHiciste clic al boton numero %d\n",i->valor_boton);
-                        Mix_PlayChannel(-1, sonidos[0], 0);
-                        i->color_base = i->color_sonando;
-                        SDL_Delay(200);
-                        i->color_base = i->color_base;
                         bandera = i->valor_boton;
                     }
                 }

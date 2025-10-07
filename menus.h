@@ -8,16 +8,19 @@
 #include "sistemasSDL.h"
 #include "constantes.h"
 
+
+
+
 typedef struct
 {
     SDL_Rect rectangulo;
-    SDL_Color color;
     unsigned int valor_boton;
     char texto_boton[50];
     bool hover;
     SDL_Color color_texto_normal;
     SDL_Color color_texto_hover;
 }tBoton;
+
 
 typedef struct
 {
@@ -37,9 +40,9 @@ typedef struct
 
 void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado);
 unsigned int controlEventos(SDL_Event *evento, tBoton *botones,size_t ce,unsigned int estado_actual);
-void cargarDatosBotones(tBoton *boton, size_t ce, SDL_Color *colores,int vector_valores[],char* txt[]);
 void dibujarTitulo(tSistemaSDL* sdl);
 
+void cargarDatosBotones(tBoton *boton, size_t ce, SDL_Color *colores,int vector_valores[],char* txt[]);
 
 
 

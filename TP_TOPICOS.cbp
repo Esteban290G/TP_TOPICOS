@@ -46,6 +46,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="boton.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="boton.h" />
 		<Unit filename="constantes.h" />
 		<Unit filename="graficos.c">
 			<Option compilerVar="CC" />
@@ -55,6 +59,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="juego.h" />
+		<Unit filename="jugador.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jugador.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

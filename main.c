@@ -24,6 +24,7 @@ Entrega: Si
 #include "constantes.h"
 #include "juego.h"
 #include "sonidos.h"
+#include "jugador.h"
 
 
 int main(int argc,char* argv[])
@@ -41,7 +42,7 @@ int main(int argc,char* argv[])
         return 1;
     }
 
-    reproducirMusica(&sdl);
+    //reproducirMusica(&sdl);
 
     // Generacion de tonos
     Mix_Chunk* sonidos[2];
@@ -104,6 +105,11 @@ int main(int argc,char* argv[])
 
     cargarBotonSimon(boton_simon, colores, colores_luz, 3,vector_valores_simon);
 
+    ///Pantalla jugador
+
+    tPantallaJugador pantalla_jugador;
+    inicializarPantallaJugador(&pantalla_jugador);
+
     while(corriendo)
     {
         switch(estado)
@@ -114,9 +120,9 @@ int main(int argc,char* argv[])
             break;
 
         case JUGAR:
-            reanudarMusica(&sdl);
-            estado = controlEventos(&evento,botones_jugar,CANTIDAD_BOTON_JUGAR,estado);
-            mostrarPantalla(&sdl,(SDL_Color){155,0,0,255},botones_jugar,CANTIDAD_BOTON_JUGAR,&bicho_crab,estado);
+            //reanudarMusica(&sdl);
+            estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado);
+            mostrarPantallaJuego(&sdl,&pantalla_jugador);
             break;
 
         case OPCIONES:
@@ -131,7 +137,7 @@ int main(int argc,char* argv[])
 
         case SCHONBERG:
             pausarMusica(&sdl);
-            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2,sonidos);
+            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,3,botones_aux_simon,2);
             break;
         case SALIR:
