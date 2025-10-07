@@ -48,7 +48,7 @@ void cargarBotonSimon(tBotonSimon* boton_simon, SDL_Color *color_1, SDL_Color *c
     }
 }
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal)
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk* sonidos[])
 {
     unsigned int bandera = estado_actual;
     while(SDL_PollEvent(evento))
@@ -66,6 +66,10 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,siz
                     if(_verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y))
                     {
                         printf("\nHiciste clic al boton numero %d\n",i->valor_boton);
+                        Mix_PlayChannel(-1, sonidos[0], 0);
+                        i->color_base = i->color_sonando;
+                        SDL_Delay(200);
+                        i->color_base = i->color_base;
                         bandera = i->valor_boton;
                     }
                 }
