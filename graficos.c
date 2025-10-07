@@ -106,7 +106,7 @@ void actualizarCrab(tSistemaCrab* bicho)
 
             if(tiempo_actual - bicho->crabs[i].tiempo > 12000)
             {
-                bicho->crabs->activo = false;
+                bicho->crabs[i].activo = false;
             }
         }
 
@@ -115,20 +115,21 @@ void actualizarCrab(tSistemaCrab* bicho)
 
 void dibujarCrab(tSistemaSDL *sdl,tSistemaCrab* bicho)
 {
-    const int crab[12][12] = {
-    {T, T, T, T, T, T, T, T, T, T, T, T},
-    {T, T, T, T, T, T, T, T, T, T, T, T},
-    {T, T, R, T, T, T, T, T, R, T, T, T},
-    {T, T, T, R, T, T, T, R, T, T, T, T},
-    {T, T, R, R, R, R, R, R, R, T, T, T},
-    {T, R, R, T, R, R, R, T, R, R, T, T},
-    {R, R, R, R, R, R, R, R, R, R, R, T},
-    {R, T, R, R, R, R, R, R, R, T, R, T},
-    {R, T, R, T, T, T, T, T, R, T, R, T},
-    {T, T, T, R, R, T, R, R, T, T, T, T},
-    {T, T, T, T, T, T, T, T, T, T, T, T},
-    {T, T, T, T, T, T, T, T, T, T, T, T}
-};
+    const int crab[12][12] =
+    {
+        {T, T, T, T, T, T, T, T, T, T, T, T},
+        {T, T, T, T, T, T, T, T, T, T, T, T},
+        {T, T, R, T, T, T, T, T, R, T, T, T},
+        {T, T, T, R, T, T, T, R, T, T, T, T},
+        {T, T, R, R, R, R, R, R, R, T, T, T},
+        {T, R, R, T, R, R, R, T, R, R, T, T},
+        {R, R, R, R, R, R, R, R, R, R, R, T},
+        {R, T, R, R, R, R, R, R, R, T, R, T},
+        {R, T, R, T, T, T, T, T, R, T, R, T},
+        {T, T, T, R, R, T, R, R, T, T, T, T},
+        {T, T, T, T, T, T, T, T, T, T, T, T},
+        {T, T, T, T, T, T, T, T, T, T, T, T}
+    };
     Uint32 tiempo_actual = SDL_GetTicks();
     float velocidad = 250.0f;
     for(int i = 0; i < MAX_CRAB; i++)
@@ -136,7 +137,8 @@ void dibujarCrab(tSistemaSDL *sdl,tSistemaCrab* bicho)
         if(bicho->crabs[i].activo && bicho->crabs[i].transparencia > 0.1f)
         {
             float factor = (sin(tiempo_actual/velocidad + i) + 1) / 2; // +i para desfase entre crabs
-            SDL_Color color = {
+            SDL_Color color =
+            {
                 (Uint8)(255 * factor),
                 (Uint8)(255 * (1 - factor)),
                 (Uint8)(128 + 127 * sin(tiempo_actual/600.0f + i)),

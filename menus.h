@@ -35,18 +35,7 @@ typedef struct
     int intervalo_creacion;
 }tSistemaCrab;
 
-//typedef struct
-//{
-//    tBotonSimon *boto_simon;
-//    tBoton *boton;
-//    size_t ce_simon;
-//    size_t ce_normal;
-//    unsigned int estado;
-//}tPantallaSimon;
-
-
-
-void Pantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado);
+void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado);
 unsigned int controlEventos(SDL_Event *evento, tBoton *botones,size_t ce,unsigned int estado_actual);
 void cargarDatosBotones(tBoton *boton, size_t ce, SDL_Color *colores,int vector_valores[],char* txt[]);
 void dibujarTitulo(tSistemaSDL* sdl);

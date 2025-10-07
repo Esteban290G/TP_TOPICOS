@@ -66,6 +66,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="sistemasSDL.h" />
+		<Unit filename="sonidos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sonidos.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

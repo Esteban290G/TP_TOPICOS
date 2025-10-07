@@ -1,4 +1,5 @@
 #include "sistemasSDL.h"
+#include "sonidos.h"
 
 void inicializarNULL(tSistemaSDL* sistema)
 {
@@ -14,6 +15,8 @@ void inicializarNULL(tSistemaSDL* sistema)
 
 bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, int largo)
 {
+    srand(time(NULL));
+
     inicializarNULL(sistema);
 
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0)
@@ -40,7 +43,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
         return false;
     }
 
-    sistema->audio_inicializado = (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) >= 0);
+    sistema->audio_inicializado = (Mix_OpenAudio(FREC_MUESTREO, MIX_DEFAULT_FORMAT, 2, BUFFER_AUDIO) == 0);
 
     if(!sistema->audio_inicializado)
     {
@@ -75,7 +78,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
     sistema->fuente2 = TTF_OpenFont("8bitOperatorPlus8-Regular.ttf", 35);
     if(sistema->fuente2 == NULL)
     {
-        printf("Error al inicializar la fuente 2 %s",TTF_GetError());
+        printf("Error al inicializar la fuente 2 %s\n",TTF_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -83,12 +86,10 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
     sistema->fuente_titulo = TTF_OpenFont("8bitOperatorPlus8-Bold.ttf",50);
     if(sistema->fuente_titulo == NULL)
     {
-        printf("Error al inicializar la fuente titulo %s",TTF_GetError());
+        printf("Error al inicializar la fuente titulo %s\n",TTF_GetError());
         limpiarSDL(sistema);
         return false;
     }
-
-
 
     SDL_SetRenderDrawBlendMode(sistema->renderer,SDL_BLENDMODE_BLEND);
 

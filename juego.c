@@ -2,14 +2,6 @@
 #include "menus.h"
 #include "graficos.h"
 
-bool _verificarMouseBotonSimon(SDL_Rect boton, int mouse_x, int mouse_y)
-{
-    if(mouse_x >= boton.x && mouse_x <= boton.x + boton.w && mouse_y >= boton.y && mouse_y <= boton.y + boton.h)
-        return true;
-    return false;
-}
-
-
 int generarAleatorio(int num_min, int num_max)
 {
     int valor = rand() % (num_max - num_min + 1) + num_min;
@@ -24,7 +16,7 @@ void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton,size_t ce)
         SDL_SetRenderDrawColor(sdl->renderer, i->color_base.r, i->color_base.g, i->color_base.b, i->color_base.a);
         SDL_RenderFillRect(sdl->renderer, &i->rectangulo);
     }
-    SDL_RenderPresent(sdl->renderer);
+    //SDL_RenderPresent(sdl->renderer);
 }
 
 void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon* boton_simon, size_t ce_simon, tBoton*boton_normal, size_t ce_normal)
@@ -56,7 +48,6 @@ void cargarBotonSimon(tBotonSimon* boton_simon, SDL_Color *color_1, SDL_Color *c
     }
 }
 
-
 unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal)
 {
     unsigned int bandera = estado_actual;
@@ -72,7 +63,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,siz
 
                 for(tBotonSimon*i = boton_simon; i < boton_simon + ce_simon; i++)
                 {
-                    if(_verificarMouseBotonSimon(i->rectangulo,evento->button.x,evento->button.y))
+                    if(_verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y))
                     {
                         printf("\nHiciste clic al boton numero %d\n",i->valor_boton);
                         bandera = i->valor_boton;
@@ -80,7 +71,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,siz
                 }
                 for(tBoton* i = boton_normal; i < boton_normal + ce_normal; i++)
                 {
-                    if(_verificarMouseBotonSimon(i->rectangulo,evento->button.x,evento->button.y))
+                    if(_verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y))
                     {
                         printf("\nHiciste clic al boton numero %d\n",i->valor_boton);
                         bandera = i->valor_boton;
@@ -93,7 +84,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,siz
         case SDL_MOUSEMOTION:
             for(tBoton* i = boton_normal; i< boton_normal + ce_normal; i++)
             {
-                i->hover = _verificarMouseBotonSimon(i->rectangulo,evento->motion.x, evento->motion.y);
+                i->hover = _verificarMouseBoton(i->rectangulo,evento->motion.x, evento->motion.y);
             }
             break;
 

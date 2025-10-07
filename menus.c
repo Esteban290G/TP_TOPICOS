@@ -32,7 +32,7 @@ void cargarDatosBotones(tBoton *boton, size_t ce,SDL_Color *colores,int vector_v
     }
 }
 
-void Pantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado)
+void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado)
 {
     actualizarCrab(bicho);
     colorPantalla(sdl, color);

@@ -5,6 +5,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <time.h>
 
 typedef struct
 {

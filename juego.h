@@ -13,6 +13,12 @@
 
 typedef struct
 {
+    int cant_botones;
+    float duracion_tono;
+} tConfigJuego;
+
+typedef struct
+{
     SDL_Rect rectangulo;
     SDL_Color color_base;
     SDL_Color color_sonando;
@@ -24,6 +30,7 @@ int generarAleatorio(int num_min, int num_max);
 void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t ce);
 void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon* boton_simon, size_t ce_simon, tBoton*boton_normal, size_t ce_normal);
 void cargarBotonSimon(tBotonSimon* boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t ce, int* v_valor);
+
 
 unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t ce_simon,unsigned int estado_actual,tBoton *boton_normal, size_t ce_normal);
 

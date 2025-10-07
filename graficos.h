@@ -10,7 +10,7 @@
 
 
 
-
+bool _verificarMouseBoton(SDL_Rect boton, int mouse_x, int mouse_y);
 void colorPantalla(tSistemaSDL* sdl, SDL_Color color);
 void dibujar(tSistemaSDL* sdl, tBoton* botonRect, size_t ce);
 void renderizarTexto(tSistemaSDL* sdl,tBoton* boton);

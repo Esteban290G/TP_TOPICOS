@@ -1,12 +1,17 @@
 # depslib dependency file v1.0
-1759096813 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1759801399 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
+	<SDL2/SDL_ttf.h>
 	"graficos.h"
 	"menus.h"
+	"sistemasSDL.h"
+	"constantes.h"
+	"juego.h"
+	"sonidos.h"
 
 1758397106 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -450,14 +455,19 @@
 	"begin_code.h"
 	"close_code.h"
 
-1759098295 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.c
+1759793634 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.c
 	"graficos.h"
 
-1759096673 c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.h
+1759794198 c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.h
 	<SDL2/SDL.h>
+	<time.h>
+	<math.h>
 	"menus.h"
+	"sistemasSDL.h"
+	"constantes.h"
 
-1759093816 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
+1759801904 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
+	"sonidos.h"
 
 1738973080 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
 	"SDL_stdinc.h"
@@ -468,10 +478,15 @@
 	"begin_code.h"
 	"close_code.h"
 
-1759098991 c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.h
+1759794089 c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.h
 	<SDL2/SDL.h>
+	<stdio.h>
+	<stdbool.h>
+	<math.h>
+	"sistemasSDL.h"
+	"constantes.h"
 
-1759098978 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.c
+1759794089 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.c
 	"menus.h"
 	"graficos.h"
 
@@ -995,4 +1010,45 @@
 	"juego.h"
 	"menus.h"
 	"graficos.h"
+
+1759792963 c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	<stdbool.h>
+	<stdio.h>
+	<time.h>
+
+1759783799 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_ttf-2.24.0\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1759787232 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
+
+1759794330 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
+	"juego.h"
+	"menus.h"
+	"graficos.h"
+
+1759800629 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	<stdbool.h>
+	<stdio.h>
+	<time.h>
+	"sistemasSDL.h"
+	"constantes.h"
+	"graficos.h"
+
+1759800001 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.c
+	"sistemasSDL.h"
+	"sonidos.h"
+
+1759801870 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_mixer.h>
+	<stdio.h>
+	<math.h>
 
