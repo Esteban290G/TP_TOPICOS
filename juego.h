@@ -10,6 +10,12 @@
 #include "sistemasSDL.h"
 #include "constantes.h"
 #include "graficos.h"
+#include "jugador.h"
+
+#define MEM_OK 0
+#define MEM_ERROR -1
+#define N_MIN 0
+#define LONG_INICIAL 1
 
 typedef struct
 {
@@ -25,13 +31,32 @@ typedef struct
     SDL_Color color_aux;
     unsigned int valor_boton;
     bool sonando;
+    float tiempo_ultimo_sonido; // para la espera entre clics
 } tBotonSimon;
 
+typedef struct
+{
+    int *vecSecuencia; //vector dinamico
+    int longitud;
+    int indice;
+    float tiempo_acumulado;
+    bool mostrando;
+    bool activo;
+    bool reproduciendo;
+    bool primera_vez;
+    bool primer_boton; //bandera para que haya un tiempo de espera al inicio
+}tSecuencia;
+
 int generarAleatorio(int num_min, int num_max);
+void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *boton_simon, size_t ce_simon,SDL_Color color,tBoton *boton_normal, size_t ce_normal, float deltaTime,tSecuencia *secuencia);
 void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t ce);
 void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon *boton_simon, size_t ce_simon, tBoton *boton_normal, size_t ce_normal);
 void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t ce, int *v_valor);
+int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones);
+int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones);
+bool validarJugador(tJugador *jugador, tSecuencia *sec);
+void reiniciarJuego(tSecuencia *sec);
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t ce_simon, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[]);
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t ce_simon, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[],tSecuencia *secuencia,float deltaTime, tJugador *jugador);
 
 #endif // JUEGO_H_INCLUDED

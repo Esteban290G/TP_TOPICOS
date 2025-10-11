@@ -36,6 +36,7 @@ void crearArrayTonos(Mix_Chunk* sonidos[])
     sonidos[0] = crearTono(TONO_ROJO);
     sonidos[1] = crearTono(TONO_VERDE);
     sonidos[2] = crearTono(TONO_AZUL);
+    sonidos[3] = crearTono(TONO_ERROR);
 }
 
 void destruirTono(Mix_Chunk *tono)
@@ -49,4 +50,5 @@ void destruirArrayTonos(Mix_Chunk* sonidos[])
     destruirTono(sonidos[0]);
     destruirTono(sonidos[1]);
     destruirTono(sonidos[2]);
+    destruirTono(sonidos[3]);
 }

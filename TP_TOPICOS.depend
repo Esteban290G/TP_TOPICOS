@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1759841885 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1760131063 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -467,7 +467,7 @@
 	"sistemasSDL.h"
 	"constantes.h"
 
-1759824349 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
+1760046120 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
 	"sonidos.h"
 
 1738973080 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
@@ -1025,14 +1025,14 @@
 	"begin_code.h"
 	"close_code.h"
 
-1759787232 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
+1760047955 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
 
-1759842113 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
+1760131960 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
 
-1759825496 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
+1760131429 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
@@ -1042,12 +1042,13 @@
 	"sistemasSDL.h"
 	"constantes.h"
 	"graficos.h"
+	"jugador.h"
 
-1759800001 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.c
+1760096539 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.c
 	"sistemasSDL.h"
 	"sonidos.h"
 
-1759824488 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
+1760094454 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
 	<stdio.h>
@@ -1607,10 +1608,10 @@
 
 1759811158 source:c:\program files (x86)\codeblock\proyecto\trabajo2\boton.c
 
-1759823100 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.c
+1760049857 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.c
 	"jugador.h"
 
-1759819595 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
+1760049857 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
 	<stdio.h>
 	<stdbool.h>
 	<string.h>

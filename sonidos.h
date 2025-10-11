@@ -10,9 +10,10 @@
 #define AMPLITUD_TONO 8192
 
 // Frecuencias tonos
-#define TONO_ROJO 523.25
-#define TONO_VERDE 587.33
-#define TONO_AZUL 659.26
+#define TONO_ERROR 100.0
+#define TONO_ROJO 261.63 //DO
+#define TONO_VERDE 329.63 //MI
+#define TONO_AZUL 392.00 //SOL
 
 Mix_Chunk* crearTono(float frecuencia);
 void crearArrayTonos(Mix_Chunk* sonidos[]);

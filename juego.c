@@ -34,10 +34,14 @@ void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *c
 
     for (tBotonSimon *i = boton_simon; i < boton_simon + ce; i++)
     {
+        i->tiempo_ultimo_sonido = 0; /// agregué recien
         i->color_aux = *pcolor_base;
         i->color_base = *pcolor_base;
         i->color_sonando = *pcolor_sonando;
-        i->rectangulo = (SDL_Rect){POSICION_X, POSICION_Y + padding, LARGO_SIMON, ANCHO_SIMON};
+        i->rectangulo = (SDL_Rect)
+        {
+            POSICION_X, POSICION_Y + padding, LARGO_SIMON, ANCHO_SIMON
+        };
         i->valor_boton = *p_valor;
         i->sonando = false;
 
@@ -48,13 +52,120 @@ void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *c
     }
 }
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t ce_simon, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[])
+int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones)
 {
-    static Uint32 ultimo_sonido_ms = 0;
-    Uint32 ahora = SDL_GetTicks();
-    /// AUX
+    secuencia->longitud = LONG_INICIAL;
+    secuencia->tiempo_acumulado = 0;
+    secuencia->indice = 0;
+    secuencia->mostrando = true;
+    secuencia->activo = false;
+    secuencia->reproduciendo = true;
+    secuencia->primera_vez = false;
+
+    secuencia->vecSecuencia = malloc(sizeof(int)* secuencia->longitud);
+    if(!secuencia->vecSecuencia)
+    {
+        printf("Error de memoria.\n");
+        return MEM_ERROR;
+    }
+
+    secuencia->vecSecuencia[0] = generarAleatorio(N_MIN,cant_botones - 1);
+
+    return MEM_OK;
+}
+
+int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones)
+{
+    secuencia->longitud++;
+
+    int *aux = realloc(secuencia->vecSecuencia,sizeof(int)* secuencia->longitud);
+    if(!aux)
+    {
+        free(secuencia->vecSecuencia);
+        printf("Error de memoria.\n");
+        return MEM_ERROR;
+    }
+
+    secuencia->vecSecuencia = aux;
+
+    secuencia->vecSecuencia[secuencia->longitud - 1] = generarAleatorio(N_MIN, cant_botones - 1);
+
+    return MEM_OK;
+}
+
+void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *boton_simon, size_t ce_simon, SDL_Color color, tBoton *boton_normal, size_t ce_normal, float deltaTime, tSecuencia *secuencia)
+{
+    if(!secuencia->reproduciendo)
+    {
+        return;
+    }
+
+    int j;
+    secuencia->tiempo_acumulado+= deltaTime;
+
+    float tiempoPrendidoBase = 1400;
+    float tiempoApagadoBase = 600;
+    float tiempoEsperaInicio = 1500;
+
+    float acelerador = 0.03f * (secuencia->longitud - 1);
+
+    // un tope para que no se pase a negativo la resta
+    if(acelerador > 1.0f)
+    {
+        acelerador = 0.9f;
+    }
+
+    float tiempoPrendido = tiempoPrendidoBase * (1.0f - acelerador);
+    float tiempoApagado  = tiempoApagadoBase  * (1.0f - acelerador);
+
+    if(secuencia->primer_boton && secuencia->tiempo_acumulado <= tiempoEsperaInicio)
+    {
+        return;
+    }
+
+    if(!secuencia->activo && secuencia->indice < secuencia->longitud)//primero para prender el boton si no hay ninguno prendido
+    {
+        j = secuencia->vecSecuencia[secuencia->indice];
+        Mix_PlayChannel(1, sonidos[j], 0);
+        boton_simon[j].color_base = boton_simon[j].color_sonando;
+        secuencia->activo = true;
+        secuencia->tiempo_acumulado = 0;
+        secuencia->primer_boton = false;
+    }
+    else if (secuencia->activo && secuencia->mostrando && secuencia->tiempo_acumulado >= tiempoPrendido) //apagar el boton despues del tiempo prendido
+    {
+        j = secuencia->vecSecuencia[secuencia->indice];
+        boton_simon[j].color_base = boton_simon[j].color_aux;
+        secuencia->mostrando = false;
+        secuencia->tiempo_acumulado = 0;
+    }
+    else if (secuencia->activo && !secuencia->mostrando && secuencia->tiempo_acumulado >= tiempoApagado) //cooldown para esperar un rato antes de pasar al siguiente
+    {
+        secuencia->indice++;
+        secuencia->mostrando = true;
+        secuencia->activo = false;
+        secuencia->tiempo_acumulado = 0;
+
+        if (secuencia->indice >= secuencia->longitud)
+        {
+            secuencia->indice = 0;
+            secuencia->reproduciendo = false;
+            secuencia->primer_boton = true;
+        }
+    }
+
+    dibujarPantallaJuego(sdl, color, boton_simon, ce_simon, boton_normal, ce_normal);
+}
+
+
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t ce_simon, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[],tSecuencia *secuencia, float deltaTime,tJugador *jugador)
+{
     int i_sonido = 0;
-    unsigned int bandera = estado_actual;
+    unsigned int estado = estado_actual;
+
+    boton_simon->tiempo_ultimo_sonido += deltaTime; // para que haya un tiempo entre clics entre CUALQUIER boton
+    float tiempo_espera = 500;
+
     while (SDL_PollEvent(evento))
     {
         switch (evento->type)
@@ -69,16 +180,16 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
                 {
                     if (_verificarMouseBoton(i->rectangulo, evento->button.x, evento->button.y))
                     {
-                        if (ahora - ultimo_sonido_ms > 500) //para que haya un tiempo entre clics al boton
+                        if (boton_simon->tiempo_ultimo_sonido >= tiempo_espera && !secuencia->reproduciendo && !i->sonando)
                         {
                             Mix_PlayChannel(1, sonidos[i_sonido], 0);
-                            ultimo_sonido_ms = ahora;
+                            boton_simon->tiempo_ultimo_sonido = 0;
 
                             printf("\nHiciste clic al boton numero %d\n", i->valor_boton);
                             i->color_base = i->color_sonando;
                             i->sonando = true;
 
-                            bandera = i->valor_boton;
+                            jugador->valorBoton = i->valor_boton;
                         }
                     }
                     i_sonido++;
@@ -88,7 +199,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
                     if (_verificarMouseBoton(i->rectangulo, evento->button.x, evento->button.y))
                     {
                         printf("\nHiciste clic al boton numero %d\n", i->valor_boton);
-                        bandera = i->valor_boton;
+                        estado = i->valor_boton;
                     }
                 }
             }
@@ -114,68 +225,42 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
             break;
 
         case SDL_QUIT:
-            bandera = SALIR;
+            estado = SALIR;
             printf("\nEstado actual: Menu Saliendo\n");
             break;
         }
     }
 
-    /// AUX
-    if (bandera == BOTON_1 || bandera == BOTON_2 || bandera == BOTON_3)
-    {
-        bandera = estado_actual;
-    }
-    return bandera;
+    return estado;
 }
 
-/*
-///Bucle para la ventana y control de eventos
-    while(!fin)
+bool validarJugador(tJugador *jugador, tSecuencia *sec)
+{
+    bool correcto = false;
+
+    if(jugador->valorBoton != -1)
     {
-        ///Me ayuda a poder dibujar en cada pasada de bucle
-        int redibujar = 0;
-
-        while(SDL_PollEvent(&evento))
+        if(sec->vecSecuencia[sec->indice] == jugador->valorBoton)
         {
-            switch(evento.type)
-            {
-            ///En caso que el evento sea un clic, "apagamos" la luz
-            case SDL_MOUSEBUTTONDOWN:
-                SDL_SetRenderDrawColor(render,160, 160, 160 , 255);
-                SDL_RenderFillRect(render, &fondo);
-
-                ///Verificamos que sea el clic izquierdo
-                if(evento.button.button == SDL_BUTTON_LEFT)
-                {
-                    ///Utilizo un puntero de boton para poder manejar el boton apretado
-                    Boton *botonclic = detectarBoton(boton, TOTAL_BOTONES,evento.button.x,evento.button.y);
-                    ///Encaso que haya un boton apretado (!null) le asigno el atributo apretado
-                    if(botonclic != NULL)
-                    {
-                        botonclic->apretado = APRETADO;;
-                        redibujar = 1;
-                    ///Aca para agregar el sonido le pedi ayuda a chatgpt, supuestamente ese if
-                    ///es para evitar crasheos
-                        if(sonido_boton)
-                        {
-                            Mix_PlayChannel(-1,sonido_boton,0);
-                        }
-                    }
-                }
-                break;
-            ///Aca estamos controlando el evento del caso que se levante el clic, o sea ya no esta siendo precionado
-            case SDL_MOUSEBUTTONUP:
-                for(Boton* pos = boton;pos<boton + TOTAL_BOTONES;pos++)
-                {
-                    pos->apretado = NO_APRETADO;
-                }
-                ///Volvemos a prender la luz(?
-                SDL_SetRenderDrawColor(render,230, 230, 230,255);
-                redibujar = 1;
-                break;
-            case SDL_QUIT:
-                fin = true;
-                break;
-            }
+            printf("CORRECTO\n");
+            correcto = true;
+            sec->indice++;
         }
-    } */
+        else
+        {
+            printf("INCORRECTO\n");
+        }
+    }
+
+    return correcto;
+}
+
+void reiniciarJuego(tSecuencia *sec)
+{
+    free(sec->vecSecuencia);
+    sec->vecSecuencia = NULL;
+    sec->longitud = LONG_INICIAL;
+    sec->indice = 0;
+    sec->primera_vez = true;
+    sec->primer_boton = true;
+}

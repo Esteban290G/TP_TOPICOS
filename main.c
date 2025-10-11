@@ -29,11 +29,16 @@ Entrega: Si
 
 int main(int argc,char* argv[])
 {
-    //Variables para que funcione el programa
+    //Variables para iniciar el programa
     bool corriendo = true;
     unsigned int estado = MENU;
     char nombreVentana[] = "TP Virus Simon";
 
+    //Variables para el tiempo
+    Uint32 tiempoAnterior = SDL_GetTicks();
+    float deltaTime = 0;
+
+    //Inicializar SDL
     tSistemaSDL sdl;
 
     if(!inicializarSDL(&sdl,nombreVentana,ANCHO,LARGO))
@@ -44,51 +49,53 @@ int main(int argc,char* argv[])
 
     ///reproducirMusica(&sdl);
 
-    // Generacion de tonos
-    Mix_Chunk* sonidos[2];
+    // Cargar y generar los sonidos
+    Mix_Chunk* sonidos[4];
     crearArrayTonos(sonidos);
 
-    //Vector colores
+    // Estructura secuencia
+    tSecuencia sec;
+
+    //  Colores
     SDL_Color colores[5] = {{255,0,0,255},{0,255,0,255},{0,0,255,255},{255,0,255,255},{255,0,255,255}};
     SDL_Color colores_luz[3] = {{255,76,76,255},{76,255,76,255},{76,76,255,255}};
+    SDL_Color fondo = (SDL_Color){115,115,115,128};
 
-    //vector valores para los botones de la pantalla
+    // Estructuras para el juego
+    SDL_Event evento;
+    tJugador jugador;
+    tPantallaJugador pantalla_jugador;
+    inicializarPantallaJugador(&pantalla_jugador);
+    inicializarJugador(&pantalla_jugador,&jugador);
+    tSistemaCrab bicho_crab;
+    inicializartSistemaCrab(&bicho_crab);
+
+    // Datos de botones y texto
     int vector_valores_menu[] = {JUGAR, OPCIONES, ESTADISTICA, SALIR};
     int vector_valores_opciones[] = {OPCIONES_BOTONES, MENU};
     int vector_valores_estadistica[] = {MENU};
     int vector_valores_jugar[] = {SCHONBERG,MOZART,MENU};
     int vector_valores_simon[] = {BOTON_1,BOTON_2,BOTON_3};
+    int vector_valores_aux_simon[] = {JUGAR,SALIR}; ///AUX
 
-    ///AUX
-    int vector_valores_aux_simon[] = {JUGAR,SALIR};
-
-    //Vector de textos
     char* texto_menu[] = {"jugar","opciones","estadistica","salir"};
     char* texto_opciones[] = {"Modificar","Volver"};
     char* texto_estadistica[] = {"Volver"};
     char* texto_jugar[] = {"Modo Schonberg", "Modo Mozart", "Volver"};
+    char* texto_aux_simon[] = {"Volver","Salir"}; ///AUX
 
-    ///AUX
-    char* texto_aux_simon[] = {"Volver","Salir"};
-
-    SDL_Event evento;
-
-    //El bicho
-    tSistemaCrab bicho_crab;
-    inicializartSistemaCrab(&bicho_crab);
-
-    //Cargamos datos a los botones
+    // Cargar datos a los botones
     tBoton botones_menu[CANTIDAD_BOTON_MENU];
     cargarDatosBotones(botones_menu,CANTIDAD_BOTON_MENU,colores, vector_valores_menu,texto_menu);
 
     tBoton botones_opciones[CANTIDAD_BOTON_OPCIONES];
     cargarDatosBotones(botones_opciones, CANTIDAD_BOTON_OPCIONES, colores,vector_valores_opciones,texto_opciones);
 
-    tBoton botones_jugar[CANTIDAD_BOTON_JUGAR];
-    cargarDatosBotones(botones_jugar,CANTIDAD_BOTON_JUGAR,colores,vector_valores_jugar,texto_jugar);
-
     tBoton botones_estadistica[CANTIDAD_BOTON_ESTADISTICA];
     cargarDatosBotones(botones_estadistica,CANTIDAD_BOTON_ESTADISTICA,colores,vector_valores_estadistica,texto_estadistica);
+
+    tBoton botones_jugar[CANTIDAD_BOTON_JUGAR];
+    cargarDatosBotones(botones_jugar,CANTIDAD_BOTON_JUGAR,colores,vector_valores_jugar,texto_jugar);
 
     ///AUX
     tBoton botones_aux_simon[2];
@@ -98,20 +105,16 @@ int main(int argc,char* argv[])
     botones_aux_simon[1].rectangulo.x = 500;
     botones_aux_simon[1].rectangulo.y = 10;
 
-    SDL_Color fondo = (SDL_Color){115,115,115,128};
-
-    //Cargamos los datos al boton_simon
+    // Cargamos los datos al boton_simon
     tBotonSimon boton_simon[3];
-
     cargarBotonSimon(boton_simon, colores, colores_luz, 3,vector_valores_simon);
-
-    ///Pantalla jugador
-
-    tPantallaJugador pantalla_jugador;
-    inicializarPantallaJugador(&pantalla_jugador);
 
     while(corriendo)
     {
+        Uint32 tiempoActual = SDL_GetTicks();
+        deltaTime = tiempoActual - tiempoAnterior;
+        tiempoAnterior = tiempoActual;
+
         switch(estado)
         {
         case MENU:
@@ -121,6 +124,8 @@ int main(int argc,char* argv[])
 
         case JUGAR:
             ///reanudarMusica(&sdl);
+            sec.primera_vez = true;
+            sec.primer_boton = true;
             estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado);
             mostrarPantallaJuego(&sdl,&pantalla_jugador);
             break;
@@ -136,18 +141,59 @@ int main(int argc,char* argv[])
             break;
 
         case SCHONBERG:
-            pausarMusica(&sdl);
-            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2,sonidos);
+            ///pausarMusica(&sdl);
+            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2,sonidos,&sec,deltaTime,&jugador);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,3,botones_aux_simon,2);
+            if(sec.primera_vez)
+            {
+                int inicio = inicializarSecuencia(&sec,3);
+                if(inicio == MEM_ERROR)
+                {
+                    estado = SALIR;
+                }
+            }
+
+            reproducirSecuencia(&sdl,sonidos,boton_simon,3,fondo,botones_aux_simon,2,deltaTime,&sec);
+
+            if(!sec.reproduciendo)
+            {
+                bool resultado = validarJugador(&jugador,&sec);
+
+                if(resultado)
+                {
+                    if(sec.indice >= sec.longitud)
+                    {
+                        printf("RONDA COMPLETA\n");
+                        int agregar = agregarElemSecuencia(&sec,3);
+                        if(agregar == MEM_ERROR)
+                        {
+                            estado = SALIR;
+                        }
+                        sec.indice = 0;
+                        sec.reproduciendo = true;
+                    }
+                }
+                else if(jugador.valorBoton != -1)
+                {
+                    printf("PERDISTE\n");
+                    Mix_PlayChannel(1, sonidos[3], 0);
+                    reiniciarJuego(&sec);
+                }
+
+                jugador.valorBoton = -1; //restauro el valor despues de usar
+            }
             break;
+
         case SALIR:
             corriendo = false;
             break;
         }
+
         SDL_RenderPresent(sdl.renderer);
         SDL_Delay(16);
     }
 
+    reiniciarJuego(&sec); //para liberar memoria
     limpiarSDL(&sdl);
 
     return 0;

@@ -15,6 +15,7 @@ typedef struct
     char nombre[MAX_LETRAS];
     int Score;
     int modo_juego;
+    int valorBoton;
 }tJugador;
 
 typedef struct

@@ -55,6 +55,7 @@ void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador)
     strcpy(jugador->nombre, pantalla->texto_ingresado);
     jugador->Score = 0;
     jugador->modo_juego = SCHONBERG;
+    jugador->valorBoton = -1;
 }
 
 void mostrarPantallaJuego(tSistemaSDL *sdl, tPantallaJugador *pantalla)

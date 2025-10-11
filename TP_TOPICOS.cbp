@@ -46,10 +46,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="boton.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="boton.h" />
 		<Unit filename="constantes.h" />
 		<Unit filename="graficos.c">
 			<Option compilerVar="CC" />

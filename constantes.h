@@ -9,13 +9,13 @@
 #define PADDING 80
 
 //Constantes para estados
-#define MENU 1
-#define JUGAR 2
-#define OPCIONES 3
-#define ESTADISTICA 4
-#define SALIR 5
-#define SCHONBERG 6
-#define MOZART 7
+#define MENU 10
+#define JUGAR 20
+#define OPCIONES 30
+#define ESTADISTICA 40
+#define SALIR 50
+#define SCHONBERG 60
+#define MOZART 70
 #define OPCIONES_BOTONES 8
 
 #define TOTAL_ESTADOS 8
@@ -40,9 +40,9 @@
 #define R 1
 
 //valor boton simon
-#define BOTON_1 30
-#define BOTON_2 40
-#define BOTON_3 50
+#define BOTON_1 0
+#define BOTON_2 1
+#define BOTON_3 2
 #define ANCHO_SIMON 60
 #define LARGO_SIMON 60
 
