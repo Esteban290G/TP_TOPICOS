@@ -19,8 +19,8 @@
 
 typedef struct
 {
-    int cant_botones;
-    float duracion_tono;
+    size_t cant_botones;
+    float duracion_inicial;
 } tConfigJuego;
 
 typedef struct
@@ -48,15 +48,15 @@ typedef struct
 }tSecuencia;
 
 int generarAleatorio(int num_min, int num_max);
-void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *boton_simon, size_t ce_simon,SDL_Color color,tBoton *boton_normal, size_t ce_normal, float deltaTime,tSecuencia *secuencia);
-void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t ce);
-void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon *boton_simon, size_t ce_simon, tBoton *boton_normal, size_t ce_normal);
-void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t ce, int *v_valor);
+void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *boton_simon, size_t cant_botones,SDL_Color color,tBoton *boton_normal, size_t ce_normal, float deltaTime,tSecuencia *secuencia, float duracion_inicial);
+void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t cant_botones);
+void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon *boton_simon, size_t cant_botones, tBoton *boton_normal, size_t ce_normal);
+void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t cant_botones, int *v_valor);
 int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones);
 int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones);
 bool validarJugador(tJugador *jugador, tSecuencia *sec);
 void reiniciarJuego(tSecuencia *sec);
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t ce_simon, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[],tSecuencia *secuencia,float deltaTime, tJugador *jugador);
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[],tSecuencia *secuencia,float deltaTime, tJugador *jugador);
 
 #endif // JUEGO_H_INCLUDED

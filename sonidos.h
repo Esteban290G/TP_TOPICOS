@@ -14,6 +14,11 @@
 #define TONO_ROJO 261.63 //DO
 #define TONO_VERDE 329.63 //MI
 #define TONO_AZUL 392.00 //SOL
+#define TONO_MAGENTA 293.66 //RE
+#define TONO_AMARILLO 493.88 //SI
+#define TONO_CIAN 659.26 // MI/
+#define TONO_NARANJA 587.33 // RE/
+#define TONO_MORADO 523.2 // DO/
 
 Mix_Chunk* crearTono(float frecuencia);
 void crearArrayTonos(Mix_Chunk* sonidos[]);

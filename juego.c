@@ -9,47 +9,133 @@ int generarAleatorio(int num_min, int num_max)
     return valor;
 }
 
-void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t ce)
+void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t cant_botones)
 {
-    for (tBotonSimon *i = boton; i < boton + ce; i++)
+    for (tBotonSimon *i = boton; i < boton + cant_botones; i++)
     {
         SDL_SetRenderDrawColor(sdl->renderer, i->color_base.r, i->color_base.g, i->color_base.b, i->color_base.a);
         SDL_RenderFillRect(sdl->renderer, &i->rectangulo);
     }
 }
 
-void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon *boton_simon, size_t ce_simon, tBoton *boton_normal, size_t ce_normal)
+void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon *boton_simon, size_t cant_botones, tBoton *boton_normal, size_t ce_normal)
 {
     colorPantalla(sdl, color);
     dibujar(sdl, boton_normal, ce_normal);
-    dibujarBoton(sdl, boton_simon, ce_simon);
+    dibujarBoton(sdl, boton_simon, cant_botones);
 }
 
-void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t ce, int *v_valor)
+void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t cant_botones, int *v_valor)
 {
-    SDL_Color *pcolor_base = color_1;
-    SDL_Color *pcolor_sonando = color_2;
-    int *p_valor = v_valor;
-    unsigned int padding = 0;
+    int cant_filas = 3;
+    int cant_columnas = 3;
+    int espacio = 20;
+    int pos_x_inicial = ANCHO/9;
+    int pos_y_inicial = LARGO/8;
 
-    for (tBotonSimon *i = boton_simon; i < boton_simon + ce; i++)
+    SDL_Point posiciones[3][3];
+
+    for(int fila = 0; fila < cant_filas; fila++)
     {
-        i->tiempo_ultimo_sonido = 0; /// agregué recien
-        i->color_aux = *pcolor_base;
-        i->color_base = *pcolor_base;
-        i->color_sonando = *pcolor_sonando;
-        i->rectangulo = (SDL_Rect)
+        for(int col = 0; col < cant_columnas; col++)
         {
-            POSICION_X, POSICION_Y + padding, LARGO_SIMON, ANCHO_SIMON
-        };
-        i->valor_boton = *p_valor;
-        i->sonando = false;
-
-        pcolor_base++;
-        pcolor_sonando++;
-        p_valor++;
-        padding += PADDING;
+            posiciones[fila][col].x = pos_x_inicial + col * (ANCHO_SIMON + espacio);
+            posiciones[fila][col].y = pos_y_inicial + fila * (ANCHO_SIMON + espacio);
+        }
     }
+
+    SDL_Point pos_activas[8];
+    int total_activados = 0;
+
+    switch(cant_botones)
+    {
+    case 3:
+    {
+        SDL_Point temp[] = {posiciones[0][1], posiciones[2][0], posiciones[2][2]};
+
+        total_activados = 3;
+        for(int i = 0; i < total_activados; i++)
+        {
+            pos_activas[i] = temp[i];
+        }
+        break;
+    }
+
+    case 4:
+    {
+        SDL_Point temp[] = {posiciones[0][0], posiciones[0][2], posiciones[2][0], posiciones[2][2]};
+
+        total_activados = 4;
+        for(int i = 0; i < total_activados; i++)
+        {
+            pos_activas[i] = temp[i];
+        }
+        break;
+
+    }
+
+    case 5:
+    {
+        SDL_Point temp[] = {posiciones[0][0], posiciones[0][2], posiciones[2][0], posiciones[2][2], posiciones[1][1]};
+
+        total_activados = 5;
+        for(int i = 0; i < total_activados; i++)
+        {
+            pos_activas[i] = temp[i];
+        }
+        break;
+    }
+    case 6:
+    {
+        SDL_Point temp[] = {posiciones[0][0],posiciones[0][1],posiciones[0][2],posiciones[2][0],posiciones[2][1],posiciones[2][2]};
+
+        total_activados = 6;
+        for(int i = 0; i < total_activados; i++)
+        {
+            pos_activas[i] = temp[i];
+        }
+        break;
+    }
+    case 7:
+    {
+        SDL_Point temp[] = {posiciones[0][0],posiciones[0][1],posiciones[0][2],posiciones[1][1],posiciones[2][0],posiciones[2][1],posiciones[2][2]};
+
+        total_activados = 7;
+        for(int i = 0; i < total_activados; i++)
+        {
+            pos_activas[i] = temp[i];
+        }
+        break;
+    }
+    case 8:
+    {
+        SDL_Point temp[] = {posiciones[0][0], posiciones[0][1], posiciones[0][2], posiciones[1][0], posiciones[1][2], posiciones[2][0], posiciones[2][1], posiciones[2][2]};
+
+        total_activados = 8;
+        for(int i = 0; i < total_activados; i++)
+        {
+            pos_activas[i] = temp[i];
+        }
+        break;
+    }
+
+
+    }
+
+    for (size_t i = 0; i < cant_botones && i < total_activados; i++)
+    {
+        boton_simon[i].rectangulo = (SDL_Rect)
+        {
+            pos_activas[i].x, pos_activas[i].y, LARGO_SIMON, ANCHO_SIMON
+        };
+        boton_simon[i].color_base = color_1[i];
+        boton_simon[i].color_sonando = color_2[i];
+        boton_simon[i].color_aux = color_1[i];
+        boton_simon[i].valor_boton = v_valor[i];
+        boton_simon[i].tiempo_ultimo_sonido = 0;
+        boton_simon[i].sonando = false;
+    }
+
 }
 
 int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones)
@@ -93,7 +179,7 @@ int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones)
     return MEM_OK;
 }
 
-void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *boton_simon, size_t ce_simon, SDL_Color color, tBoton *boton_normal, size_t ce_normal, float deltaTime, tSecuencia *secuencia)
+void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *boton_simon, size_t cant_botones, SDL_Color color, tBoton *boton_normal, size_t ce_normal, float deltaTime, tSecuencia *secuencia, float duracion_inicial)
 {
     if(!secuencia->reproduciendo)
     {
@@ -103,9 +189,11 @@ void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *bo
     int j;
     secuencia->tiempo_acumulado+= deltaTime;
 
-    float tiempoPrendidoBase = 1400;
-    float tiempoApagadoBase = 600;
+    float tiempoPrendidoBase = duracion_inicial * 0.7f;
+    float tiempoApagadoBase = duracion_inicial * 0.3f;
     float tiempoEsperaInicio = 1500;
+
+    //printf("\nTiempo original = %.2f \nTiempo Prendio = %.2f \nTiempoApagado = %.2f",duracion_inicial,tiempoPrendidoBase,tiempoApagadoBase);
 
     float acelerador = 0.03f * (secuencia->longitud - 1);
 
@@ -117,6 +205,8 @@ void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *bo
 
     float tiempoPrendido = tiempoPrendidoBase * (1.0f - acelerador);
     float tiempoApagado  = tiempoApagadoBase  * (1.0f - acelerador);
+
+    //printf("\ntiempo prendido actual = %.2f \ntiempo apagado actual = %.2f",tiempoPrendido, tiempoApagado);
 
     if(secuencia->primer_boton && secuencia->tiempo_acumulado <= tiempoEsperaInicio)
     {
@@ -153,12 +243,11 @@ void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *bo
             secuencia->primer_boton = true;
         }
     }
-
-    dibujarPantallaJuego(sdl, color, boton_simon, ce_simon, boton_normal, ce_normal);
+    dibujarPantallaJuego(sdl, color, boton_simon, cant_botones, boton_normal, ce_normal);
 }
 
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t ce_simon, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[],tSecuencia *secuencia, float deltaTime,tJugador *jugador)
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon,size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[],tSecuencia *secuencia, float deltaTime,tJugador *jugador)
 {
     int i_sonido = 0;
     unsigned int estado = estado_actual;
@@ -176,7 +265,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
                 printf("Hiciste clic izquierdo en %d - %d\n", evento->button.x, evento->button.y);
                 printf("\n");
 
-                for (tBotonSimon *i = boton_simon; i < boton_simon + ce_simon; i++)
+                for (tBotonSimon *i = boton_simon; i < boton_simon + cant_botones; i++)
                 {
                     if (_verificarMouseBoton(i->rectangulo, evento->button.x, evento->button.y))
                     {
@@ -216,7 +305,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
 
             if (evento->button.button == SDL_BUTTON_LEFT)
             {
-                for (tBotonSimon *i = boton_simon; i < boton_simon + ce_simon; i++)
+                for (tBotonSimon *i = boton_simon; i < boton_simon + cant_botones; i++)
                 {
                     i->color_base = i->color_aux;
                     i->sonando = false;
@@ -257,7 +346,10 @@ bool validarJugador(tJugador *jugador, tSecuencia *sec)
 
 void reiniciarJuego(tSecuencia *sec)
 {
-    free(sec->vecSecuencia);
+    if(sec->primera_vez)
+    {
+        free(sec->vecSecuencia);
+    }
     sec->vecSecuencia = NULL;
     sec->longitud = LONG_INICIAL;
     sec->indice = 0;

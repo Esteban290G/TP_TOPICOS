@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1760131063 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1760225400 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -13,6 +13,8 @@
 	"juego.h"
 	"sonidos.h"
 	"jugador.h"
+	"estadistica.h"
+	"opciones.h"
 
 1758397106 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -467,7 +469,7 @@
 	"sistemasSDL.h"
 	"constantes.h"
 
-1760046120 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
+1760218670 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
 	"sonidos.h"
 
 1738973080 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
@@ -1025,14 +1027,14 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760047955 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
+1760222043 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
 
-1760131960 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
+1760225325 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
 
-1760131429 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
+1760225325 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
@@ -1048,7 +1050,7 @@
 	"sistemasSDL.h"
 	"sonidos.h"
 
-1760094454 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
+1760218670 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
 	<stdio.h>
@@ -1611,11 +1613,36 @@
 1760049857 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.c
 	"jugador.h"
 
-1760049857 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
+1760222043 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
 	<stdio.h>
 	<stdbool.h>
 	<string.h>
 	"menus.h"
 	"sistemasSDL.h"
 	"graficos.h"
+
+1760037001 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.c
+	"estadistica.h"
+
+1760221252 c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.h
+	<string.h>
+	<stdio.h>
+	<stdbool.h>
+	"constantes.h"
+	"menus.h"
+	"jugador.h"
+	"sistemasSDL.h"
+
+1760225353 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.c
+	"opciones.h"
+
+1760223558 c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.h
+	"constantes.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	"estadistica.h"
+	"menus.h"
+	"juego.h"
 

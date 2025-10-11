@@ -25,7 +25,8 @@ Entrega: Si
 #include "juego.h"
 #include "sonidos.h"
 #include "jugador.h"
-
+#include "estadistica.h"
+#include "opciones.h"
 
 int main(int argc,char* argv[])
 {
@@ -50,23 +51,29 @@ int main(int argc,char* argv[])
     ///reproducirMusica(&sdl);
 
     // Cargar y generar los sonidos
-    Mix_Chunk* sonidos[4];
+    Mix_Chunk* sonidos[8];
     crearArrayTonos(sonidos);
 
     // Estructura secuencia
     tSecuencia sec;
 
-    //  Colores
-    SDL_Color colores[5] = {{255,0,0,255},{0,255,0,255},{0,0,255,255},{255,0,255,255},{255,0,255,255}};
-    SDL_Color colores_luz[3] = {{255,76,76,255},{76,255,76,255},{76,76,255,255}};
+    //  Colores Rojo - Verde - Azul - Magenta - Amarillo - Cian - Naranja - Morado
+    SDL_Color colores[8] = {{191,0,0,255},{0,191,0,255},{0,0,191,255},{191,0,191,255},{191,191,0,255},{0,191,191,255},{191,124,0,255},{65,26,75,255}};
+    SDL_Color colores_luz[8] = {{236,83,83,255},{83,236,83,255},{83,83,236,255},{236,83,236,255},{236,236,83,255},{83,236,236,255},{236,182,83,255},{104,52,117,255}};
     SDL_Color fondo = (SDL_Color){115,115,115,128};
 
     // Estructuras para el juego
     SDL_Event evento;
-    tJugador jugador;
     tPantallaJugador pantalla_jugador;
+    tJugador jugador;
+    tEstadistica pantalla_estadistica;
+    tOpciones opciones;
+
     inicializarPantallaJugador(&pantalla_jugador);
     inicializarJugador(&pantalla_jugador,&jugador);
+    inicializarPantallaEstadistica(&pantalla_estadistica);
+    inicializarOpciones(&opciones);
+
     tSistemaCrab bicho_crab;
     inicializartSistemaCrab(&bicho_crab);
 
@@ -75,7 +82,7 @@ int main(int argc,char* argv[])
     int vector_valores_opciones[] = {OPCIONES_BOTONES, MENU};
     int vector_valores_estadistica[] = {MENU};
     int vector_valores_jugar[] = {SCHONBERG,MOZART,MENU};
-    int vector_valores_simon[] = {BOTON_1,BOTON_2,BOTON_3};
+    int vector_valores_simon[] = {BOTON_1,BOTON_2,BOTON_3,BOTON_4,BOTON_5,BOTON_6,BOTON_7,BOTON_8};
     int vector_valores_aux_simon[] = {JUGAR,SALIR}; ///AUX
 
     char* texto_menu[] = {"jugar","opciones","estadistica","salir"};
@@ -106,8 +113,11 @@ int main(int argc,char* argv[])
     botones_aux_simon[1].rectangulo.y = 10;
 
     // Cargamos los datos al boton_simon
-    tBotonSimon boton_simon[3];
-    cargarBotonSimon(boton_simon, colores, colores_luz, 3,vector_valores_simon);
+    tBotonSimon boton_simon[8];
+
+    tConfigJuego configuracion;
+    configuracion.cant_botones = 3;
+    configuracion.duracion_inicial = 2000;
 
     while(corriendo)
     {
@@ -126,34 +136,35 @@ int main(int argc,char* argv[])
             ///reanudarMusica(&sdl);
             sec.primera_vez = true;
             sec.primer_boton = true;
+            cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
             estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado);
             mostrarPantallaJuego(&sdl,&pantalla_jugador);
             break;
 
         case OPCIONES:
-            estado = controlEventos(&evento,botones_opciones,CANTIDAD_BOTON_OPCIONES,estado);
-            mostrarPantalla(&sdl,(SDL_Color){0,155,0,255},botones_opciones,CANTIDAD_BOTON_OPCIONES,&bicho_crab,estado);
+            estado = eventosOpciones(&evento,&opciones,estado,&configuracion);
+            mostrarPantallaOpciones(&sdl,&opciones);
             break;
 
         case ESTADISTICA:
-            estado = controlEventos(&evento,botones_estadistica,CANTIDAD_BOTON_ESTADISTICA,estado);
-            mostrarPantalla(&sdl,(SDL_Color){0,0,155,255},botones_estadistica,CANTIDAD_BOTON_ESTADISTICA,&bicho_crab,estado);
+            estado = controlEventosEstadistica(&evento,&pantalla_estadistica,estado);
+            mostrarPantallaEstadistica(&sdl,&pantalla_estadistica);
             break;
 
         case SCHONBERG:
             ///pausarMusica(&sdl);
-            estado = controlEventosSimon(&evento,boton_simon,3,estado,botones_aux_simon,2,sonidos,&sec,deltaTime,&jugador);
-            dibujarPantallaJuego(&sdl,fondo,boton_simon,3,botones_aux_simon,2);
+            estado = controlEventosSimon(&evento,boton_simon,configuracion.cant_botones,estado,botones_aux_simon,2,sonidos,&sec,deltaTime,&jugador);
+            dibujarPantallaJuego(&sdl,fondo,boton_simon,configuracion.cant_botones,botones_aux_simon,2);
             if(sec.primera_vez)
             {
-                int inicio = inicializarSecuencia(&sec,3);
+                int inicio = inicializarSecuencia(&sec,configuracion.cant_botones);
                 if(inicio == MEM_ERROR)
                 {
                     estado = SALIR;
                 }
             }
 
-            reproducirSecuencia(&sdl,sonidos,boton_simon,3,fondo,botones_aux_simon,2,deltaTime,&sec);
+            reproducirSecuencia(&sdl,sonidos,boton_simon,configuracion.cant_botones,fondo,botones_aux_simon,2,deltaTime,&sec,configuracion.duracion_inicial);
 
             if(!sec.reproduciendo)
             {
@@ -164,7 +175,7 @@ int main(int argc,char* argv[])
                     if(sec.indice >= sec.longitud)
                     {
                         printf("RONDA COMPLETA\n");
-                        int agregar = agregarElemSecuencia(&sec,3);
+                        int agregar = agregarElemSecuencia(&sec,configuracion.cant_botones);
                         if(agregar == MEM_ERROR)
                         {
                             estado = SALIR;
@@ -185,6 +196,7 @@ int main(int argc,char* argv[])
             break;
 
         case SALIR:
+            sec.primera_vez = false; // para que no libere memoria sin inicializar cuando salimos
             corriendo = false;
             break;
         }
@@ -193,7 +205,7 @@ int main(int argc,char* argv[])
         SDL_Delay(16);
     }
 
-    reiniciarJuego(&sec); //para liberar memoria
+    reiniciarJuego(&sec);
     limpiarSDL(&sdl);
 
     return 0;

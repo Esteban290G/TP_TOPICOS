@@ -7,8 +7,6 @@
 #include "menus.h"
 #include "sistemasSDL.h"
 #include "graficos.h"
-#define MAX_LETRAS 20
-#define MAX_BOTONES 3
 
 typedef struct
 {
