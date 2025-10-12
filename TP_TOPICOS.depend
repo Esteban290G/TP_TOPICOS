@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1760304440 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1760310951 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -1027,14 +1027,14 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760304363 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
+1760309656 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
 
-1760304757 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
+1760310651 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
 
-1760304363 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
+1760310651 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
@@ -1610,10 +1610,10 @@
 
 1759811158 source:c:\program files (x86)\codeblock\proyecto\trabajo2\boton.c
 
-1760296844 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.c
+1760310301 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.c
 	"jugador.h"
 
-1760258580 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
+1760310293 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
 	<stdio.h>
 	<stdbool.h>
 	<string.h>

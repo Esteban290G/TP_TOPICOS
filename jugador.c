@@ -56,6 +56,8 @@ void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador)
     jugador->Score = 0;
     jugador->modo_juego = SCHONBERG;
     jugador->valorBoton = -1;
+    jugador->cheat = false;
+    jugador->vidas = 0;
 }
 
 void mostrarPantallaJuego(tSistemaSDL *sdl, tPantallaJugador *pantalla)
@@ -98,6 +100,30 @@ void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador *pantalla)
     SDL_FreeSurface(superficie);
 }
 
+bool validarNombreJugador(const char *texto)
+{
+    bool caracter_valido = false;
+
+    if (texto == NULL)
+    {
+        return caracter_valido;
+    }
+
+    int i = 0;
+    while(texto[i] != '\0')
+    {
+        if(texto[i] != ' ')
+        {
+            caracter_valido = true;
+            return caracter_valido;
+        }
+
+        i++;
+    }
+
+    return caracter_valido;
+}
+
 unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador)
 {
     unsigned int bandera = estado_actual;
@@ -124,7 +150,7 @@ unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pa
                 {
                     if (_verificarMouseBotonJugar(i->rectangulo, evento->button.x, evento->button.y))
                     {
-                        if (strlen(pantalla->texto_ingresado) > 0 || i->valor_boton == MENU)
+                        if (validarNombreJugador(pantalla->texto_ingresado) || i->valor_boton == MENU)
                         {
                             printf("Hiciste clic al boton numero %d\n", i->valor_boton);
                             strcpy(jugador->nombre,pantalla->texto_ingresado);

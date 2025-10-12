@@ -60,7 +60,10 @@ int main(int argc,char* argv[])
     //  Colores Rojo - Verde - Azul - Magenta - Amarillo - Cian - Naranja - Morado
     SDL_Color colores[8] = {{191,0,0,255},{0,191,0,255},{0,0,191,255},{191,0,191,255},{191,191,0,255},{0,191,191,255},{191,124,0,255},{65,26,75,255}};
     SDL_Color colores_luz[8] = {{236,83,83,255},{83,236,83,255},{83,83,236,255},{236,83,236,255},{236,236,83,255},{83,236,236,255},{236,182,83,255},{104,52,117,255}};
-    SDL_Color fondo = (SDL_Color){115,115,115,128};
+    SDL_Color fondo = (SDL_Color)
+    {
+        115,115,115,128
+    };
 
     // Estructuras para el juego
     SDL_Event evento;
@@ -89,7 +92,7 @@ int main(int argc,char* argv[])
     int vector_valores_aux_simon[] = {JUGAR,SALIR}; ///AUX
 
     char* texto_menu[] = {"jugar","opciones","estadistica","salir"};
-    char* texto_opciones[] = {"Modificar","Volver"};
+    //char* texto_opciones[] = {"Modificar","Volver"};
     char* texto_estadistica[] = {"Volver"};
     char* texto_jugar[] = {"Modo Schonberg", "Modo Mozart", "Volver"};
     char* texto_aux_simon[] = {"Volver","Salir"}; ///AUX
@@ -133,7 +136,10 @@ int main(int argc,char* argv[])
         {
         case MENU:
             estado = controlEventos(&evento,botones_menu,CANTIDAD_BOTON_MENU,estado);
-            mostrarPantalla(&sdl,(SDL_Color){0,0,0,255},botones_menu,CANTIDAD_BOTON_MENU,&bicho_crab,estado);
+            mostrarPantalla(&sdl,(SDL_Color)
+            {
+                0,0,0,255
+            },botones_menu,CANTIDAD_BOTON_MENU,&bicho_crab,estado);
             break;
 
         case JUGAR:
@@ -141,7 +147,6 @@ int main(int argc,char* argv[])
             cargar_botones = true;
             sec.primera_vez = true;
             sec.primer_boton = true;
-            //cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
             estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado,&jugador);
             mostrarPantallaJuego(&sdl,&pantalla_jugador);
             break;
@@ -165,7 +170,6 @@ int main(int argc,char* argv[])
                 cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
                 cargar_botones = false;
             }
-            //cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,configuracion.cant_botones,botones_aux_simon,2);
             if(sec.primera_vez)
             {
@@ -209,20 +213,25 @@ int main(int argc,char* argv[])
 
                     guardarTopEnArchivo(pantalla_estadistica.jugador, pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
 
-                    estado = PERDISTE;
+                    reiniciarJuego(&sec);
                 }
 
                 jugador.valorBoton = -1; //restauro el valor despues de usar
             }
             break;
 
-case MOZART:
+        case MOZART:
             ///pausarMusica(&sdl);
             if(sec.primera_vez)
             {
                 size_t ce_mozart = contarElemSecuencia("secuencia.txt");
                 inicializarSecuenciaMozart(&sec,ce_mozart);
-                copiarSecuenciaMozart(&sec,"secuencia.txt",ce_mozart);
+                if((copiarSecuenciaMozart(&sec,"secuencia.txt",ce_mozart) == FORMATO_ERROR))
+                {
+                    printf("\nSecuencia con formato invalido.\n");
+                    estado = JUGAR;
+                }
+
                 jugador.Score = 0;
             }
 
@@ -235,7 +244,6 @@ case MOZART:
                 cargarBotonSimon(boton_simon, colores, colores_luz,cant_botones, vector_valores_simon);
                 cargar_botones = false;
             }
-            //cargarBotonSimon(boton_simon, colores, colores_luz, cant_botones, vector_valores_simon);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,cant_botones,botones_aux_simon,2);
 
             reproducirSecuencia(&sdl,sonidos,boton_simon,cant_botones,fondo,botones_aux_simon,2,deltaTime,&sec,configuracion.duracion_inicial,sec.mozart_actual);
@@ -283,15 +291,6 @@ case MOZART:
                 jugador.valorBoton = -1; //restauro el valor despues de usar
             }
             break;
-
-        case PERDISTE:
-            cargar_botones = true;
-            pantallaPerdiste(&sdl,&jugador);
-            estado = controlEventosPantallaPerdiste(&evento,estado);
-            if(estado == SCHONBERG || estado == MOZART)
-                reiniciarJuego(&sec);
-            break;
-
 
         case SALIR:
             sec.primera_vez = false; // para que no libere memoria sin inicializar cuando salimos

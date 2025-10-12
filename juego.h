@@ -16,6 +16,7 @@
 #define MEM_ERROR -1
 #define FILE_ERROR -2
 #define FILE_OK 0
+#define FORMATO_ERROR -3
 #define N_MIN 0
 #define LONG_INICIAL 1
 
@@ -63,9 +64,8 @@ int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones);
 int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones);
 bool validarJugador(tJugador *jugador, tSecuencia *sec);
 void reiniciarJuego(tSecuencia *sec);
-void pantallaPerdiste(tSistemaSDL* sdl,tJugador* jugador);
-void mostrarTextoPerdiste(tSistemaSDL* sdl,tJugador* jugador);
-unsigned int controlEventosPantallaPerdiste(SDL_Event* evento, unsigned int estado_actual);
+
+void colorpantalla_juego(tSistemaSDL* sdl,SDL_Color);
 
 unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[], tSecuencia *secuencia, float deltaTime, tJugador *jugador);
 

@@ -14,6 +14,8 @@ typedef struct
     int Score;
     int modo_juego;
     int valorBoton;
+    int vidas;
+    bool cheat;
 }tJugador;
 
 typedef struct
@@ -38,6 +40,7 @@ void inicializarJugador(tPantallaJugador *pantalla, tJugador* jugador);
 ///AUX
 void mostrarPantallaJuego(tSistemaSDL *sdl,tPantallaJugador* pantalla);
 void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador* pantalla);
+bool validarNombreJugador(const char *texto);
 unsigned int controlEventosPantallaJuego(SDL_Event* evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador);
 void dibujarTextoIngresado(tSistemaSDL* sdl, tPantallaJugador* pantalla);
 
