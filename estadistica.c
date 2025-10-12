@@ -1,10 +1,72 @@
 #include "estadistica.h"
 
+bool cargarTopDesdeArchivo(tJugador *vec, size_t *ce, const char *nombre_archivo)
+{
+    FILE *pf = fopen(nombre_archivo, "rb");
+    if (!pf)
+    {
+        *ce = 0;
+        return false;
+    }
+
+    *ce = fread(vec, sizeof(tJugador), MAX_JUGADORES, pf);
+    fclose(pf);
+    return true;
+}
+
+void guardarTopEnArchivo(tJugador *vec, size_t ce, const char *nombre_archivo)
+{
+    FILE *pf = fopen(nombre_archivo, "wb");
+    if (!pf)
+    {
+        perror("Error al guardar el archivo de top");
+        return;
+    }
+
+    fwrite(vec, sizeof(tJugador), ce, pf);
+    fclose(pf);
+}
+
+void insertarEnTop(tJugador *vec, size_t *ce, tJugador nuevo)
+{
+    // Si el vector está vacío
+    if (*ce == 0)
+    {
+        vec[0] = nuevo;
+        (*ce)++;
+        return;
+    }
+
+    // Si hay menos de 5 jugadores, insertar normalmente
+    if (*ce < MAX_JUGADORES)
+    {
+        vec[*ce] = nuevo;
+        (*ce)++;
+    }
+    else if (nuevo.Score > vec[*ce - 1].Score)
+    {
+        vec[*ce - 1] = nuevo; // reemplaza al último
+    }
+
+    // Ordenar de mayor a menor
+    for (int i = 0; i < *ce - 1; i++)
+    {
+        for (int j = i + 1; j < *ce; j++)
+        {
+            if (vec[j].Score > vec[i].Score)
+            {
+                tJugador aux = vec[i];
+                vec[i] = vec[j];
+                vec[j] = aux;
+            }
+        }
+    }
+}
+
 float _signo(int px, int py, SDL_Point p1, SDL_Point p2)
 {
     return (px - p2.x) * (p1.y - p2.y) - (p1.x - p2.x) * (py -p2.y);
 }
-
 
 bool _verificarTriangulo(tBoton_triangular* boton_triangular, int mouse_x, int mouse_y)
 {
@@ -45,116 +107,6 @@ bool _verificarTriangulo(tBoton_triangular* boton_triangular, int mouse_x, int m
     return !(negativo && positivo);
 }
 
-
-int _cantidadRegistros(FILE *pf)
-{
-    int bytes, cantidad;
-
-    fseek(pf,0,SEEK_END);
-
-    bytes = ftell(pf);
-    cantidad = bytes/sizeof(tJugador);
-
-    fclose(pf);
-
-    return cantidad;
-}
-
-FILE* corroborarArchivo(char* texto)
-{
-    FILE *pf = fopen(texto,"rb");
-    if(pf == NULL)
-    {
-        pf = fopen(texto,"wb");
-
-        if(pf == NULL)
-        {
-            printf("Error\n");
-            return NULL;
-        }
-    }
-    return pf;
-}
-
-int agregarDatosVector(tJugador *jugador, char* texto)
-{
-    FILE *pf;
-    tJugador *pj = jugador;
-    size_t ce;
-
-
-    pf = corroborarArchivo(texto);
-
-    if(!pf)
-    {
-        printf("Archivo creado");
-        fclose(pf);
-        return ARCHIVO_CREADO;
-    }
-
-    if(!(ce = _cantidadRegistros(pf)))
-    {
-        printf("No hay datos cargados para almacenar en los vectores");
-        fclose(pf);
-        return ce;
-    }
-
-    fread(jugador,sizeof(tJugador),1,pf);
-    while(!feof(pf))
-    {
-        *pj = *jugador;
-        pj++;
-        fread(jugador,sizeof(tJugador),1,pf);
-    }
-    fclose(pf);
-
-    return ce;
-}
-
-void insertarVectorOrdenado(tJugador *jugador, size_t* ce, tJugador nuevo)
-{
-    tJugador *pfin = jugador + *ce - 1;
-    tJugador *ppos = jugador;
-
-    if(*ce == MAX_JUGADORES)
-    {
-        (*ce)--;
-    }
-
-    while(ppos <= pfin && ppos->Score > nuevo.Score)
-    {
-        ppos++;
-    }
-    while(pfin >= ppos)
-    {
-        *(pfin+1) = *pfin;
-        pfin--;
-    }
-    *ppos = nuevo;
-    (*ce)++;
-}
-
-bool agregarArchivo(tJugador* jugador, size_t ce, char* texto)
-{
-    FILE *pf;
-    pf = corroborarArchivo(texto);
-
-    if(!pf)
-    {
-        printf("No existe el archivo");
-        fclose(pf);
-        return false;
-    }
-
-    for(tJugador* i = jugador; i < jugador + ce; i++)
-    {
-        fwrite(i,sizeof(tJugador),1,pf);
-    }
-
-    fclose(pf);
-    return true;
-}
-
 void inicializarPantallaEstadistica(tEstadistica* estadistica)
 {
     estadistica->botones[0].valor_boton = MENU;
@@ -189,10 +141,6 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
     estadistica->botones_triangulares[0].estado = MOZART;
     estadistica->botones_triangulares[1].estado = SCHONBERG;
 
-
-
-
-    estadistica->ce_jugadores = agregarDatosVector(estadistica->jugador,"estadistica.dat");
     estadistica->rec_estadistica = (SDL_Rect)
     {
         180,
@@ -200,7 +148,6 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
         LARGO_RECT * 2,
         ANCHO_RECT * 7
     };
-    estadistica->ce_jugadores_mo = agregarDatosVector(estadistica->jugador_mo,"estadisticamo.dat");
 
     strcpy(estadistica->titulo,"Estadistica");
 
@@ -218,7 +165,6 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
 
         estadistica->ce_jugadores = MAX_JUGADORES;
 
-        agregarArchivo(estadistica->jugador,estadistica->ce_jugadores,"estadistica.dat");
     }
 
     if(estadistica->ce_jugadores_mo == 0)
@@ -233,13 +179,8 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
 
         estadistica->ce_jugadores_mo = MAX_JUGADORES;
 
-        agregarArchivo(estadistica->jugador,estadistica->ce_jugadores,"estadisticamo.dat");
     }
-
-
     estadistica->es_schon = true;
-
-
 }
 
 void mostrarTextoEst(tSistemaSDL* sdl, tEstadistica* estadistica, char* texto_est)

@@ -50,10 +50,13 @@ typedef struct
 ///Logica para crear y agregar al archivo
 ///Logica para ordenar el vector de los puntos
 
-FILE* corroborarArchivo(char* texto);
-int agregarDatosVector(tJugador *jugador, char* texto);
-void insertarVectorOrdenado(tJugador *jugador, size_t* ce, tJugador nuevo);
-bool agregarArchivo(tJugador *jugador, size_t ce, char* texto);
+/////////////
+
+bool cargarTopDesdeArchivo(tJugador *vec, size_t *ce, const char *nombre_archivo);
+void guardarTopEnArchivo(tJugador *vec, size_t ce, const char *nombre_archivo);
+void insertarEnTop(tJugador *vec, size_t *ce, tJugador nuevo);
+
+///////////
 
 
 ///Parte visual de la estadistica

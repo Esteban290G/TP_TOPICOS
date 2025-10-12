@@ -98,7 +98,7 @@ void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador *pantalla)
     SDL_FreeSurface(superficie);
 }
 
-unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pantalla, unsigned int estado_actual)
+unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador)
 {
     unsigned int bandera = estado_actual;
 
@@ -127,6 +127,7 @@ unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pa
                         if (strlen(pantalla->texto_ingresado) > 0 || i->valor_boton == MENU)
                         {
                             printf("Hiciste clic al boton numero %d\n", i->valor_boton);
+                            strcpy(jugador->nombre,pantalla->texto_ingresado);
                             bandera = i->valor_boton;
                         }
                         else

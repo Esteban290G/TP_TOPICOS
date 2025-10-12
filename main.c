@@ -77,6 +77,9 @@ int main(int argc,char* argv[])
     tSistemaCrab bicho_crab;
     inicializartSistemaCrab(&bicho_crab);
 
+    cargarTopDesdeArchivo(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
+    cargarTopDesdeArchivo(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, "top_mozart.dat");
+
     // Datos de botones y texto
     int vector_valores_menu[] = {JUGAR, OPCIONES, ESTADISTICA, SALIR};
     int vector_valores_opciones[] = {OPCIONES_BOTONES, MENU};
@@ -137,7 +140,7 @@ int main(int argc,char* argv[])
             sec.primera_vez = true;
             sec.primer_boton = true;
             cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
-            estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado);
+            estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado,&jugador);
             mostrarPantallaJuego(&sdl,&pantalla_jugador);
             break;
 
@@ -157,6 +160,7 @@ int main(int argc,char* argv[])
             dibujarPantallaJuego(&sdl,fondo,boton_simon,configuracion.cant_botones,botones_aux_simon,2);
             if(sec.primera_vez)
             {
+                jugador.Score = 0;
                 int inicio = inicializarSecuencia(&sec,configuracion.cant_botones);
                 if(inicio == MEM_ERROR)
                 {
@@ -172,8 +176,10 @@ int main(int argc,char* argv[])
 
                 if(resultado)
                 {
+                    jugador.Score += 10;
                     if(sec.indice >= sec.longitud)
                     {
+                        jugador.Score += 10 * (sec.indice - 1);
                         printf("RONDA COMPLETA\n");
                         int agregar = agregarElemSecuencia(&sec,configuracion.cant_botones);
                         if(agregar == MEM_ERROR)
@@ -186,8 +192,13 @@ int main(int argc,char* argv[])
                 }
                 else if(jugador.valorBoton != -1)
                 {
-                    printf("PERDISTE\n");
+                    printf("PERDISTE\nPUNTUACION FINAL = %d\n", jugador.Score);
                     Mix_PlayChannel(1, sonidos[3], 0);
+
+                    insertarEnTop(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, jugador);
+
+                    guardarTopEnArchivo(pantalla_estadistica.jugador, pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
+
                     reiniciarJuego(&sec);
                 }
 

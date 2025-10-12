@@ -38,7 +38,7 @@ void inicializarJugador(tPantallaJugador *pantalla, tJugador* jugador);
 ///AUX
 void mostrarPantallaJuego(tSistemaSDL *sdl,tPantallaJugador* pantalla);
 void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador* pantalla);
-unsigned int controlEventosPantallaJuego(SDL_Event* evento, tPantallaJugador *pantalla, unsigned int estado_actual);
+unsigned int controlEventosPantallaJuego(SDL_Event* evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador);
 void dibujarTextoIngresado(tSistemaSDL* sdl, tPantallaJugador* pantalla);
 
 #endif // JUGADOR_H_INCLUDED
