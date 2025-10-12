@@ -164,14 +164,10 @@ unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pa
                 {
                     pantalla->input_activo = false;
                 }
-                bandera = MOZART;
             }
             break;
         }
     }
-
-    if (bandera == MOZART)
-        bandera = estado_actual;
     if (bandera == MENU)
         strcpy(pantalla->texto_ingresado, "");
     return bandera;

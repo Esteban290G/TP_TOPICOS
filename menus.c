@@ -82,12 +82,6 @@ unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,unsigned
             break;
         }
     }
-
-    ///AUX
-    if(bandera == OPCIONES_BOTONES || bandera == MOZART )
-    {
-        bandera = estado_actual;
-    }
     return bandera;
 }
 

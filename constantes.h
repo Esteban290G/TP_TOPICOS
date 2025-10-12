@@ -16,7 +16,7 @@
 #define SALIR 50
 #define SCHONBERG 60
 #define MOZART 70
-#define OPCIONES_BOTONES 80
+#define PERDISTE 80
 #define SIGUIENTE 120
 #define ANTERIOR 121
 #define EST_SCHO 123

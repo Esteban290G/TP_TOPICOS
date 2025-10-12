@@ -14,6 +14,8 @@
 
 #define MEM_OK 0
 #define MEM_ERROR -1
+#define FILE_ERROR -2
+#define FILE_OK 0
 #define N_MIN 0
 #define LONG_INICIAL 1
 
@@ -36,7 +38,7 @@ typedef struct
 
 typedef struct
 {
-    int *vecSecuencia; //vector dinamico
+    int *vecSecuencia; // vector dinamico
     int longitud;
     int indice;
     float tiempo_acumulado;
@@ -44,11 +46,16 @@ typedef struct
     bool activo;
     bool reproduciendo;
     bool primera_vez;
-    bool primer_boton; //bandera para que haya un tiempo de espera al inicio
-}tSecuencia;
+    bool primer_boton; // bandera para que haya un tiempo de espera al inicio
+    int mozart_actual; // para modo mozart
+} tSecuencia;
 
+void inicializarSecuenciaMozart(tSecuencia *secuencia, size_t cant_elem);
+size_t contarElemSecuencia(char *nombre_archivo);
+size_t buscarMaximo(tSecuencia *vec);
+int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_elem);
 int generarAleatorio(int num_min, int num_max);
-void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk* sonidos[], tBotonSimon *boton_simon, size_t cant_botones,SDL_Color color,tBoton *boton_normal, size_t ce_normal, float deltaTime,tSecuencia *secuencia, float duracion_inicial);
+void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk *sonidos[], tBotonSimon *boton_simon, size_t cant_botones, SDL_Color color, tBoton *boton_normal, size_t ce_normal, float deltaTime, tSecuencia *secuencia, float duracion_inicial, int limite_mozart);
 void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t cant_botones);
 void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon *boton_simon, size_t cant_botones, tBoton *boton_normal, size_t ce_normal);
 void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *color_2, size_t cant_botones, int *v_valor);
@@ -56,7 +63,10 @@ int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones);
 int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones);
 bool validarJugador(tJugador *jugador, tSecuencia *sec);
 void reiniciarJuego(tSecuencia *sec);
+void pantallaPerdiste(tSistemaSDL* sdl,tJugador* jugador);
+void mostrarTextoPerdiste(tSistemaSDL* sdl,tJugador* jugador);
+unsigned int controlEventosPantallaPerdiste(SDL_Event* evento, unsigned int estado_actual);
 
-unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[],tSecuencia *secuencia,float deltaTime, tJugador *jugador);
+unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[], tSecuencia *secuencia, float deltaTime, tJugador *jugador);
 
 #endif // JUEGO_H_INCLUDED

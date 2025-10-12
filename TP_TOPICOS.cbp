@@ -47,6 +47,10 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="constantes.h" />
+		<Unit filename="estadistica.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="estadistica.h" />
 		<Unit filename="graficos.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -66,6 +70,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="menus.h" />
+		<Unit filename="opciones.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="opciones.h" />
 		<Unit filename="sistemasSDL.c">
 			<Option compilerVar="CC" />
 		</Unit>
