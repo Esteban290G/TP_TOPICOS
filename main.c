@@ -28,6 +28,8 @@ Entrega: Si
 #include "estadistica.h"
 #include "opciones.h"
 
+
+
 int main(int argc,char* argv[])
 {
     //Variables para iniciar el programa
@@ -47,6 +49,8 @@ int main(int argc,char* argv[])
         printf("Error, no se pudo inicializar SDL\n");
         return 1;
     }
+
+
 
     ///reproducirMusica(&sdl);
 
@@ -217,7 +221,7 @@ int main(int argc,char* argv[])
 
                     guardarTopEnArchivo(pantalla_estadistica.jugador, pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
 
-                    reiniciarJuego(&sec);
+                    estado = PERDISTE;
                 }
 
                 jugador.valorBoton = -1; //restauro el valor despues de usar
@@ -299,7 +303,6 @@ int main(int argc,char* argv[])
             }
             break;
 
-<<<<<<< HEAD
         case PERDISTE:
             cargar_botones = true;
             SDL_Color color_perdiste = (SDL_Color){255,0,0,3};
@@ -314,8 +317,7 @@ int main(int argc,char* argv[])
             estado = controlEventosPantalla_juego(&evento,estado,modo);
             break;
 
-=======
->>>>>>> 0bf568313d4965d08651379e0fb2090fbe8d8fb6
+
         case SALIR:
             sec.primera_vez = false; // para que no libere memoria sin inicializar cuando salimos
             corriendo = false;

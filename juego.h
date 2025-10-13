@@ -65,7 +65,6 @@ int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones);
 bool validarJugador(tJugador *jugador, tSecuencia *sec);
 void reiniciarJuego(tSecuencia *sec);
 
-<<<<<<< HEAD
 
 void pantalla_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo, SDL_Color color);
 void mostrarTexto_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo);
@@ -73,9 +72,9 @@ unsigned int controlEventosPantalla_juego(SDL_Event* evento, unsigned int estado
 
 void colorpantalla_juego(tSistemaSDL* sdl,SDL_Color);
 
-=======
+
 void colorpantalla_juego(tSistemaSDL* sdl,SDL_Color);
->>>>>>> 0bf568313d4965d08651379e0fb2090fbe8d8fb6
+
 
 unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[], tSecuencia *secuencia, float deltaTime, tJugador *jugador);
 

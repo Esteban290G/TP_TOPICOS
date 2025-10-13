@@ -1646,7 +1646,7 @@
 	"menus.h"
 	"juego.h"
 
-1760314530 source:c:\users\lucas\documents\version6\tp_topicos\estadistica.c
+1760317649 source:c:\users\lucas\documents\version6\tp_topicos\estadistica.c
 	"estadistica.h"
 
 1760305126 c:\users\lucas\documents\version6\tp_topicos\estadistica.h
@@ -2132,7 +2132,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760305126 c:\users\lucas\documents\version6\tp_topicos\jugador.h
+1760318197 c:\users\lucas\documents\version6\tp_topicos\jugador.h
 	<stdio.h>
 	<stdbool.h>
 	<string.h>
@@ -2151,7 +2151,7 @@
 1760306496 source:c:\users\lucas\documents\version6\tp_topicos\graficos.c
 	"graficos.h"
 
-1760305126 source:c:\users\lucas\documents\version6\tp_topicos\jugador.c
+1760318197 source:c:\users\lucas\documents\version6\tp_topicos\jugador.c
 	"jugador.h"
 
 1760305128 source:c:\users\lucas\documents\version6\tp_topicos\menus.c
@@ -2171,7 +2171,7 @@
 	"menus.h"
 	"juego.h"
 
-1760308213 c:\users\lucas\documents\version6\tp_topicos\juego.h
+1760318338 c:\users\lucas\documents\version6\tp_topicos\juego.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
@@ -2193,7 +2193,7 @@
 	<stdio.h>
 	<math.h>
 
-1760310760 source:c:\users\lucas\documents\version6\tp_topicos\juego.c
+1760318346 source:c:\users\lucas\documents\version6\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
@@ -2201,7 +2201,7 @@
 1760305129 source:c:\users\lucas\documents\version6\tp_topicos\sonidos.c
 	"sonidos.h"
 
-1760314441 source:c:\users\lucas\documents\version6\tp_topicos\main.c
+1760318876 source:c:\users\lucas\documents\version6\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>

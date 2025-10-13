@@ -461,7 +461,7 @@ size_t buscarMaximo(tSecuencia *vec)
 
     return *max;
 }
-<<<<<<< HEAD
+
 
 // Pantalla Perdiste
 
@@ -573,5 +573,4 @@ void colorpantalla_juego(tSistemaSDL * sdl, SDL_Color color)
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
 }
 
-=======
->>>>>>> 0bf568313d4965d08651379e0fb2090fbe8d8fb6
+
