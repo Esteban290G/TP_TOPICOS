@@ -31,17 +31,76 @@ Mix_Chunk* crearTono(float frecuencia)
     return tono;
 }
 
-void crearArrayTonos(Mix_Chunk* sonidos[])
+void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
 {
-    sonidos[0] = crearTono(TONO_ROJO);
-    sonidos[1] = crearTono(TONO_VERDE);
-    sonidos[2] = crearTono(TONO_AZUL);
-    sonidos[3] = crearTono(TONO_MAGENTA);
-    sonidos[4] = crearTono(TONO_AMARILLO);
-    sonidos[5] = crearTono(TONO_CIAN);
-    sonidos[6] = crearTono(TONO_NARANJA);
-    sonidos[7] = crearTono(TONO_MORADO);
-    sonidos[8] = crearTono(TONO_ERROR);
+    float tonos[8] = {0};
+    switch(cant_botones)
+    {
+    case 3:
+    {
+        float aux[] = {FREC_DO,FREC_MI,FREC_SOL};
+
+        for(int j = 0; j < cant_botones; j++)
+        {
+            tonos[j] = aux[j];
+        }
+        break;
+    }
+    case 4:
+    {
+        float aux[] = {FREC_DO,FREC_MI,FREC_SOL,FREC_LA};
+        for(int j = 0; j < cant_botones; j++)
+        {
+            tonos[j] = aux[j];
+        }
+        break;
+    }
+
+    case 5:
+    {
+        float aux[] = {FREC_DO,FREC_RE,FREC_MI,FREC_SOL,FREC_LA};
+        for(int j = 0; j < cant_botones; j++)
+        {
+            tonos[j] = aux[j];
+        }
+        break;
+    }
+
+    case 6:
+    {
+        float aux[] = {FREC_DO,FREC_RE,FREC_MI,FREC_FA_SOST,FREC_SOL_SOST,FREC_LA_SOST};
+        for(int j = 0; j < cant_botones; j++)
+        {
+            tonos[j] = aux[j];
+        }
+        break;
+    }
+
+    case 7:
+    {
+        float aux[] = {FREC_DO,FREC_RE,FREC_MIB,FREC_FA,FREC_SOL,FREC_LAB,FREC_SI};
+        for(int j = 0; j < cant_botones; j++)
+        {
+            tonos[j] = aux[j];
+        }
+        break;
+    }
+    case 8:
+    {
+        float aux[] = {FREC_DO,FREC_RE,FREC_MI,FREC_FA,FREC_SOL,FREC_LA,FREC_SI,FREC_DO_AGU};
+        for(int j = 0; j < cant_botones; j++)
+        {
+            tonos[j] = aux[j];
+        }
+        break;
+    }
+
+    }
+
+    for(int i = 0; i < cant_botones; i++)
+    {
+        sonidos[i] = crearTono(tonos[i]);
+    }
 }
 
 void destruirTono(Mix_Chunk *tono)

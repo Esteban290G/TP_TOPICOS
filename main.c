@@ -56,7 +56,6 @@ int main(int argc,char* argv[])
 
     // Cargar y generar los sonidos
     Mix_Chunk* sonidos[8];
-    crearArrayTonos(sonidos);
 
     // Estructura secuencia
     tSecuencia sec;
@@ -72,6 +71,8 @@ int main(int argc,char* argv[])
     SDL_Color colores_hover[] = {{255, 70, 70, 255},{70, 255, 70, 255},{70, 70, 255, 255},{255, 70, 255, 255},{255, 255, 70, 255},{70, 255, 255, 255},{255, 190, 70, 255},{120, 60, 130, 255}};
 
     SDL_Color colores_apretado[] = {{100, 0, 0, 255},{0, 100, 0, 255},{0, 0, 100, 255},{100, 0, 100, 255},{120, 120, 0, 255},{0, 100, 100, 255},{120, 70, 0, 255},{30, 10, 40, 255}};
+
+    size_t cant_simon_menu = 8; // Para los botones de colores que aparecen en menu ppal
 
     // Estructuras para el juego
     SDL_Event evento;
@@ -91,19 +92,19 @@ int main(int argc,char* argv[])
     cargarTopDesdeArchivo(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
     cargarTopDesdeArchivo(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, "top_mozart.dat");
 
-    // Datos de botones y texto
+    /// Datos de botones y texto REVISAR
     int vector_valores_menu[] = {JUGAR, OPCIONES, ESTADISTICA, SALIR};
     //int vector_valores_opciones[] = {OPCIONES_BOTONES, MENU};
     int vector_valores_estadistica[] = {MENU};
-    int vector_valores_jugar[] = {SCHONBERG,MOZART,MENU};
+    int vector_valores_jugar[] = {SCHONBERG,MOZART,DESAFIO,MENU};
     int vector_valores_simon[] = {BOTON_1,BOTON_2,BOTON_3,BOTON_4,BOTON_5,BOTON_6,BOTON_7,BOTON_8};
-    int vector_valores_fondo[] = {BOTON_111,BOTON_112,BOTON_113,BOTON_114,BOTON_115,BOTON_116,BOTON_117,BOTON_118};
+    //int vector_valores_fondo[] = {BOTON_111,BOTON_112,BOTON_113,BOTON_114,BOTON_115,BOTON_116,BOTON_117,BOTON_118};
     int vector_valores_aux_simon[] = {JUGAR,SALIR}; ///AUX
 
     char* texto_menu[] = {"jugar","opciones","estadistica","salir"};
     //char* texto_opciones[] = {"Modificar","Volver"};
     char* texto_estadistica[] = {"Volver"};
-    char* texto_jugar[] = {"Modo Schonberg", "Modo Mozart", "Volver"};
+    char* texto_jugar[] = {"Modo Schonberg", "Modo Mozart","Modo Desafio", "Volver"};
     char* texto_aux_simon[] = {"Volver","Salir"}; ///AUX
 
     // Cargar datos a los botones
@@ -139,7 +140,7 @@ int main(int argc,char* argv[])
 
     tBoton_fondo boton_fondo[8];
 
-    inicializarBoton_fondo(boton_fondo, colores,colores_hover,colores_apretado);
+    inicializarBoton_fondo(boton_fondo, colores,colores_hover,colores_apretado,vector_valores_simon);
 
     ///
 
@@ -149,17 +150,22 @@ int main(int argc,char* argv[])
     bool modo = true;
     bool win = false;
 
+    tKonami codigo;
+    inicializarKonami(&codigo);
+
     while(corriendo)
     {
         Uint32 tiempoActual = SDL_GetTicks();
         deltaTime = tiempoActual - tiempoAnterior;
         tiempoAnterior = tiempoActual;
-        //estado = MOZART;
+
+        //estado = DESAFIO;
+
         switch(estado)
         {
         case MENU:
-            estado = controlEventos(&evento,botones_menu,CANTIDAD_BOTON_MENU,boton_fondo,estado);
-            mostrarPantalla(&sdl,(SDL_Color){0,0,0,255},botones_menu,CANTIDAD_BOTON_MENU,boton_fondo,(size_t)8,estado);
+            estado = controlEventos(&evento,botones_menu,CANTIDAD_BOTON_MENU,boton_fondo,estado,&codigo);
+            mostrarPantalla(&sdl,(SDL_Color){0,0,0,255},botones_menu,CANTIDAD_BOTON_MENU,boton_fondo,cant_simon_menu,estado);
             break;
 
         case JUGAR:
@@ -187,6 +193,7 @@ int main(int argc,char* argv[])
 
             if(cargar_botones)
             {
+                crearArrayTonos(sonidos,configuracion.cant_botones);
                 cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
                 cargar_botones = false;
                 modo = true;
@@ -264,6 +271,7 @@ int main(int argc,char* argv[])
 
             if(cargar_botones)
             {
+                crearArrayTonos(sonidos,cant_botones);
                 cargarBotonSimon(boton_simon, colores, colores_luz,cant_botones, vector_valores_simon);
                 cargar_botones = false;
             }
@@ -316,6 +324,21 @@ int main(int argc,char* argv[])
                 }
                 jugador.valorBoton = -1; //restauro el valor despues de usar
             }
+            break;
+
+        case DESAFIO:
+            estado = controlEventosSimon(&evento,boton_simon,configuracion.cant_botones,estado,botones_aux_simon,2,sonidos,&sec,deltaTime,&jugador);
+            if(cargar_botones)
+            {
+                crearArrayTonos(sonidos,configuracion.cant_botones);
+                cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
+                cargar_botones = false;
+            }
+            dibujarPantallaJuego(&sdl,fondo,boton_simon,configuracion.cant_botones,botones_aux_simon,2);
+
+            //if(0-7 y apretaste guardar) guardarValorBoton(estado,vec);
+            //grabarSecuencia(vec,txt);
+
             break;
 
         case PERDISTE:

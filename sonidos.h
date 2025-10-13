@@ -10,18 +10,23 @@
 #define AMPLITUD_TONO 8192
 
 // Frecuencias tonos
-#define TONO_ERROR 100.0
-#define TONO_ROJO 261.63 //DO
-#define TONO_VERDE 329.63 //MI
-#define TONO_AZUL 392.00 //SOL
-#define TONO_MAGENTA 293.66 //RE
-#define TONO_AMARILLO 493.88 //SI
-#define TONO_CIAN 659.26 // MI/
-#define TONO_NARANJA 587.33 // RE/
-#define TONO_MORADO 523.2 // DO/
+
+#define FREC_DO 261.63
+#define FREC_RE 293.66
+#define FREC_MI 329.63
+#define FREC_FA 349.23
+#define FREC_SOL 392.00
+#define FREC_LA 440.00
+#define FREC_SI 493.88
+#define FREC_DO_AGU 523.25
+#define FREC_FA_SOST 369.99
+#define FREC_SOL_SOST 415.30
+#define FREC_LA_SOST 466.16
+#define FREC_LAB 415.30
+#define FREC_MIB 311.13
 
 Mix_Chunk* crearTono(float frecuencia);
-void crearArrayTonos(Mix_Chunk* sonidos[]);
+void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones);
 void destruirTono();
 void destruirArrayTonos(Mix_Chunk* sonidos[]);
 

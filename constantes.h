@@ -18,6 +18,7 @@
 #define MOZART 70
 #define PERDISTE 80
 #define GANASTE 90
+#define DESAFIO 100 //en construccion
 #define SIGUIENTE 120
 #define ANTERIOR 121
 #define EST_SCHO 123
@@ -27,7 +28,7 @@
 
 //Constantes para cantidad de botones
 #define CANTIDAD_BOTON_MENU 4
-#define CANTIDAD_BOTON_JUGAR 3
+#define CANTIDAD_BOTON_JUGAR 4
 #define CANTIDAD_BOTON_OPCIONES 1
 #define CANTIDAD_BOTON_ESTADISTICA 1
 
@@ -41,7 +42,7 @@
 
 //Constantes de limites
 #define MAX_LETRAS 20
-#define MAX_BOTONES 3
+#define MAX_BOTONES 4
 
 //crab
 #define MAX_CRAB 10

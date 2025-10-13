@@ -28,26 +28,32 @@ void inicializarPantallaJugador(tPantallaJugador *pantalla)
     pantalla->botones[0].rectangulo = (SDL_Rect){POSICION_X, POSICION_Y + PADDING, LARGO_RECT, ANCHO_RECT};
     pantalla->botones[1].rectangulo = (SDL_Rect){POSICION_X, POSICION_Y + PADDING * 2, LARGO_RECT, ANCHO_RECT};
     pantalla->botones[2].rectangulo = (SDL_Rect){POSICION_X, POSICION_Y + PADDING * 3, LARGO_RECT, ANCHO_RECT};
+    pantalla->botones[3].rectangulo = (SDL_Rect){POSICION_X, POSICION_Y + PADDING * 4, LARGO_RECT, ANCHO_RECT};
 
     strcpy(pantalla->botones[0].texto_boton, "Modo Schonberg");
     strcpy(pantalla->botones[1].texto_boton, "Modo Mozart");
-    strcpy(pantalla->botones[2].texto_boton, "Volver");
+    strcpy(pantalla->botones[2].texto_boton, "Modo Desafio");
+    strcpy(pantalla->botones[3].texto_boton, "Volver");
 
     pantalla->botones[0].valor_boton = SCHONBERG;
     pantalla->botones[1].valor_boton = MOZART;
-    pantalla->botones[2].valor_boton = MENU;
+    pantalla->botones[2].valor_boton = DESAFIO;
+    pantalla->botones[3].valor_boton = MENU;
 
     pantalla->botones[0].hover = false;
     pantalla->botones[1].hover = false;
     pantalla->botones[2].hover = false;
+    pantalla->botones[3].hover = false;
 
     pantalla->botones[0].color_texto_normal = (SDL_Color){255, 255, 255, 255};
     pantalla->botones[1].color_texto_normal = (SDL_Color){255, 255, 255, 255};
     pantalla->botones[2].color_texto_normal = (SDL_Color){255, 255, 255, 255};
+    pantalla->botones[3].color_texto_normal = (SDL_Color){255, 255, 255, 255};
 
     pantalla->botones[0].color_texto_hover = (SDL_Color){255, 0, 0, 255};
     pantalla->botones[1].color_texto_hover = (SDL_Color){0, 255, 0, 255};
     pantalla->botones[2].color_texto_hover = (SDL_Color){0, 0, 255, 255};
+    pantalla->botones[3].color_texto_hover = (SDL_Color){255, 0, 255, 255};
 }
 
 void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador)

@@ -46,8 +46,36 @@ void cargarDatosBotones(tBoton *boton, size_t ce,SDL_Color *colores,int vector_v
 
 }
 
+void inicializarKonami(tKonami *codigo)
+{
+    codigo->indice = 0;
+    codigo->longitud = 10;
+}
 
-unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,tBoton_fondo *boton_fondo,unsigned int estado_actual)
+bool verificarCodigoKonami(unsigned int valor_boton, tKonami *codigo)
+{
+    const unsigned int sec_konami[] = {1,1,6,6,3,4,3,4,0,7};
+
+    if(valor_boton == sec_konami[codigo->indice])
+    {
+        codigo->indice++;
+        if(codigo->indice == codigo->longitud)
+        {
+            codigo->indice = 0;
+            printf("\nCODIGO KONAMI ACTIVADO\n");
+            return true;
+        }
+    }
+    else
+    {
+        codigo->indice = 0;
+    }
+
+    return false;
+}
+
+
+unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,tBoton_fondo *boton_fondo,unsigned int estado_actual, tKonami *codigo)
 {
     unsigned int bandera = estado_actual;
     while(SDL_PollEvent(evento))
@@ -82,7 +110,18 @@ unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,tBoton_f
 
                 for(tBoton_fondo*i = boton_fondo; i< boton_fondo + 8; i++)
                 {
-                    i->apretado = _verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y);
+                    if(_verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y))
+                    {
+                        i->apretado = true;
+
+                        if(verificarCodigoKonami(i->valor_boton,codigo))
+                        {
+                            printf("\nCHEAT ACTIVADO\n");
+                        }
+
+                        break;
+
+                    }
                 }
 
             }
@@ -168,18 +207,20 @@ void dibujarFondo(tSistemaSDL *sdl, tBoton_fondo* boton_fondo, size_t ce_fondo)
     }
 }
 
-void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color* colores,SDL_Color* color_hoverr, SDL_Color* color_apretadoo)
+void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color* colores,SDL_Color* color_hoverr, SDL_Color* color_apretadoo,int *v_valor)
 {
     int tam_cuadrado = (ANCHO  - (ESPACIO * (CUADRADOS_POR_LADO - 1))) / CUADRADOS_POR_LADO;
 
-
+    int j = 0;
     for(tBoton_fondo*i = boton_fondo; i < boton_fondo + 8; i++)
     {
+
         i->color = *colores;
         i->color_apretado = *color_apretadoo;
         i->color_hover = *color_hoverr;
         i->hover = false;
         i->apretado = false;
+        i->valor_boton = v_valor[j];
 
         int indice = i - boton_fondo;
 
@@ -206,6 +247,7 @@ void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color* colores,SDL_Co
         colores++;
         color_apretadoo++;
         color_hoverr++;
+        j++;
     }
 }
 
