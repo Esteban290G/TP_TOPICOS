@@ -9,17 +9,17 @@ bool _verificarMouseBoton(SDL_Rect boton, int mouse_x, int mouse_y)
     return false;
 }
 
-void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado)
+void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce_normal, tBoton_fondo *boton_fondo, size_t ce_fondo, unsigned int estado)
 {
-    actualizarCrab(bicho);
+    SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_BLEND);
     colorPantalla(sdl, color);
+    dibujarFondo(sdl, boton_fondo, ce_fondo);
+    dibujarTitulo(sdl);
+    SDL_SetRenderDrawColor(sdl->renderer,60, 60, 60, 180);
+    SDL_RenderFillRect(sdl->renderer,&(SDL_Rect){220,220,300,400});
+    dibujar(sdl, boton, ce_normal);
+    SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
 
-    if(estado == MENU)
-    {
-        dibujarTitulo(sdl);
-        dibujarCrab(sdl,bicho);
-    }
-    dibujar(sdl, boton, ce);
 }
 
 
@@ -43,10 +43,11 @@ void cargarDatosBotones(tBoton *boton, size_t ce,SDL_Color *colores,int vector_v
         padding += PADDING;
         pvec++;
     }
+
 }
 
 
-unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,unsigned int estado_actual)
+unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,tBoton_fondo *boton_fondo,unsigned int estado_actual)
 {
     unsigned int bandera = estado_actual;
     while(SDL_PollEvent(evento))
@@ -57,6 +58,11 @@ unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,unsigned
             for(tBoton* i = botones; i< botones + ce; i++)
             {
                 i->hover = _verificarMouseBoton(i->rectangulo,evento->motion.x, evento->motion.y);
+            }
+
+            for(tBoton_fondo* i = boton_fondo; i < boton_fondo + 8; i++)
+            {
+                i->hover = _verificarMouseBoton(i->rectangulo,evento->button.x, evento->button.y);
             }
             break;
         case SDL_MOUSEBUTTONDOWN:
@@ -74,10 +80,24 @@ unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,unsigned
                     }
                 }
 
+                for(tBoton_fondo*i = boton_fondo; i< boton_fondo + 8; i++)
+                {
+                    i->apretado = _verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y);
+                }
+
+            }
+            break;
+        case SDL_MOUSEBUTTONUP:
+            if(evento->button.button == SDL_BUTTON_LEFT)
+            {
+                for(tBoton_fondo* i = boton_fondo; i < boton_fondo + 8; i++)
+                {
+                    i->apretado = false;
+                }
             }
             break;
 
-            break;
+
         case SDL_QUIT:
             bandera = SALIR;
             printf("\nEstado actual: Menu Saliendo\n");
@@ -121,6 +141,73 @@ void dibujarTitulo(tSistemaSDL* sdl)
     SDL_FreeSurface(superficie);
 }
 
+
+void dibujarFondo(tSistemaSDL *sdl, tBoton_fondo* boton_fondo, size_t ce_fondo)
+{
+    SDL_Color color_fondo;
+
+    for(tBoton_fondo* i = boton_fondo; i < boton_fondo + ce_fondo; i++)
+    {
+        if(i->apretado == true)
+        {
+            color_fondo = i->color_apretado;
+        }
+        else if(i->hover == true)
+        {
+            color_fondo = i->color_hover;
+        }
+        else
+        {
+            color_fondo = i->color;
+        }
+
+        SDL_SetRenderDrawColor(sdl->renderer, color_fondo.r,color_fondo.g,color_fondo.b,color_fondo.a);
+        SDL_RenderFillRect(sdl->renderer, &i->rectangulo);
+        SDL_SetRenderDrawColor(sdl->renderer,0,0,0,255);
+        SDL_RenderDrawRect(sdl->renderer,&i->rectangulo);
+    }
+}
+
+void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color* colores,SDL_Color* color_hoverr, SDL_Color* color_apretadoo)
+{
+    int tam_cuadrado = (ANCHO  - (ESPACIO * (CUADRADOS_POR_LADO - 1))) / CUADRADOS_POR_LADO;
+
+
+    for(tBoton_fondo*i = boton_fondo; i < boton_fondo + 8; i++)
+    {
+        i->color = *colores;
+        i->color_apretado = *color_apretadoo;
+        i->color_hover = *color_hoverr;
+        i->hover = false;
+        i->apretado = false;
+
+        int indice = i - boton_fondo;
+
+        int fila, columna;
+
+        if(indice < 3)
+        {
+            fila = 0;
+            columna = indice;
+        }
+        else if( indice < 5)
+        {
+            fila = 1;
+            columna = (indice == 3) ? 0:2;
+        }
+        else
+        {
+            fila = 2;
+            columna = indice - 5;
+        }
+
+        i->rectangulo = (SDL_Rect){columna*(tam_cuadrado + ESPACIO),fila*(tam_cuadrado + ESPACIO),tam_cuadrado,tam_cuadrado};
+
+        colores++;
+        color_apretadoo++;
+        color_hoverr++;
+    }
+}
 
 
 

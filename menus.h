@@ -9,7 +9,15 @@
 #include "constantes.h"
 
 
-
+typedef struct
+{
+    SDL_Color color;
+    SDL_Color color_apretado;
+    SDL_Color color_hover;
+    SDL_Rect rectangulo;
+    bool apretado;
+    bool hover;
+}tBoton_fondo;
 
 typedef struct
 {
@@ -38,12 +46,18 @@ typedef struct
     int intervalo_creacion;
 }tSistemaCrab;
 
-void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce, tSistemaCrab *bicho, unsigned int estado);
-unsigned int controlEventos(SDL_Event *evento, tBoton *botones,size_t ce,unsigned int estado_actual);
+
+
+void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce_normal, tBoton_fondo *boton_fondo, size_t ce_fondo ,unsigned int estado);
+unsigned int controlEventos(SDL_Event *evento, tBoton *botones,size_t ce,tBoton_fondo* boton_fondo,unsigned int estado_actual);
 void dibujarTitulo(tSistemaSDL* sdl);
 
 void cargarDatosBotones(tBoton *boton, size_t ce, SDL_Color *colores,int vector_valores[],char* txt[]);
 
+///Por si necesitamos sacarlo o realizar modificaciones
+
+void dibujarFondo(tSistemaSDL *sdl, tBoton_fondo* boton_fondo, size_t ce_fondo);
+void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color* colores, SDL_Color* color_hover, SDL_Color* color_apretado);
 
 
 #endif // MENUS_H_INCLUDED

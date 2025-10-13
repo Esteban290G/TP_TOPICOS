@@ -69,6 +69,10 @@ int main(int argc,char* argv[])
         115,115,115,128
     };
 
+    SDL_Color colores_hover[] = {{255, 70, 70, 255},{70, 255, 70, 255},{70, 70, 255, 255},{255, 70, 255, 255},{255, 255, 70, 255},{70, 255, 255, 255},{255, 190, 70, 255},{120, 60, 130, 255}};
+
+    SDL_Color colores_apretado[] = {{100, 0, 0, 255},{0, 100, 0, 255},{0, 0, 100, 255},{100, 0, 100, 255},{120, 120, 0, 255},{0, 100, 100, 255},{120, 70, 0, 255},{30, 10, 40, 255}};
+
     // Estructuras para el juego
     SDL_Event evento;
     tPantallaJugador pantalla_jugador;
@@ -93,6 +97,7 @@ int main(int argc,char* argv[])
     int vector_valores_estadistica[] = {MENU};
     int vector_valores_jugar[] = {SCHONBERG,MOZART,MENU};
     int vector_valores_simon[] = {BOTON_1,BOTON_2,BOTON_3,BOTON_4,BOTON_5,BOTON_6,BOTON_7,BOTON_8};
+    int vector_valores_fondo[] = {BOTON_111,BOTON_112,BOTON_113,BOTON_114,BOTON_115,BOTON_116,BOTON_117,BOTON_118};
     int vector_valores_aux_simon[] = {JUGAR,SALIR}; ///AUX
 
     char* texto_menu[] = {"jugar","opciones","estadistica","salir"};
@@ -130,6 +135,17 @@ int main(int argc,char* argv[])
     configuracion.duracion_inicial = 2000;
     bool cargar_botones = true;
 
+    ///AUX FONDO
+
+    tBoton_fondo boton_fondo[8];
+
+    inicializarBoton_fondo(boton_fondo, colores,colores_hover,colores_apretado);
+
+    ///
+
+    tConfeti confeti[MAX_CONFETI];
+    inicializarConfeti(confeti);
+
     bool modo = true;
     bool win = false;
 
@@ -142,11 +158,8 @@ int main(int argc,char* argv[])
         switch(estado)
         {
         case MENU:
-            estado = controlEventos(&evento,botones_menu,CANTIDAD_BOTON_MENU,estado);
-            mostrarPantalla(&sdl,(SDL_Color)
-            {
-                0,0,0,255
-            },botones_menu,CANTIDAD_BOTON_MENU,&bicho_crab,estado);
+            estado = controlEventos(&evento,botones_menu,CANTIDAD_BOTON_MENU,boton_fondo,estado);
+            mostrarPantalla(&sdl,(SDL_Color){0,0,0,255},botones_menu,CANTIDAD_BOTON_MENU,boton_fondo,(size_t)8,estado);
             break;
 
         case JUGAR:
@@ -308,14 +321,14 @@ int main(int argc,char* argv[])
         case PERDISTE:
             cargar_botones = true;
             SDL_Color color_perdiste = (SDL_Color){255,0,0,3};
-            pantalla_juego(&sdl,&jugador,win,color_perdiste);
+            pantalla_juego(&sdl,&jugador,win,color_perdiste,confeti);
             estado = controlEventosPantalla_juego(&evento,estado,modo);
             break;
 
         case GANASTE:
             cargar_botones = true;
             SDL_Color color_ganar = (SDL_Color){0,255,0,2};
-            pantalla_juego(&sdl,&jugador,win,color_ganar);
+            pantalla_juego(&sdl,&jugador,win,color_ganar,confeti);
             estado = controlEventosPantalla_juego(&evento,estado,modo);
             break;
 

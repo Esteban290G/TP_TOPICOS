@@ -61,5 +61,23 @@
 #define ANCHO_SIMON 180
 #define LARGO_SIMON 180
 
+//aux
+
+#define BOTON_111 111
+#define BOTON_112 112
+#define BOTON_113 113
+#define BOTON_114 114
+#define BOTON_115 115
+#define BOTON_116 116
+#define BOTON_117 117
+#define BOTON_118 118
+
+
+#define ESPACIO  5
+#define MARGEN_LATERAL  20
+#define CUADRADOS_POR_LADO 3
+
+#define MAX_CONFETI 200
+
 
 #endif // CONSTANTES_H_INCLUDED

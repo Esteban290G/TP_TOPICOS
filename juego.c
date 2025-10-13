@@ -465,9 +465,11 @@ size_t buscarMaximo(tSecuencia *vec)
 
 // Pantalla Perdiste
 
-void pantalla_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo, SDL_Color color)
+void pantalla_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo, SDL_Color color,tConfeti* confeti)
 {
     colorpantalla_juego(sdl,color);
+    actualizarConfeti(confeti);
+    dibujarConfeti(sdl,confeti);
     mostrarTexto_juego(sdl,jugador,modo);
 
 }
@@ -571,6 +573,79 @@ void colorpantalla_juego(tSistemaSDL * sdl, SDL_Color color)
     SDL_Rect pantalla_completa = {0, 0, ANCHO, LARGO};
     SDL_RenderFillRect(sdl->renderer, &pantalla_completa);
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
+    SDL_RenderClear(sdl->renderer);
 }
 
 
+void inicializarConfeti(tConfeti* confeti)
+{
+
+    SDL_Color colores[] = {
+            {255, 50, 50, 255},   // Rojo
+            {50, 255, 50, 255},   // Verde
+            {50, 50, 255, 255},   // Azul
+            {255, 255, 50, 255},  // Amarillo
+            {255, 50, 255, 255},  // Rosa
+            {50, 255, 255, 255}   // Cyan
+        };
+
+
+    for(int i = 0; i < MAX_CONFETI; i++)
+    {
+        confeti[i].tam = rand() % 8 + 4;
+        confeti[i].pos.x = rand() % 740;
+        confeti[i].pos.y = -(rand() % 200);
+        confeti[i].pos.w = confeti[i].tam;
+        confeti[i].pos.h = confeti[i].tam;
+
+        confeti[i].color = colores[rand() % 6];
+
+        confeti[i].velocidad_y = rand() % 5 + 2.0f;
+        confeti[i].velocidad_x = (rand() % 10 - 5) / 2.0f;
+        confeti[i].gravedad = 0.1f;
+        confeti[i].rotacion = rand() % 360;
+    }
+}
+
+void actualizarConfeti(tConfeti* confeti)
+{
+    for(int i = 0; i < MAX_CONFETI; i++)
+    {
+        confeti[i].velocidad_y += confeti[i].gravedad;
+
+        confeti[i].pos.y += confeti[i].velocidad_y;
+        confeti[i].pos.x += confeti[i].velocidad_x;
+
+        confeti[i].rotacion += confeti[i].velocidad_x;
+
+        if(confeti[i].pos.x < 0 || confeti[i].pos.x > 740 - confeti[i].tam)
+        {
+            confeti[i].velocidad_x *= -0.8f;
+        }
+
+        if(confeti[i].pos.y > 740)
+        {
+            confeti[i].pos.y = -confeti[i].tam;
+            confeti[i].pos.x =rand() % 740;
+            confeti[i].velocidad_y = rand() %3 + 1.0f;
+        }
+    }
+}
+
+void dibujarConfeti(tSistemaSDL* sdl, tConfeti* confeti)
+{
+     for (int i = 0; i < MAX_CONFETI; i++) {
+        SDL_SetRenderDrawColor(sdl->renderer,
+                              confeti[i].color.r,
+                              confeti[i].color.g,
+                              confeti[i].color.b,
+                              confeti[i].color.a);
+
+        // Dibujar como pequeño rectángulo (podrías hacer formas más interesantes)
+        SDL_RenderFillRect(sdl->renderer, &confeti[i].pos);
+
+        // Opcional: dibujar borde
+        SDL_SetRenderDrawColor(sdl->renderer, 255, 255, 255, 128);
+        SDL_RenderDrawRect(sdl->renderer, &confeti[i].pos);
+    }
+}
