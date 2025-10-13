@@ -385,8 +385,6 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
         return MEM_ERROR;
     }
 
-    int i = 0;
-
     FILE *pf = fopen(nombre_archivo, "r");
     if (!pf)
     {
@@ -395,8 +393,21 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
         return FILE_ERROR;
     }
 
-    while (i < cant_elem && fscanf(pf, "%d", &vec->vecSecuencia[i]) == 1)
+    int i = 0;
+    int num_leido;
+
+    while (i < cant_elem && fscanf(pf, "%d", &num_leido) == 1)
     {
+        if(num_leido < 0 || num_leido > 7)
+        {
+            printf("Error de formato.\n");
+            fclose(pf);
+            free(vec->vecSecuencia);
+            vec->vecSecuencia = NULL;
+            return FORMATO_ERROR;
+        }
+
+        vec->vecSecuencia[i] = num_leido;
         i++;
     }
 
@@ -450,6 +461,7 @@ size_t buscarMaximo(tSecuencia *vec)
 
     return *max;
 }
+<<<<<<< HEAD
 
 // Pantalla Perdiste
 
@@ -561,3 +573,5 @@ void colorpantalla_juego(tSistemaSDL * sdl, SDL_Color color)
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
 }
 
+=======
+>>>>>>> 0bf568313d4965d08651379e0fb2090fbe8d8fb6

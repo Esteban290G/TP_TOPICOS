@@ -60,7 +60,10 @@ int main(int argc,char* argv[])
     //  Colores Rojo - Verde - Azul - Magenta - Amarillo - Cian - Naranja - Morado
     SDL_Color colores[8] = {{191,0,0,255},{0,191,0,255},{0,0,191,255},{191,0,191,255},{191,191,0,255},{0,191,191,255},{191,124,0,255},{65,26,75,255}};
     SDL_Color colores_luz[8] = {{236,83,83,255},{83,236,83,255},{83,83,236,255},{236,83,236,255},{236,236,83,255},{83,236,236,255},{236,182,83,255},{104,52,117,255}};
-    SDL_Color fondo = (SDL_Color){115,115,115,128};
+    SDL_Color fondo = (SDL_Color)
+    {
+        115,115,115,128
+    };
 
     // Estructuras para el juego
     SDL_Event evento;
@@ -136,7 +139,10 @@ int main(int argc,char* argv[])
         {
         case MENU:
             estado = controlEventos(&evento,botones_menu,CANTIDAD_BOTON_MENU,estado);
-            mostrarPantalla(&sdl,(SDL_Color){0,0,0,255},botones_menu,CANTIDAD_BOTON_MENU,&bicho_crab,estado);
+            mostrarPantalla(&sdl,(SDL_Color)
+            {
+                0,0,0,255
+            },botones_menu,CANTIDAD_BOTON_MENU,&bicho_crab,estado);
             break;
 
         case JUGAR:
@@ -144,7 +150,6 @@ int main(int argc,char* argv[])
             cargar_botones = true;
             sec.primera_vez = true;
             sec.primer_boton = true;
-            //cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
             estado = controlEventosPantallaJuego(&evento,&pantalla_jugador,estado,&jugador);
             mostrarPantallaJuego(&sdl,&pantalla_jugador);
             break;
@@ -169,7 +174,6 @@ int main(int argc,char* argv[])
                 cargar_botones = false;
                 modo = true;
             }
-            //cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,configuracion.cant_botones,botones_aux_simon,2);
             if(sec.primera_vez)
             {
@@ -213,7 +217,7 @@ int main(int argc,char* argv[])
 
                     guardarTopEnArchivo(pantalla_estadistica.jugador, pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
 
-                    estado = PERDISTE;
+                    reiniciarJuego(&sec);
                 }
 
                 jugador.valorBoton = -1; //restauro el valor despues de usar
@@ -226,7 +230,12 @@ int main(int argc,char* argv[])
             {
                 size_t ce_mozart = contarElemSecuencia("secuencia.txt");
                 inicializarSecuenciaMozart(&sec,ce_mozart);
-                copiarSecuenciaMozart(&sec,"secuencia.txt",ce_mozart);
+                if((copiarSecuenciaMozart(&sec,"secuencia.txt",ce_mozart) == FORMATO_ERROR))
+                {
+                    printf("\nSecuencia con formato invalido.\n");
+                    estado = JUGAR;
+                }
+
                 jugador.Score = 0;
                 modo = false;
 
@@ -241,7 +250,6 @@ int main(int argc,char* argv[])
                 cargarBotonSimon(boton_simon, colores, colores_luz,cant_botones, vector_valores_simon);
                 cargar_botones = false;
             }
-            //cargarBotonSimon(boton_simon, colores, colores_luz, cant_botones, vector_valores_simon);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,cant_botones,botones_aux_simon,2);
 
             reproducirSecuencia(&sdl,sonidos,boton_simon,cant_botones,fondo,botones_aux_simon,2,deltaTime,&sec,configuracion.duracion_inicial,sec.mozart_actual);
@@ -291,6 +299,7 @@ int main(int argc,char* argv[])
             }
             break;
 
+<<<<<<< HEAD
         case PERDISTE:
             cargar_botones = true;
             SDL_Color color_perdiste = (SDL_Color){255,0,0,3};
@@ -305,6 +314,8 @@ int main(int argc,char* argv[])
             estado = controlEventosPantalla_juego(&evento,estado,modo);
             break;
 
+=======
+>>>>>>> 0bf568313d4965d08651379e0fb2090fbe8d8fb6
         case SALIR:
             sec.primera_vez = false; // para que no libere memoria sin inicializar cuando salimos
             corriendo = false;
