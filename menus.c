@@ -76,6 +76,8 @@ unsigned int controlEventos(SDL_Event *evento,tBoton* botones,size_t ce,unsigned
 
             }
             break;
+
+            break;
         case SDL_QUIT:
             bandera = SALIR;
             printf("\nEstado actual: Menu Saliendo\n");

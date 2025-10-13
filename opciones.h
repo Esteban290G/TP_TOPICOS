@@ -29,6 +29,5 @@ void mostrarTituloOpciones(tSistemaSDL* sdl, tOpciones* op);
 void mostrarTextos(tSistemaSDL* sdl, tOpciones* op);
 void mostrarTextosopciones(tSistemaSDL* sdl, tOpciones * op,char*opciones);
 unsigned int eventosOpciones(SDL_Event* evento, tOpciones *op, unsigned int estado_actual, tConfigJuego *configJuego);
-void dibujarBotonesTriangularess(tSistemaSDL *sdl, tBoton_triangular* botones, size_t ce);
 
 #endif // OPCIONES_H_INCLUDED

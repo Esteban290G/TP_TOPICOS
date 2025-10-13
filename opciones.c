@@ -60,25 +60,36 @@ void inicializarOpciones(tOpciones *op)
     op->boton->rectangulo = (SDL_Rect){30,680,LARGO_RECT,ANCHO_RECT};
     strcpy(op->boton->texto_boton,"Volver");
 
-    op->boton_triangular[0].color_bordes = (SDL_Color){255,255,0,255};
-    op->boton_triangular[0].color_relleno = (SDL_Color){255,255,255,255};
+   // op->boton_triangular[0].color_bordes = (SDL_Color){184, 134, 11, 255};
+    //op->boton_triangular[0].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[0].estado = SIGUIENTE;
     op->boton_triangular[0].posicion = (SDL_Point){600,180};
 
-    op->boton_triangular[1].color_bordes = (SDL_Color){255,255,0,255};
-    op->boton_triangular[1].color_relleno = (SDL_Color){255,255,255,255};
+    //op->boton_triangular[1].color_bordes = (SDL_Color){184, 134, 11, 255};
+    //op->boton_triangular[1].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[1].estado = ANTERIOR;
     op->boton_triangular[1].posicion = (SDL_Point){300,180};
 
-    op->boton_triangular[2].color_bordes = (SDL_Color){255,255,0,255};
-    op->boton_triangular[2].color_relleno = (SDL_Color){255,255,255,255};
+    //op->boton_triangular[2].color_bordes = (SDL_Color){184, 134, 11, 255};
+    //op->boton_triangular[2].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[2].estado = SIGUIENTE;
     op->boton_triangular[2].posicion = (SDL_Point){600,280};
 
-    op->boton_triangular[3].color_bordes = (SDL_Color){255,255,0,255};
-    op->boton_triangular[3].color_relleno = (SDL_Color){255,255,255,255};
+    //op->boton_triangular[3].color_bordes = (SDL_Color){184, 134, 11, 255};
+     //op->boton_triangular[3].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[3].estado = ANTERIOR;
     op->boton_triangular[3].posicion = (SDL_Point){300,280};
+
+
+    op->boton_triangular[0].apretado = false;
+    op->boton_triangular[1].apretado = false;
+    op->boton_triangular[2].apretado = false;
+    op->boton_triangular[3].apretado = false;
+
+    op->boton_triangular[0].hover = false;
+    op->boton_triangular[1].hover = false;
+    op->boton_triangular[2].hover = false;
+    op->boton_triangular[3].hover = false;
 
     op->fondo = (SDL_Color){0,0,0,255};
 
@@ -93,7 +104,7 @@ void mostrarPantallaOpciones(tSistemaSDL* sdl, tOpciones* op)
     dibujar(sdl,op->boton,CANTIDAD_BOTON_OPCIONES);
     mostrarTituloOpciones(sdl,op);
     mostrarTextos(sdl,op);
-    dibujarBotonesTriangularess(sdl,op->boton_triangular,4);
+    dibujarBotonesTriangulares(sdl,op->boton_triangular,4);
 
 }
 
@@ -134,8 +145,8 @@ void mostrarTextos(tSistemaSDL* sdl, tOpciones* op)
     char* texto_1 = op->texto_botones;
     char* texto_2 = op->texto_velocidad;
 
-    sprintf(valor1, " %lld ", op->config.cant_botones);
-    sprintf(valor2, " %.1f sg", op->config.duracion_inicial);
+    sprintf(valor1, " %zu ", op->config.cant_botones);
+    sprintf(valor2, " %.1f sg", op->config.duracion_inicial/1000);
 
     TTF_Font *fuente = sdl->fuente;
     TTF_Font *fuente2 = sdl->fuente2;
@@ -192,10 +203,15 @@ unsigned int eventosOpciones(SDL_Event* evento, tOpciones *op, unsigned int esta
     {
         switch(evento->type)
         {
+
         case SDL_MOUSEMOTION:
             for(tBoton* i = op->boton; i< op->boton + CANTIDAD_BOTON_OPCIONES; i++)
             {
                 i->hover = _verificarMouseBoton(i->rectangulo,evento->motion.x, evento->motion.y);
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                op->boton_triangular[i].hover = _verificarTrianguloops(&op->boton_triangular[i],evento->button.x, evento->button.y);
             }
             break;
         case SDL_MOUSEBUTTONDOWN:
@@ -238,12 +254,21 @@ unsigned int eventosOpciones(SDL_Event* evento, tOpciones *op, unsigned int esta
                                 op->config.duracion_inicial -= 1000;
                             break;
                         }
+                        op->boton_triangular[i].apretado = true;
                     }
                 }
                 configJuego->cant_botones = op->config.cant_botones;
                 configJuego->duracion_inicial = op->config.duracion_inicial;
+            break;
 
-
+        case SDL_MOUSEBUTTONUP:
+            if(evento->button.button == SDL_BUTTON_LEFT)
+            {
+                for(int i = 0; i < 4; i++)
+                {
+                    op->boton_triangular[i].apretado = false;
+                }
+            }
             break;
 
         case SDL_QUIT:
@@ -257,53 +282,4 @@ unsigned int eventosOpciones(SDL_Event* evento, tOpciones *op, unsigned int esta
     return bandera;
 }
 
-void dibujarBotonesTriangularess(tSistemaSDL *sdl, tBoton_triangular* botones_triangular, size_t ce)
-{
-    const int triangulo[12][12] =
-    {
-        {T, BR, BR, T, T, T, T, T, T, T, T, T},
-        {T, BR, R, BR, T, T, T, T, T, T, T, T},
-        {T, BR, R, R, BR, T, T, T, T, T, T, T},
-        {T, BR, R, R, R, BR, T, T, T, T, T, T},
-        {T, BR, R, R, R, R, BR, T, T, T, T, T},
-        {T, BR, R, R, R, R, R, BR, T, T, T, T},
-        {T, BR, R, R, R, R, R, BR, T, T, T, T},
-        {T, BR, R, R, R, R, BR, T, T, T, T, T},
-        {T, BR, R, R, R, BR, T, T, T, T, T, T},
-        {T, BR, R, R, BR, T, T, T, T, T, T, T},
-        {T, BR, R, BR, T, T, T, T, T, T, T, T},
-        {T, BR, BR, T, T, T, T, T, T, T, T, T}
-    };
 
-    for(int i = 0; i < ce; i++)
-    {
-        for(int py = 0; py < 12; py++)
-        {
-            for(int px = 0; px < 12; px++)
-            {
-                SDL_Rect pixel = {botones_triangular[i].posicion.x + px * 5, botones_triangular[i].posicion.y + py *5,5,5};
-
-                bool invertir = (i % 2 == 1);
-
-                int valor = invertir ? triangulo[py][11 - px] : triangulo[py][px];
-
-                if(valor == R)
-                {
-                    SDL_SetRenderDrawColor(sdl->renderer, botones_triangular[i].color_relleno.r,botones_triangular[i].color_relleno.g, botones_triangular[i].color_relleno.b, botones_triangular[i].color_relleno.a);
-                    SDL_RenderFillRect(sdl->renderer, &pixel);
-                }
-                else if(valor == BR)
-                {
-                    SDL_SetRenderDrawColor(sdl->renderer, botones_triangular[i].color_bordes.r,botones_triangular[i].color_bordes.g, botones_triangular[i].color_bordes.b, botones_triangular[i].color_bordes.a);
-                    SDL_RenderFillRect(sdl->renderer, &pixel);
-                }
-                else
-                {
-                    SDL_SetRenderDrawColor(sdl->renderer, 0, 0, 0, 0); // Negro
-                    SDL_RenderFillRect(sdl->renderer, &pixel);
-                }
-            }
-        }
-
-    }
-}

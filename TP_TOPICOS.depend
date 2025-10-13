@@ -1646,10 +1646,10 @@
 	"menus.h"
 	"juego.h"
 
-1760317649 source:c:\users\lucas\documents\version6\tp_topicos\estadistica.c
+1760323838 source:c:\users\lucas\documents\version6\tp_topicos\estadistica.c
 	"estadistica.h"
 
-1760305126 c:\users\lucas\documents\version6\tp_topicos\estadistica.h
+1760322136 c:\users\lucas\documents\version6\tp_topicos\estadistica.h
 	<string.h>
 	<stdio.h>
 	<stdbool.h>
@@ -2151,17 +2151,17 @@
 1760306496 source:c:\users\lucas\documents\version6\tp_topicos\graficos.c
 	"graficos.h"
 
-1760318197 source:c:\users\lucas\documents\version6\tp_topicos\jugador.c
+1760319392 source:c:\users\lucas\documents\version6\tp_topicos\jugador.c
 	"jugador.h"
 
-1760305128 source:c:\users\lucas\documents\version6\tp_topicos\menus.c
+1760321389 source:c:\users\lucas\documents\version6\tp_topicos\menus.c
 	"menus.h"
 	"graficos.h"
 
-1760305128 source:c:\users\lucas\documents\version6\tp_topicos\opciones.c
+1760323964 source:c:\users\lucas\documents\version6\tp_topicos\opciones.c
 	"opciones.h"
 
-1760305128 c:\users\lucas\documents\version6\tp_topicos\opciones.h
+1760323965 c:\users\lucas\documents\version6\tp_topicos\opciones.h
 	"constantes.h"
 	<stdio.h>
 	<stdlib.h>
@@ -2201,7 +2201,7 @@
 1760305129 source:c:\users\lucas\documents\version6\tp_topicos\sonidos.c
 	"sonidos.h"
 
-1760318876 source:c:\users\lucas\documents\version6\tp_topicos\main.c
+1760319192 source:c:\users\lucas\documents\version6\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>

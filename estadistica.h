@@ -23,6 +23,8 @@ typedef struct
     SDL_Point posicion;
     SDL_Color color_relleno;
     SDL_Color color_bordes;
+    bool apretado;
+    bool hover;
     unsigned int estado;
 }tBoton_triangular;
 

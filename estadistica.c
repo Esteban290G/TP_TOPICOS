@@ -129,11 +129,18 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
     estadistica->color_titulo = (SDL_Color){255,255,255,255};
     estadistica->color_texto = (SDL_Color){255,255,255,255};
 
-    estadistica->botones_triangulares[0].color_relleno = (SDL_Color){255,255,255,255};
-    estadistica->botones_triangulares[1].color_relleno = (SDL_Color){255,255,255,255};
+    //estadistica->botones_triangulares[0].color_relleno = (SDL_Color){255,255,255,255};
+    //estadistica->botones_triangulares[1].color_relleno = (SDL_Color){255,255,255,255};
 
-    estadistica->botones_triangulares[0].color_bordes = (SDL_Color){255,255,0,255};
-    estadistica->botones_triangulares[1].color_bordes = (SDL_Color){255,255,0,255};
+    //estadistica->botones_triangulares[0].color_bordes = (SDL_Color){255,255,0,255};
+    //estadistica->botones_triangulares[1].color_bordes = (SDL_Color){255,255,0,255};
+
+    estadistica->botones_triangulares[0].apretado = false;
+    estadistica->botones_triangulares[1].apretado = false;
+
+    estadistica->botones_triangulares[0].hover = false;
+    estadistica->botones_triangulares[1].hover = false;
+
 
     estadistica->botones_triangulares[0].posicion = (SDL_Point){500,580};
     estadistica->botones_triangulares[1].posicion = (SDL_Point){200,580};
@@ -170,7 +177,7 @@ void mostrarTextoEst(tSistemaSDL* sdl, tEstadistica* estadistica, char* texto_es
     SDL_Surface *superficie = TTF_RenderText_Blended(fuente_titulo, texto, color);
     SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer, superficie);
 
-    x = 310;
+    x = (ANCHO - superficie->w) / 2;
     y = 600;
 
     SDL_Rect rectangulo = {x, y, superficie->w, superficie->h};
@@ -258,6 +265,10 @@ unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadist
             {
                 i->hover = _verificarMouseBoton(i->rectangulo,evento->motion.x, evento->motion.y);
             }
+            for(int i = 0; i < 4; i++)
+            {
+                estadistica->botones_triangulares[i].hover = _verificarTriangulo(&estadistica->botones_triangulares[i],evento->button.x, evento->button.y);
+            }
             break;
         case SDL_MOUSEBUTTONDOWN:
             if(evento->button.button == SDL_BUTTON_LEFT)
@@ -284,9 +295,21 @@ unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadist
                             bandera = EST_SCHO;
                         else if(estadistica->botones_triangulares[i].estado == MOZART)
                             bandera = EST_MO;
+
+                        estadistica->botones_triangulares[i].apretado = true;
                     }
                 }
 
+            }
+            break;
+
+        case SDL_MOUSEBUTTONUP:
+            if(evento->button.button == SDL_BUTTON_LEFT)
+            {
+                for(int i = 0; i < 4; i++)
+                {
+                    estadistica->botones_triangulares[i].apretado = false;
+                }
             }
             break;
 
@@ -319,7 +342,7 @@ void mostrarJugadores(tSistemaSDL* sdl, tEstadistica* estadistica)
 
     for(tJugador *i = estadistica->jugador; i < estadistica->jugador + estadistica->ce_jugadores; i++)
     {
-        sprintf(texto,"%s - %d pts",i->nombre,i->Score);
+        sprintf(texto,"%-15s %6d pts",i->nombre,i->Score);
 
         SDL_Surface *superficie = TTF_RenderText_Blended(sdl->fuente,texto,estadistica->color_texto);
         SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer,superficie);
@@ -344,7 +367,7 @@ void mostrarJugadores_mo(tSistemaSDL* sdl, tEstadistica* estadistica)
 
     for(tJugador *i = estadistica->jugador_mo; i < estadistica->jugador_mo + estadistica->ce_jugadores_mo; i++)
     {
-        sprintf(texto,"%s - %d pts",i->nombre,i->Score);
+        sprintf(texto,"%-15s  %3d pts",i->nombre,i->Score);
 
         SDL_Surface *superficie = TTF_RenderText_Blended(sdl->fuente,texto,estadistica->color_texto);
         SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer,superficie);
@@ -378,6 +401,7 @@ void dibujarBotonesTriangulares(tSistemaSDL *sdl, tBoton_triangular* botones_tri
         {T, BR, BR, T, T, T, T, T, T, T, T, T}
     };
 
+
     for(int i = 0; i < ce; i++)
     {
         for(int py = 0; py < 12; py++)
@@ -386,15 +410,42 @@ void dibujarBotonesTriangulares(tSistemaSDL *sdl, tBoton_triangular* botones_tri
             {
                 SDL_Rect pixel = {botones_triangular[i].posicion.x + px * 5, botones_triangular[i].posicion.y + py *5,5,5};
 
-                int valor = (i == 1) ? triangulo[py][11 - px] : triangulo[py][px];
+                bool invertir = (i % 2 == 1);
+
+                int valor = invertir ? triangulo[py][11 - px] : triangulo[py][px];
 
                 if(valor == R)
                 {
+                    if(botones_triangular[i].apretado == true)
+                    {
+                        botones_triangular[i].color_relleno = (SDL_Color){184, 134, 11, 255};
+                    }
+                    else if(botones_triangular[i].hover == true)
+                    {
+                        botones_triangular[i].color_relleno = (SDL_Color){255, 225, 100, 255};
+                    }
+                    else
+                    {
+                        botones_triangular[i].color_relleno = (SDL_Color){255, 200, 50, 255};
+                    }
                     SDL_SetRenderDrawColor(sdl->renderer, botones_triangular[i].color_relleno.r,botones_triangular[i].color_relleno.g, botones_triangular[i].color_relleno.b, botones_triangular[i].color_relleno.a);
                     SDL_RenderFillRect(sdl->renderer, &pixel);
                 }
                 else if(valor == BR)
                 {
+                    if(botones_triangular[i].apretado == true)
+                    {
+                        botones_triangular[i].color_bordes = (SDL_Color){139, 101, 8, 255};
+                    }
+                    else if(botones_triangular[i].hover == true)
+                    {
+                        botones_triangular[i].color_bordes = (SDL_Color){218, 165, 32, 255};
+                    }
+                    else
+                    {
+                         botones_triangular[i].color_bordes = (SDL_Color){184, 134, 11, 255};
+                    }
+
                     SDL_SetRenderDrawColor(sdl->renderer, botones_triangular[i].color_bordes.r,botones_triangular[i].color_bordes.g, botones_triangular[i].color_bordes.b, botones_triangular[i].color_bordes.a);
                     SDL_RenderFillRect(sdl->renderer, &pixel);
                 }

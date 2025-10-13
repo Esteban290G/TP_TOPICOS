@@ -45,9 +45,9 @@ void inicializarPantallaJugador(tPantallaJugador *pantalla)
     pantalla->botones[1].color_texto_normal = (SDL_Color){255, 255, 255, 255};
     pantalla->botones[2].color_texto_normal = (SDL_Color){255, 255, 255, 255};
 
-    pantalla->botones[0].color_texto_hover = (SDL_Color){255, 0, 255, 255};
-    pantalla->botones[1].color_texto_hover = (SDL_Color){255, 0, 255, 255};
-    pantalla->botones[2].color_texto_hover = (SDL_Color){255, 0, 255, 255};
+    pantalla->botones[0].color_texto_hover = (SDL_Color){255, 0, 0, 255};
+    pantalla->botones[1].color_texto_hover = (SDL_Color){0, 255, 0, 255};
+    pantalla->botones[2].color_texto_hover = (SDL_Color){0, 0, 255, 255};
 }
 
 void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador)
