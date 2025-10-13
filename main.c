@@ -279,6 +279,8 @@ int main(int argc,char* argv[])
                         }
                         else
                         {
+                            insertarEnTop(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, jugador);
+                            guardarTopEnArchivo(pantalla_estadistica.jugador_mo, pantalla_estadistica.ce_jugadores_mo, "top_mozart.dat");
                             sec.mozart_actual = 1;
                             sec.indice = 0;
                             sec.reproduciendo = true;
