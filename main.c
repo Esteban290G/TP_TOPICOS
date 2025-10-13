@@ -89,7 +89,7 @@ int main(int argc,char* argv[])
     int vector_valores_aux_simon[] = {JUGAR,SALIR}; ///AUX
 
     char* texto_menu[] = {"jugar","opciones","estadistica","salir"};
-    char* texto_opciones[] = {"Modificar","Volver"};
+    //char* texto_opciones[] = {"Modificar","Volver"};
     char* texto_estadistica[] = {"Volver"};
     char* texto_jugar[] = {"Modo Schonberg", "Modo Mozart", "Volver"};
     char* texto_aux_simon[] = {"Volver","Salir"}; ///AUX
@@ -122,6 +122,9 @@ int main(int argc,char* argv[])
     configuracion.cant_botones = 3;
     configuracion.duracion_inicial = 2000;
     bool cargar_botones = true;
+
+    bool modo = true;
+    bool win = false;
 
     while(corriendo)
     {
@@ -164,6 +167,7 @@ int main(int argc,char* argv[])
             {
                 cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
                 cargar_botones = false;
+                modo = true;
             }
             //cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
             dibujarPantallaJuego(&sdl,fondo,boton_simon,configuracion.cant_botones,botones_aux_simon,2);
@@ -216,7 +220,7 @@ int main(int argc,char* argv[])
             }
             break;
 
-case MOZART:
+        case MOZART:
             ///pausarMusica(&sdl);
             if(sec.primera_vez)
             {
@@ -224,6 +228,8 @@ case MOZART:
                 inicializarSecuenciaMozart(&sec,ce_mozart);
                 copiarSecuenciaMozart(&sec,"secuencia.txt",ce_mozart);
                 jugador.Score = 0;
+                modo = false;
+
             }
 
             size_t cant_botones = buscarMaximo(&sec) + 1;
@@ -264,6 +270,8 @@ case MOZART:
                             sec.mozart_actual = 1;
                             sec.indice = 0;
                             sec.reproduciendo = true;
+                            win = true;
+                            estado = GANASTE;
                         }
                     }
                 }
@@ -276,22 +284,26 @@ case MOZART:
 
                     guardarTopEnArchivo(pantalla_estadistica.jugador_mo, pantalla_estadistica.ce_jugadores_mo, "top_mozart.dat");
 
-                    reiniciarJuego(&sec);
+                    estado = PERDISTE;
                     sec.mozart_actual = 1;
                 }
-
                 jugador.valorBoton = -1; //restauro el valor despues de usar
             }
             break;
 
         case PERDISTE:
             cargar_botones = true;
-            pantallaPerdiste(&sdl,&jugador);
-            estado = controlEventosPantallaPerdiste(&evento,estado);
-            if(estado == SCHONBERG || estado == MOZART)
-                reiniciarJuego(&sec);
+            SDL_Color color_perdiste = (SDL_Color){255,0,0,3};
+            pantalla_juego(&sdl,&jugador,win,color_perdiste);
+            estado = controlEventosPantalla_juego(&evento,estado,modo);
             break;
 
+        case GANASTE:
+            cargar_botones = true;
+            SDL_Color color_ganar = (SDL_Color){0,255,0,2};
+            pantalla_juego(&sdl,&jugador,win,color_ganar);
+            estado = controlEventosPantalla_juego(&evento,estado,modo);
+            break;
 
         case SALIR:
             sec.primera_vez = false; // para que no libere memoria sin inicializar cuando salimos

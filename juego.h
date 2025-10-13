@@ -63,9 +63,14 @@ int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones);
 int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones);
 bool validarJugador(tJugador *jugador, tSecuencia *sec);
 void reiniciarJuego(tSecuencia *sec);
-void pantallaPerdiste(tSistemaSDL* sdl,tJugador* jugador);
-void mostrarTextoPerdiste(tSistemaSDL* sdl,tJugador* jugador);
-unsigned int controlEventosPantallaPerdiste(SDL_Event* evento, unsigned int estado_actual);
+
+
+void pantalla_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo, SDL_Color color);
+void mostrarTexto_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo);
+unsigned int controlEventosPantalla_juego(SDL_Event* evento, unsigned int estado_actual, bool modo);
+
+void colorpantalla_juego(tSistemaSDL* sdl,SDL_Color);
+
 
 unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[], tSecuencia *secuencia, float deltaTime, tJugador *jugador);
 

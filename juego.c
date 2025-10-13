@@ -453,26 +453,36 @@ size_t buscarMaximo(tSecuencia *vec)
 
 // Pantalla Perdiste
 
-void pantallaPerdiste(tSistemaSDL* sdl,tJugador* jugador)
+void pantalla_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo, SDL_Color color)
 {
-    colorPantalla(sdl,(SDL_Color){180,0,0,255});
-    mostrarTextoPerdiste(sdl,jugador);
+    colorpantalla_juego(sdl,color);
+    mostrarTexto_juego(sdl,jugador,modo);
 
 }
 
-void mostrarTextoPerdiste(tSistemaSDL* sdl,tJugador* jugador)
+void mostrarTexto_juego(tSistemaSDL* sdl,tJugador* jugador,bool modo)
 {
-    int x1,x2,x3,y1,y2,y3;
-    Uint32 tiempo_actual = SDL_GetTicks();
+    int x1,x2,x3,y1,y2,y3,x4,y4;
 
     SDL_Color color = (SDL_Color){255,255,255,255};
     char texto_jugador[500];
     char texto_parrafo[500];
     char texto_titulo[500];
+    char texto_parrafo2[500];
 
-    strcpy(texto_titulo,"¡PERDISTEE!");
+    if(modo == false)
+    {
+        strcpy(texto_titulo,"¡PERDISTEE!");
+    }
+    else
+    {
+        strcpy(texto_titulo,"¡GANASTE!");
+    }
     sprintf(texto_jugador,"Nombre: %s | Score: %d",jugador->nombre,jugador->Score);
-    strcpy(texto_parrafo,"Precionar alguna tecla para salir");
+    strcpy(texto_parrafo,"Clic izquiero para volver al menu de juego");
+    strcpy(texto_parrafo2,"Clic derecho para volver a jugar");
+
+    SDL_Surface* superficie_parrafo2 = TTF_RenderText_Blended(sdl->fuente,texto_parrafo2,color);
 
     SDL_Surface* superficie_titulo = TTF_RenderText_Blended(sdl->fuente_titulo,texto_titulo,color);
     SDL_Texture* textura_titulo = SDL_CreateTextureFromSurface(sdl->renderer,superficie_titulo);
@@ -480,6 +490,7 @@ void mostrarTextoPerdiste(tSistemaSDL* sdl,tJugador* jugador)
     SDL_Surface *superficie_jugador = TTF_RenderText_Blended(sdl->fuente2,texto_jugador,color);
     SDL_Surface *superficie_parrafo = TTF_RenderText_Blended(sdl->fuente,texto_parrafo,color);
 
+    SDL_Texture *textura_parrafo2 = SDL_CreateTextureFromSurface(sdl->renderer,superficie_parrafo2);
     SDL_Texture *textura_jugador = SDL_CreateTextureFromSurface(sdl->renderer,superficie_jugador);
     SDL_Texture *textura_parrafo = SDL_CreateTextureFromSurface(sdl->renderer,superficie_parrafo);
 
@@ -489,26 +500,33 @@ void mostrarTextoPerdiste(tSistemaSDL* sdl,tJugador* jugador)
     y1 = 350;
     y2 = 600;
 
-    x3 = (ANCHO - superficie_titulo->w) / 2 + (int)(20 * sin(tiempo_actual/300.0f));
-    y3 = 60 + (int)(10 * fabs(sin(tiempo_actual/200.0f)));
+    x3 = (ANCHO - superficie_titulo->w) / 2;
+    y3 = 60;
 
+    x4 = (ANCHO - superficie_parrafo2->w) / 2;
+    y4 = 700;
 
     SDL_Rect rect_jugador = {x1, y1, superficie_jugador->w, superficie_jugador->h};
     SDL_Rect rect_parrafo = {x2, y2, superficie_parrafo->w, superficie_parrafo->h};
     SDL_Rect rectangulo = {x3,y3,superficie_titulo->w,superficie_titulo->h};
+    SDL_Rect rec_parrafo2 = {x4,y4,superficie_parrafo2->w,superficie_parrafo2->h};
 
+    SDL_RenderCopy(sdl->renderer,textura_parrafo2,NULL,&rec_parrafo2);
     SDL_RenderCopy(sdl->renderer,textura_titulo,NULL,&rectangulo);
     SDL_RenderCopy(sdl->renderer,textura_jugador,NULL,&rect_jugador);
     SDL_RenderCopy(sdl->renderer,textura_parrafo,NULL,&rect_parrafo);
 
+    SDL_FreeSurface(superficie_parrafo2);
     SDL_FreeSurface(superficie_jugador);
     SDL_FreeSurface(superficie_parrafo);
     SDL_FreeSurface(superficie_titulo);
+
+    SDL_DestroyTexture(textura_parrafo2);
     SDL_DestroyTexture(textura_titulo);
     SDL_DestroyTexture(textura_jugador);
     SDL_DestroyTexture(textura_parrafo);
 }
-unsigned int controlEventosPantallaPerdiste(SDL_Event* evento, unsigned int estado_actual)
+unsigned int controlEventosPantalla_juego(SDL_Event* evento, unsigned int estado_actual, bool modo)
 {
     unsigned int estado = estado_actual;
 
@@ -521,14 +539,9 @@ unsigned int controlEventosPantallaPerdiste(SDL_Event* evento, unsigned int esta
             {
                 printf("Hiciste clic izquierdo en %d - %d\n", evento->button.x, evento->button.y);
                 printf("\n");
-                estado = JUGAR;
-            }
-            if(evento->button.button == SDL_BUTTON_RIGHT)
-            {
-                estado = SCHONBERG;
+                estado = MENU;
             }
             break;
-
         case SDL_QUIT:
             estado = SALIR;
             printf("\nEstado actual: Menu Saliendo\n");
@@ -538,3 +551,13 @@ unsigned int controlEventosPantallaPerdiste(SDL_Event* evento, unsigned int esta
 
     return estado;
 }
+
+void colorpantalla_juego(tSistemaSDL * sdl, SDL_Color color)
+{
+    SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(sdl->renderer, color.r, color.g, color.b, color.a);
+    SDL_Rect pantalla_completa = {0, 0, ANCHO, LARGO};
+    SDL_RenderFillRect(sdl->renderer, &pantalla_completa);
+    SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
+}
+

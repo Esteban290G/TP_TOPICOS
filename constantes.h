@@ -17,6 +17,7 @@
 #define SCHONBERG 60
 #define MOZART 70
 #define PERDISTE 80
+#define GANASTE 90
 #define SIGUIENTE 120
 #define ANTERIOR 121
 #define EST_SCHO 123

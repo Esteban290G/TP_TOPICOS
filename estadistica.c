@@ -152,34 +152,7 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
     strcpy(estadistica->titulo,"Estadistica");
 
     ///AUX
-    int multi = 100;
-    if(estadistica->ce_jugadores == 0)
-    {
-        for(tJugador* i = estadistica->jugador; i < estadistica->jugador + MAX_JUGADORES; i++)
-        {
-            strcpy(i->nombre,"lucas");
-            i->Score = multi;
 
-            multi += 100;
-        }
-
-        estadistica->ce_jugadores = MAX_JUGADORES;
-
-    }
-
-    if(estadistica->ce_jugadores_mo == 0)
-    {
-        for(tJugador* i = estadistica->jugador_mo; i < estadistica->jugador_mo + MAX_JUGADORES; i++)
-        {
-            strcpy(i->nombre,"PEDROOO");
-            i->Score = multi;
-
-            multi += 100;
-        }
-
-        estadistica->ce_jugadores_mo = MAX_JUGADORES;
-
-    }
     estadistica->es_schon = true;
 }
 
@@ -209,6 +182,7 @@ void mostrarTextoEst(tSistemaSDL* sdl, tEstadistica* estadistica, char* texto_es
 
 void mostrarPantallaEstadistica(tSistemaSDL*sdl ,tEstadistica* estadistica)
 {
+    SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_BLEND);
     if(estadistica->es_schon)
     {
         colorPantalla(sdl,estadistica->fondo);
@@ -244,7 +218,7 @@ void mostrarPantallaEstadistica(tSistemaSDL*sdl ,tEstadistica* estadistica)
 
         mostrarTextoEst(sdl,estadistica,"Mozart");
     }
-
+    SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
 }
 
 void mostrarTituloEstadistica(tSistemaSDL* sdl, tEstadistica* estadistica)
