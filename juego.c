@@ -393,10 +393,11 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
 
     int i = 0;
     int num_leido;
+    int cant_valores = 0;
 
     while (i < cant_elem && fscanf(pf, "%d", &num_leido) == 1)
     {
-        if (num_leido < 0 || num_leido > 7)
+        if (num_leido < BOTON_1 || num_leido > BOTON_8)
         {
             printf("Error de formato.\n");
             fclose(pf);
@@ -407,10 +408,21 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
 
         vec->vecSecuencia[i] = num_leido;
         i++;
+        cant_valores++;
     }
 
-    vec->longitud = i;
+    if (cant_valores == 0)
+    {
+        printf("Error de formato.\n");
+        fclose(pf);
+        free(vec->vecSecuencia);
+        vec->vecSecuencia = NULL;
+        return FORMATO_ERROR;
+    }
+
     fclose(pf);
+
+    vec->longitud = i;
 
     return FILE_OK;
 }
@@ -471,27 +483,23 @@ void pantalla_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo, SDL_Color co
 
 void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo)
 {
-    int x1, x2, x3, y1, y2, y3, x4, y4;
+    int x1, x2, x3, y1, y2, y3;
 
     SDL_Color color = (SDL_Color){255, 255, 255, 255};
     char texto_jugador[500];
     char texto_parrafo[500];
     char texto_titulo[500];
-    char texto_parrafo2[500];
 
     if (modo == false)
     {
-        strcpy(texto_titulo, "�PERDISTEE!");
+        strcpy(texto_titulo, "¡PERDISTEE!");
     }
     else
     {
-        strcpy(texto_titulo, "�GANASTE!");
+        strcpy(texto_titulo, "¡GANASTE!");
     }
     sprintf(texto_jugador, "Nombre: %s | Score: %d", jugador->nombre, jugador->Score);
-    strcpy(texto_parrafo, "Clic izquiero para volver al menu de juego");
-    strcpy(texto_parrafo2, "Clic derecho para volver a jugar");
-
-    SDL_Surface *superficie_parrafo2 = TTF_RenderText_Blended(sdl->fuente, texto_parrafo2, color);
+    strcpy(texto_parrafo, "Clic izquierdo para volver al menu de juego");
 
     SDL_Surface *superficie_titulo = TTF_RenderText_Blended(sdl->fuente_titulo, texto_titulo, color);
     SDL_Texture *textura_titulo = SDL_CreateTextureFromSurface(sdl->renderer, superficie_titulo);
@@ -499,7 +507,6 @@ void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo)
     SDL_Surface *superficie_jugador = TTF_RenderText_Blended(sdl->fuente2, texto_jugador, color);
     SDL_Surface *superficie_parrafo = TTF_RenderText_Blended(sdl->fuente, texto_parrafo, color);
 
-    SDL_Texture *textura_parrafo2 = SDL_CreateTextureFromSurface(sdl->renderer, superficie_parrafo2);
     SDL_Texture *textura_jugador = SDL_CreateTextureFromSurface(sdl->renderer, superficie_jugador);
     SDL_Texture *textura_parrafo = SDL_CreateTextureFromSurface(sdl->renderer, superficie_parrafo);
 
@@ -512,25 +519,18 @@ void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo)
     x3 = (ANCHO - superficie_titulo->w) / 2;
     y3 = 60;
 
-    x4 = (ANCHO - superficie_parrafo2->w) / 2;
-    y4 = 700;
-
     SDL_Rect rect_jugador = {x1, y1, superficie_jugador->w, superficie_jugador->h};
     SDL_Rect rect_parrafo = {x2, y2, superficie_parrafo->w, superficie_parrafo->h};
     SDL_Rect rectangulo = {x3, y3, superficie_titulo->w, superficie_titulo->h};
-    SDL_Rect rec_parrafo2 = {x4, y4, superficie_parrafo2->w, superficie_parrafo2->h};
 
-    SDL_RenderCopy(sdl->renderer, textura_parrafo2, NULL, &rec_parrafo2);
     SDL_RenderCopy(sdl->renderer, textura_titulo, NULL, &rectangulo);
     SDL_RenderCopy(sdl->renderer, textura_jugador, NULL, &rect_jugador);
     SDL_RenderCopy(sdl->renderer, textura_parrafo, NULL, &rect_parrafo);
 
-    SDL_FreeSurface(superficie_parrafo2);
     SDL_FreeSurface(superficie_jugador);
     SDL_FreeSurface(superficie_parrafo);
     SDL_FreeSurface(superficie_titulo);
 
-    SDL_DestroyTexture(textura_parrafo2);
     SDL_DestroyTexture(textura_titulo);
     SDL_DestroyTexture(textura_jugador);
     SDL_DestroyTexture(textura_parrafo);
@@ -646,9 +646,15 @@ void dibujarConfeti(tSistemaSDL *sdl, tConfeti *confeti)
 
 void inicializarSecuenciaDesafio(tSecuencia* secuencia)
 {
-    secuencia->longitud = 1;
+    if (secuencia->vecSecuencia != NULL)
+    {
+        free(secuencia->vecSecuencia);
+        secuencia->vecSecuencia = NULL;
+    }
+    secuencia->longitud = 0;
     secuencia->indice = 0;
     secuencia->primera_vez = false;
+    secuencia->reproduciendo = false;
     secuencia->vecSecuencia = NULL;
     secuencia->vecSecuencia = malloc(sizeof(int)* secuencia->longitud);
     if (!secuencia->vecSecuencia)
@@ -662,7 +668,7 @@ void inicializarSecuenciaDesafio(tSecuencia* secuencia)
 
 void agregarDesafioSecuencia(tSecuencia *secuencia, unsigned int valor)
 {
-    int *aux = realloc(secuencia->vecSecuencia, sizeof(int) * secuencia->longitud);
+    int *aux = realloc(secuencia->vecSecuencia, sizeof(int) * (secuencia->longitud + 1));
     if (!aux)
     {
         printf("Error de memoria.\n");

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1760412627 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1760418449 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -1030,12 +1030,12 @@
 
 1760402715 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
 
-1760413051 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
+1760418439 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
 
-1760412550 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
+1760419032 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>

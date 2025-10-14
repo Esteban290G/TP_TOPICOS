@@ -35,6 +35,7 @@ typedef struct
 {
     size_t cant_botones;
     float duracion_inicial;
+    //tipo_sonido;
 } tConfigJuego;
 
 typedef struct

@@ -53,7 +53,16 @@ int main(int argc, char *argv[])
     // Cargar y generar los sonidos
     Mix_Chunk *sonidos[8];
     Mix_Chunk *sonido_error = cargarSonido("snd/sonido_error.wav");
-    //Mix_Chunk *sonido_hover =
+
+    // Sonidos Counter
+    Mix_Chunk *counter_01 = cargarSonido("snd/counter_01.wav");
+    Mix_Chunk *counter_02 = cargarSonido("snd/counter_02.wav");
+    Mix_Chunk *counter_03 = cargarSonido("snd/counter_03.wav");
+    Mix_Chunk *counter_04 = cargarSonido("snd/counter_04.wav");
+    Mix_Chunk *counter_05 = cargarSonido("snd/counter_05.wav");
+    Mix_Chunk *counter_06 = cargarSonido("snd/counter_06.wav");
+    Mix_Chunk *counter_07 = cargarSonido("snd/counter_07.wav");
+    Mix_Chunk *counter_08 = cargarSonido("snd/counter_08.wav");
 
     // Estructura secuencia
     tSecuencia sec;
@@ -163,8 +172,6 @@ int main(int argc, char *argv[])
         Uint32 tiempoActual = SDL_GetTicks();
         deltaTime = tiempoActual - tiempoAnterior;
         tiempoAnterior = tiempoActual;
-
-        // estado = DESAFIO;
 
         switch (estado)
         {
@@ -279,7 +286,12 @@ int main(int argc, char *argv[])
                 modo = false;
             }
 
-            size_t cant_botones = buscarMaximo(&sec) + 1;
+            size_t cant_botones = 3;
+            size_t cant_aux = buscarMaximo(&sec) + 1;
+            if(cant_aux >= cant_botones)
+            {
+                cant_botones = cant_aux;
+            }
 
             estado = controlEventosSimon(&evento, boton_simon, cant_botones, estado, botones_aux_simon, 2, sonidos, &sec, deltaTime, &jugador);
 
@@ -349,8 +361,9 @@ int main(int argc, char *argv[])
             if(sec.primera_vez)
             {
                 inicializarSecuenciaDesafio(&sec);
+                sec.primera_vez = false;
             }
-            printf("qdasdasdas");
+
             estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_desafio, 2, sonidos, &sec, deltaTime, &jugador);
             if (cargar_botones)
             {
@@ -366,9 +379,10 @@ int main(int argc, char *argv[])
                 estado = MENU;
 
             }
-            else if (estado >= BOTON_1 && estado <= BOTON_8)
+            else if (jugador.valorBoton >= BOTON_1 && jugador.valorBoton <= BOTON_8)
             {
-                agregarDesafioSecuencia(&sec,estado);
+                agregarDesafioSecuencia(&sec,jugador.valorBoton);
+                jugador.valorBoton = -1;
             }
 
             break;
