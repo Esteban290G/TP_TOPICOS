@@ -25,7 +25,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
         return false;
     }
 
-    sistema->ventana = SDL_CreateWindow(nombre_ventana,SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,ancho,largo,SDL_WINDOW_SHOWN);
+    sistema->ventana = SDL_CreateWindow(nombre_ventana,SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,ancho,largo,2);
 
     if(sistema->ventana == NULL)
     {

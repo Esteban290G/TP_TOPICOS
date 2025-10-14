@@ -49,6 +49,7 @@ typedef struct
     unsigned int valor_boton;
     bool sonando;
     float tiempo_ultimo_sonido; // para la espera entre clics
+    bool presionado;
 } tBotonSimon;
 
 typedef struct

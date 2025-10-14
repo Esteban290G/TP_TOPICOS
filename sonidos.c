@@ -44,8 +44,9 @@ Mix_Chunk* crearTono(float frecuencia)
     return tono;
 }
 
-void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
+int crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
 {
+    int tonos_creados = 0;
     float tonos[8] = {0};
     switch(cant_botones)
     {
@@ -57,6 +58,7 @@ void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
         {
             tonos[j] = aux[j];
         }
+        tonos_creados = cant_botones;
         break;
     }
     case 4:
@@ -66,6 +68,7 @@ void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
         {
             tonos[j] = aux[j];
         }
+        tonos_creados = cant_botones;
         break;
     }
 
@@ -76,6 +79,7 @@ void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
         {
             tonos[j] = aux[j];
         }
+        tonos_creados = cant_botones;
         break;
     }
 
@@ -86,6 +90,7 @@ void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
         {
             tonos[j] = aux[j];
         }
+        tonos_creados = cant_botones;
         break;
     }
 
@@ -96,6 +101,7 @@ void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
         {
             tonos[j] = aux[j];
         }
+        tonos_creados = cant_botones;
         break;
     }
     case 8:
@@ -105,6 +111,7 @@ void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
         {
             tonos[j] = aux[j];
         }
+        tonos_creados = cant_botones;
         break;
     }
 
@@ -114,6 +121,8 @@ void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones)
     {
         sonidos[i] = crearTono(tonos[i]);
     }
+
+    return tonos_creados;
 }
 
 void destruirTono(Mix_Chunk *tono)
@@ -122,10 +131,30 @@ void destruirTono(Mix_Chunk *tono)
     free(tono);
 }
 
-void destruirArrayTonos(Mix_Chunk* sonidos[])
+
+void destruirArraySonido(Mix_Chunk *sonidos[])
 {
-    for(int i = 0; i<=8; i++)
+    if (sonidos == NULL)
+    {
+        return;
+    }
+
+    for (int i = 0; i < 8; i++)
+    {
+        if (sonidos[i] != NULL)
+        {
+            //printf("liberando\n");
+            Mix_FreeChunk(sonidos[i]);
+            sonidos[i] = NULL;
+        }
+    }
+}
+
+void destruirArrayTonos(Mix_Chunk* sonidos[], int cant_tonos)
+{
+    for(int i = 0; i< cant_tonos; i++)
     {
         destruirTono(sonidos[i]);
+        //printf("\ntono %d libreado\n",i);
     }
 }

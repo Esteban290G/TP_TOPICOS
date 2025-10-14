@@ -27,9 +27,10 @@
 
 Mix_Chunk* cargarSonido(const char *path);
 Mix_Chunk* crearTono(float frecuencia);
-void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones);
+int crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones);
 void destruirTono();
-void destruirArrayTonos(Mix_Chunk* sonidos[]);
+void destruirArraySonido(Mix_Chunk *sonidos[]);
+void destruirArrayTonos(Mix_Chunk* sonidos[], int cant_tonos);
 
 
 #endif // SONIDOS_H_INCLUDED

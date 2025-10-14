@@ -20,5 +20,7 @@ void crearCrab(tSistemaCrab* bicho, int ancho_pantalla, int largo_pantalla);
 void actualizarCrab(tSistemaCrab* bicho);
 void dibujarCrab(tSistemaSDL *sdl,tSistemaCrab* bicho);
 
+void dibujarBotonSprite(SDL_Renderer *renderer, const int sprite[15][15], int x, int y, SDL_Color colorBase, int tamPixel);
+
 
 #endif // GRAFICOS_H_INCLUDED

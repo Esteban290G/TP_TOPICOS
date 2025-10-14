@@ -1,63 +1,5 @@
 #include "graficos.h"
 
-// T: TRANSPARENTE | B: BASE | S: SOMBRA | W: BLANCO | L: LUZ
-/*const int boton_base[15][15] =
-{
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,L,L,L,L,L,L,L,L,L,L,L,L,L,T},
-    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T},
-    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T}
-};
-
-const int boton_encendido[15][15] =
-{
-    {T,B,L,B,B,B,L,L,L,B,B,B,L,B,T},
-    {T,B,B,B,L,B,B,B,B,B,L,B,B,B,T},
-    {T,B,B,L,B,B,L,L,L,B,B,L,B,B,T},
-    {T,B,B,B,B,L,B,B,B,L,B,B,B,B,T},
-    {T,B,L,B,L,B,B,W,B,B,L,B,L,B,T},
-    {T,B,L,B,L,B,W,W,W,B,L,B,L,B,T},
-    {T,B,L,B,L,B,B,W,B,B,L,B,L,B,T},
-    {T,B,B,B,B,L,B,B,B,L,B,B,B,B,T},
-    {T,B,B,L,B,B,L,L,L,B,B,L,B,B,T},
-    {T,B,B,B,L,B,B,B,B,B,L,B,B,B,T},
-    {T,B,L,B,B,B,L,L,L,B,B,B,L,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,L,L,L,L,L,L,L,L,L,L,L,L,L,T},
-    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T},
-    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T}
-};
-
-const int boton_encendido_pres[15][15] =
-{
-    {T,T,T,T,T,T,T,T,T,T,T,T,T,T,T},
-    {T,T,T,T,T,T,T,T,T,T,T,T,T,T,T},
-    {T,B,L,B,B,B,L,L,L,B,B,B,L,B,T},
-    {T,B,B,B,L,B,B,B,B,B,L,B,B,B,T},
-    {T,B,B,L,B,B,L,L,L,B,B,L,B,B,T},
-    {T,B,B,B,B,L,B,B,B,L,B,B,B,B,T},
-    {T,B,L,B,L,B,B,W,B,B,L,B,L,B,T},
-    {T,B,L,B,L,B,W,W,W,B,L,B,L,B,T},
-    {T,B,L,B,L,B,B,W,B,B,L,B,L,B,T},
-    {T,B,B,B,B,L,B,B,B,L,B,B,B,B,T},
-    {T,B,B,L,B,B,L,L,L,B,B,L,B,B,T},
-    {T,B,B,B,L,B,B,B,B,B,L,B,B,B,T},
-    {T,B,L,B,B,B,L,L,L,B,B,B,L,B,T},
-    {T,B,B,B,B,B,B,B,B,B,B,B,B,B,T},
-    {T,L,L,L,L,L,L,L,L,L,L,L,L,L,T}
-};*/
-
 void colorPantalla(tSistemaSDL* sdl, SDL_Color color)
 {
     SDL_SetRenderDrawColor(sdl->renderer, color.r, color.g, color.b, color.a);
@@ -170,28 +112,6 @@ void actualizarCrab(tSistemaCrab* bicho)
     }
 }
 
-/*void dibujar(SDL_Window *ventana, SDL_Renderer *renderer, const int dibujo[][PIXELES_X_LADO], int oX, int oY)
-{
-    int offsetX = oX * (PIXELES_X_LADO * TAM_PIXEL + PX_PADDING);
-    int offsetY = oY * (PIXELES_X_LADO * TAM_PIXEL + PX_PADDING);
-    int transparencia = rand() & 255;
-
-    for (int y = 0; y < PIXELES_X_LADO; y++)
-    {
-        for (int x = 0; x < PIXELES_X_LADO; x++)
-        {
-            SDL_SetRenderDrawColor(renderer,
-                                   colores[dibujo[y][x]].r,
-                                   colores[dibujo[y][x]].g,
-                                   colores[dibujo[y][x]].b,
-                                   colores[dibujo[y][x]].a == 0 ? 0 : transparencia);
-            SDL_Rect pixel = {offsetX + TAM_PIXEL*x, offsetY + TAM_PIXEL*y, TAM_PIXEL, TAM_PIXEL};
-            SDL_RenderFillRect(renderer, &pixel);
-        }
-    }
-    SDL_RenderPresent(renderer);
-}*/
-
 void dibujarCrab(tSistemaSDL *sdl,tSistemaCrab* bicho)
 {
     const int crab[12][12] =
@@ -240,3 +160,46 @@ void dibujarCrab(tSistemaSDL *sdl,tSistemaCrab* bicho)
     }
 }
 
+void dibujarBotonSprite(SDL_Renderer *renderer, const int sprite[15][15], int x, int y, SDL_Color colorBase, int tamPixel)
+{
+    SDL_Color color;
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
+    for(int py = 0; py < 15; py++)
+    {
+        for(int px = 0; px < 15; px++)
+        {
+            int valor = sprite[py][px];
+
+            switch(valor)
+            {
+            case T:
+                color = (SDL_Color){0, 0, 0, 0};
+                break;
+            case BA:
+                color = colorBase;
+                break;
+            case L:
+                color.r = (colorBase.r + 50 > 255) ? 255 : colorBase.r + 50;
+                color.g = (colorBase.g + 50 > 255) ? 255 : colorBase.g + 50;
+                color.b = (colorBase.b + 50 > 255) ? 255 : colorBase.b + 50;
+                color.a = colorBase.a;
+                break;
+            case S:
+                color.r = (colorBase.r - 50 < 0) ? 0 : colorBase.r - 50;
+                color.g = (colorBase.g - 50 < 0) ? 0 : colorBase.g - 50;
+                color.b = (colorBase.b - 50 < 0) ? 0 : colorBase.b - 50;
+                color.a = colorBase.a;
+                break;
+            case W:
+                color = (SDL_Color){255,255,255,255};
+                break;
+            }
+
+            SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+            SDL_Rect pixel = {x + px * tamPixel, y + py * tamPixel, tamPixel, tamPixel};
+            SDL_RenderFillRect(renderer, &pixel);
+        }
+    }
+}

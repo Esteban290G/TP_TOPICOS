@@ -386,22 +386,22 @@ void dibujarFlecha(tSistemaSDL *sdl, tFlecha* flecha, size_t ce)
                 {
                     if(flecha[i].apretado == true)
                     {
-                        color = (SDL_Color){80, 80, 80, 255};
+                        color = (SDL_Color){80, 80, 80, 25};
                     }
                     else if(flecha[i].hover == true)
                     {
-                        color = (SDL_Color){255,255,255,255};
+                        color = (SDL_Color){255,255,255,100};
                     }
                     else
                     {
-                        color = (SDL_Color){170, 170, 190, 255};
+                        color = (SDL_Color){170, 170, 190, 25};
                     }
                     SDL_SetRenderDrawColor(sdl->renderer, color.r,color.g, color.b, color.a);
                     SDL_RenderFillRect(sdl->renderer, &pixel);
                 }
                 else if(valor == BR)
                 {
-                    color = (SDL_Color){0, 0, 0, 255};
+                    color = (SDL_Color){0, 0, 0, 25};
                     SDL_SetRenderDrawColor(sdl->renderer, color.r,color.g, color.b, color.a);
                     SDL_RenderFillRect(sdl->renderer, &pixel);
                 }

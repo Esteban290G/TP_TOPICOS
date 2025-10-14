@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     SDL_Color fondo = (SDL_Color){
         115, 115, 115, 128};
 
-    SDL_Color colores_hover[] = {{255, 70, 70, 255}, {70, 255, 70, 255}, {70, 70, 255, 255}, {255, 70, 255, 255}, {255, 255, 70, 255}, {70, 255, 255, 255}, {255, 190, 70, 255}, {120, 60, 130, 255}};
+    //SDL_Color colores_hover[] = {{255, 70, 70, 255}, {70, 255, 70, 255}, {70, 70, 255, 255}, {255, 70, 255, 255}, {255, 255, 70, 255}, {70, 255, 255, 255}, {255, 190, 70, 255}, {120, 60, 130, 255}};
 
     SDL_Color colores_apretado[] = {{100, 0, 0, 255}, {0, 100, 0, 255}, {0, 0, 100, 255}, {100, 0, 100, 255}, {120, 120, 0, 255}, {0, 100, 100, 255}, {120, 70, 0, 255}, {30, 10, 40, 255}};
 
@@ -179,17 +179,18 @@ int main(int argc, char *argv[])
     configuracion.cant_botones = 3;
     configuracion.duracion_inicial = 2000;
     bool cargar_botones = true;
+    bool cargar_sonidos = true;
 
     /// AUX FONDO
 
     tBoton_fondo boton_fondo[8];
 
-    inicializarBoton_fondo(boton_fondo, colores, colores_hover, colores_apretado, vector_valores_simon);
+    inicializarBoton_fondo(boton_fondo, colores, colores_luz, colores_apretado, vector_valores_simon);
 
-    for(int i = 0; i< 8; i++)
+    /*for(int i = 0; i< 8; i++)
     {
         printf("(%d - %d -%d) - ",boton_fondo[i].valor_boton, boton_fondo[i].rectangulo.x, boton_fondo[i].rectangulo.y);
-    }
+    }*/
 
     tFlecha flecha[4];
 
@@ -205,7 +206,7 @@ int main(int argc, char *argv[])
 
     tKonami codigo;
     inicializarKonami(&codigo);
-
+    int cant_tonos = 0;
     while (corriendo)
     {
         Uint32 tiempoActual = SDL_GetTicks();
@@ -237,6 +238,28 @@ int main(int argc, char *argv[])
         case OPCIONES:
             estado = eventosOpciones(&evento, &opciones, estado, &configuracion);
             mostrarPantallaOpciones(&sdl, &opciones);
+
+            if(opciones.config.es_counter)
+            {
+                for(int i = 0; i<8;i++)
+                {
+                    sonidos[i] = armas[i];
+                }
+                cargar_sonidos = false;
+            }
+            else if(opciones.config.es_minecraft)
+            {
+                for(int i = 0; i<8;i++)
+                {
+                    sonidos[i] = mine[i];
+                }
+                cargar_sonidos = false;
+            }
+            else
+            {
+                cargar_sonidos = true;
+            }
+
             break;
 
         case ESTADISTICA:
@@ -248,9 +271,14 @@ int main(int argc, char *argv[])
             /// pausarMusica(&sdl);
             estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_simon, 2, sonidos, &sec, deltaTime, &jugador);
 
+            if(cargar_sonidos)
+            {
+                cant_tonos = crearArrayTonos(sonidos, configuracion.cant_botones);
+                cargar_sonidos = false;
+            }
+
             if (cargar_botones)
             {
-                crearArrayTonos(sonidos, configuracion.cant_botones);
                 cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
                 cargar_botones = false;
                 modo = true;
@@ -334,9 +362,14 @@ int main(int argc, char *argv[])
 
             estado = controlEventosSimon(&evento, boton_simon, cant_botones, estado, botones_aux_simon, 2, sonidos, &sec, deltaTime, &jugador);
 
+            if(cargar_sonidos)
+            {
+                cant_tonos = crearArrayTonos(sonidos, configuracion.cant_botones);
+                cargar_sonidos = false;
+            }
+
             if (cargar_botones)
             {
-                crearArrayTonos(sonidos, cant_botones);
                 cargarBotonSimon(boton_simon, colores, colores_luz, cant_botones, vector_valores_simon);
                 cargar_botones = false;
             }
@@ -403,10 +436,15 @@ int main(int argc, char *argv[])
                 sec.primera_vez = false;
             }
 
-            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_desafio, 2, armas, &sec, deltaTime, &jugador);
+            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_desafio, 2, sonidos, &sec, deltaTime, &jugador);
+
+            if(cargar_sonidos)
+            {
+                cant_tonos = crearArrayTonos(sonidos, configuracion.cant_botones);
+            }
+
             if (cargar_botones)
             {
-                crearArrayTonos(sonidos, configuracion.cant_botones);
                 cargarBotonSimon(boton_simon, colores, colores_luz, configuracion.cant_botones, vector_valores_simon);
                 cargar_botones = false;
             }
@@ -448,10 +486,14 @@ int main(int argc, char *argv[])
             break;
         }
 
+        //printf("\nCantidad de tonos : %d",cant_tonos);
         SDL_RenderPresent(sdl.renderer);
         SDL_Delay(16);
     }
 
+    destruirArrayTonos(sonidos,cant_tonos);
+    destruirArraySonido(armas);
+    destruirArraySonido(mine);
     Mix_FreeChunk(sonido_error);
     Mix_FreeChunk(codigo.sonido_ok);
     reiniciarJuego(&sec);

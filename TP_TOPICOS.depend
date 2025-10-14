@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1760418449 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1760471624 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -458,10 +458,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760398077 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.c
+1760475002 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.c
 	"graficos.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.h
+1760472645 c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.h
 	<SDL2/SDL.h>
 	<time.h>
 	<math.h>
@@ -469,7 +469,7 @@
 	"sistemasSDL.h"
 	"constantes.h"
 
-1760404141 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
+1760469488 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
 	"sonidos.h"
 
 1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
@@ -481,7 +481,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760409287 c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.h
+1760455998 c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.h
 	<SDL2/SDL.h>
 	<stdio.h>
 	<stdbool.h>
@@ -489,7 +489,7 @@
 	"sistemasSDL.h"
 	"constantes.h"
 
-1760409293 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.c
+1760456176 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.c
 	"menus.h"
 	"graficos.h"
 	"sonidos.h"
@@ -1028,14 +1028,14 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760402715 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
+1760472607 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
 
-1760418439 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
+1760474819 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
 
-1760419032 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
+1760474121 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
@@ -1047,11 +1047,11 @@
 	"graficos.h"
 	"jugador.h"
 
-1760225681 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.c
+1760474462 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.c
 	"sistemasSDL.h"
 	"sonidos.h"
 
-1760404141 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
+1760469315 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
 	<stdio.h>
@@ -1622,7 +1622,7 @@
 	"sistemasSDL.h"
 	"graficos.h"
 
-1760340325 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.c
+1760455998 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.c
 	"estadistica.h"
 
 1760340325 c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.h
@@ -1634,10 +1634,10 @@
 	"jugador.h"
 	"sistemasSDL.h"
 
-1760340325 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.c
+1760455998 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.c
 	"opciones.h"
 
-1760340325 c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.h
+1760455998 c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.h
 	"constantes.h"
 	<stdio.h>
 	<stdlib.h>

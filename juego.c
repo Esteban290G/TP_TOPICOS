@@ -2,6 +2,64 @@
 #include "menus.h"
 #include "graficos.h"
 
+// T: TRANSPARENTE | B: BASE | S: SOMBRA | W: BLANCO | L: LUZ
+const int boton_base[15][15] =
+{
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,L,L,L,L,L,L,L,L,L,L,L,L,L,T},
+    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T},
+    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T}
+};
+
+const int boton_encendido[15][15] =
+{
+    {T,BA,L,BA,BA,BA,L,L,L,BA,BA,BA,L,BA,T},
+    {T,BA,BA,BA,L,BA,BA,BA,BA,BA,L,BA,BA,BA,T},
+    {T,BA,BA,L,BA,BA,L,L,L,BA,BA,L,BA,BA,T},
+    {T,BA,BA,BA,BA,L,BA,BA,BA,L,BA,BA,BA,BA,T},
+    {T,BA,L,BA,L,BA,BA,W,BA,BA,L,BA,L,BA,T},
+    {T,BA,L,BA,L,BA,W,W,W,BA,L,BA,L,BA,T},
+    {T,BA,L,BA,L,BA,BA,W,BA,BA,L,BA,L,BA,T},
+    {T,BA,BA,BA,BA,L,BA,BA,BA,L,BA,BA,BA,BA,T},
+    {T,BA,BA,L,BA,BA,L,L,L,BA,BA,L,BA,BA,T},
+    {T,BA,BA,BA,L,BA,BA,BA,BA,BA,L,BA,BA,BA,T},
+    {T,BA,L,BA,BA,BA,L,L,L,BA,BA,BA,L,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,L,L,L,L,L,L,L,L,L,L,L,L,L,T},
+    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T},
+    {T,S,S,S,S,S,S,S,S,S,S,S,S,S,T}
+};
+
+const int boton_encendido_pres[15][15] =
+{
+    {T,T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+    {T,T,T,T,T,T,T,T,T,T,T,T,T,T,T},
+    {T,BA,L,BA,BA,BA,L,L,L,BA,BA,BA,L,BA,T},
+    {T,BA,BA,BA,L,BA,BA,BA,BA,BA,L,BA,BA,BA,T},
+    {T,BA,BA,L,BA,BA,L,L,L,BA,BA,L,BA,BA,T},
+    {T,BA,BA,BA,BA,L,BA,BA,BA,L,BA,BA,BA,BA,T},
+    {T,BA,L,BA,L,BA,BA,W,BA,BA,L,BA,L,BA,T},
+    {T,BA,L,BA,L,BA,W,W,W,BA,L,BA,L,BA,T},
+    {T,BA,L,BA,L,BA,BA,W,BA,BA,L,BA,L,BA,T},
+    {T,BA,BA,BA,BA,L,BA,BA,BA,L,BA,BA,BA,BA,T},
+    {T,BA,BA,L,BA,BA,L,L,L,BA,BA,L,BA,BA,T},
+    {T,BA,BA,BA,L,BA,BA,BA,BA,BA,L,BA,BA,BA,T},
+    {T,BA,L,BA,BA,BA,L,L,L,BA,BA,BA,L,BA,T},
+    {T,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,BA,T},
+    {T,L,L,L,L,L,L,L,L,L,L,L,L,L,T}
+};
+
 int generarAleatorio(int num_min, int num_max)
 {
     int valor = rand() % (num_max - num_min + 1) + num_min;
@@ -13,8 +71,22 @@ void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t cant_botones)
 {
     for (tBotonSimon *i = boton; i < boton + cant_botones; i++)
     {
-        SDL_SetRenderDrawColor(sdl->renderer, i->color_base.r, i->color_base.g, i->color_base.b, i->color_base.a);
-        SDL_RenderFillRect(sdl->renderer, &i->rectangulo);
+        const int (*sprite)[15][15];
+
+        if(i->sonando && !i->presionado)
+        {
+            sprite = &boton_encendido;
+        }
+        else if(i->presionado && i->sonando)
+        {
+            sprite = &boton_encendido_pres;
+        }
+        else
+        {
+            sprite = &boton_base;
+        }
+
+        dibujarBotonSprite(sdl->renderer, *sprite,i->rectangulo.x, i->rectangulo.y,i->color_base, 12);
     }
 }
 
@@ -122,13 +194,14 @@ void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *c
     for (size_t i = 0; i < cant_botones && i < total_activados; i++)
     {
         boton_simon[i].rectangulo = (SDL_Rect){
-            pos_activas[i].x, pos_activas[i].y, LARGO_SIMON, ANCHO_SIMON};
+        pos_activas[i].x, pos_activas[i].y, LARGO_SIMON, ANCHO_SIMON};
         boton_simon[i].color_base = color_1[i];
         boton_simon[i].color_sonando = color_2[i];
         boton_simon[i].color_aux = color_1[i];
         boton_simon[i].valor_boton = v_valor[i];
         boton_simon[i].tiempo_ultimo_sonido = 0;
         boton_simon[i].sonando = false;
+        boton_simon[i].presionado = false;
     }
 }
 
@@ -222,6 +295,7 @@ void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk *sonidos[], tBotonSimon *bo
         j = secuencia->vecSecuencia[secuencia->indice];
         Mix_PlayChannel(1, sonidos[j], 0);
         boton_simon[j].color_base = boton_simon[j].color_sonando;
+        boton_simon[j].sonando = true;
         secuencia->activo = true;
         secuencia->tiempo_acumulado = 0;
         secuencia->primer_boton = false;
@@ -230,6 +304,7 @@ void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk *sonidos[], tBotonSimon *bo
     {
         j = secuencia->vecSecuencia[secuencia->indice];
         boton_simon[j].color_base = boton_simon[j].color_aux;
+        boton_simon[j].sonando = false;
         secuencia->mostrando = false;
         secuencia->tiempo_acumulado = 0;
     }
@@ -280,6 +355,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
                             printf("\nHiciste clic al boton numero %d\n", i->valor_boton);
                             i->color_base = i->color_sonando;
                             i->sonando = true;
+                            i->presionado = true;
 
                             jugador->valorBoton = i->valor_boton;
                         }
@@ -312,6 +388,7 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
                 {
                     i->color_base = i->color_aux;
                     i->sonando = false;
+                    i->presionado = false;
                 }
             }
             break;
@@ -645,11 +722,12 @@ void dibujarConfeti(tSistemaSDL *sdl, tConfeti *confeti)
 
 void inicializarSecuenciaDesafio(tSecuencia* secuencia)
 {
-    if (secuencia->vecSecuencia != NULL)
+    /*if (secuencia->vecSecuencia != NULL)
     {
+        printf("DEBUG2");
         free(secuencia->vecSecuencia);
         secuencia->vecSecuencia = NULL;
-    }
+    }*/
     secuencia->longitud = 0;
     secuencia->indice = 0;
     secuencia->primera_vez = false;

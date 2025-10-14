@@ -50,6 +50,10 @@
 #define T 0
 #define R 1
 #define BR 2 // Borde
+#define BA 3
+#define L 4
+#define S 5
+#define W 6
 
 // valor boton simon
 #define BOTON_1 0
