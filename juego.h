@@ -35,7 +35,9 @@ typedef struct
 {
     size_t cant_botones;
     float duracion_inicial;
-    //tipo_sonido;
+    bool es_counter;
+    bool es_minecraft;
+    bool es_default;
 } tConfigJuego;
 
 typedef struct
@@ -82,7 +84,7 @@ void inicializarSecuenciaDesafio(tSecuencia* secuencia);
 void agregarDesafioSecuencia(tSecuencia *secuencia,  unsigned int valor);
 void agregarSecuenciaArchivo(tSecuencia *secuencia,  char* archivo);
 
-void pantalla_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo, SDL_Color color, tConfeti *confeti);
+void pantalla_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo, SDL_Color color);
 void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo);
 unsigned int controlEventosPantalla_juego(SDL_Event *evento, unsigned int estado_actual, bool modo);
 

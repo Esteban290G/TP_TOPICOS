@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
     Mix_Chunk *sonidos[8];
     Mix_Chunk *sonido_error = cargarSonido("snd/sonido_error.wav");
 
+    Mix_Chunk *armas[8];
     // Sonidos Counter
     Mix_Chunk *counter_01 = cargarSonido("snd/counter_01.wav");
     Mix_Chunk *counter_02 = cargarSonido("snd/counter_02.wav");
@@ -63,6 +64,35 @@ int main(int argc, char *argv[])
     Mix_Chunk *counter_06 = cargarSonido("snd/counter_06.wav");
     Mix_Chunk *counter_07 = cargarSonido("snd/counter_07.wav");
     Mix_Chunk *counter_08 = cargarSonido("snd/counter_08.wav");
+
+    armas[0] = counter_01;
+    armas[1] = counter_02;
+    armas[2] = counter_03;
+    armas[3] = counter_04;
+    armas[4] = counter_05;
+    armas[5] = counter_06;
+    armas[6] = counter_07;
+    armas[7] = counter_08;
+
+    Mix_Chunk *mine[8];
+
+    Mix_Chunk *mine_01 = cargarSonido("snd/minecraft_01.wav");
+    Mix_Chunk *mine_02 = cargarSonido("snd/minecraft_02.wav");
+    Mix_Chunk *mine_03 = cargarSonido("snd/minecraft_03.wav");
+    Mix_Chunk *mine_04 = cargarSonido("snd/minecraft_04.wav");
+    Mix_Chunk *mine_05 = cargarSonido("snd/minecraft_05.wav");
+    Mix_Chunk *mine_06 = cargarSonido("snd/minecraft_06.wav");
+    Mix_Chunk *mine_07 = cargarSonido("snd/minecraft_07.wav");
+    Mix_Chunk *mine_08 = cargarSonido("snd/minecraft_08.wav");
+
+    mine[0] = mine_01;
+    mine[1] = mine_02;
+    mine[2] = mine_03;
+    mine[3] = mine_04;
+    mine[4] = mine_05;
+    mine[5] = mine_06;
+    mine[6] = mine_07;
+    mine[7] = mine_08;
 
     // Estructura secuencia
     tSecuencia sec;
@@ -156,6 +186,15 @@ int main(int argc, char *argv[])
 
     inicializarBoton_fondo(boton_fondo, colores, colores_hover, colores_apretado, vector_valores_simon);
 
+    for(int i = 0; i< 8; i++)
+    {
+        printf("(%d - %d -%d) - ",boton_fondo[i].valor_boton, boton_fondo[i].rectangulo.x, boton_fondo[i].rectangulo.y);
+    }
+
+    tFlecha flecha[4];
+
+    inicializarFlecha(flecha);
+
     ///
 
     tConfeti confeti[MAX_CONFETI];
@@ -176,14 +215,14 @@ int main(int argc, char *argv[])
         switch (estado)
         {
         case MENU:
-            estado = controlEventos(&evento, botones_menu, CANTIDAD_BOTON_MENU, boton_fondo, estado, &codigo);
+            estado = controlEventos(&evento, botones_menu, CANTIDAD_BOTON_MENU, boton_fondo, estado, &codigo,flecha);
 
             if (codigo.cheat)
             {
                 jugador.vidas = VIDAS_CHEAT;
             }
 
-            mostrarPantalla(&sdl, (SDL_Color){0, 0, 0, 255}, botones_menu, CANTIDAD_BOTON_MENU, boton_fondo, cant_simon_menu, estado);
+            mostrarPantalla(&sdl, (SDL_Color){0, 0, 0, 255}, botones_menu, CANTIDAD_BOTON_MENU, boton_fondo, cant_simon_menu, flecha,estado);
             break;
 
         case JUGAR:
@@ -364,7 +403,7 @@ int main(int argc, char *argv[])
                 sec.primera_vez = false;
             }
 
-            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_desafio, 2, sonidos, &sec, deltaTime, &jugador);
+            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_desafio, 2, armas, &sec, deltaTime, &jugador);
             if (cargar_botones)
             {
                 crearArrayTonos(sonidos, configuracion.cant_botones);
@@ -391,7 +430,7 @@ int main(int argc, char *argv[])
             codigo.cheat = false;
             cargar_botones = true;
             SDL_Color color_perdiste = (SDL_Color){255, 0, 0, 3};
-            pantalla_juego(&sdl, &jugador, win, color_perdiste, confeti);
+            pantalla_juego(&sdl, &jugador, win, color_perdiste);
             estado = controlEventosPantalla_juego(&evento, estado, modo); // REVISAR CLIC IZQUIERDA
             break;
 
@@ -399,7 +438,7 @@ int main(int argc, char *argv[])
             codigo.cheat = false;
             cargar_botones = true;
             SDL_Color color_ganar = (SDL_Color){0, 255, 0, 2};
-            pantalla_juego(&sdl, &jugador, win, color_ganar, confeti);
+            pantalla_juego(&sdl, &jugador, win, color_ganar);
             estado = controlEventosPantalla_juego(&evento, estado, modo);
             break;
 

@@ -9,15 +9,17 @@ bool _verificarMouseBoton(SDL_Rect boton, int mouse_x, int mouse_y)
     return false;
 }
 
-void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce_normal, tBoton_fondo *boton_fondo, size_t ce_fondo, unsigned int estado)
+void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce_normal, tBoton_fondo *boton_fondo, size_t ce_fondo, tFlecha* flecha ,unsigned int estado)
 {
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_BLEND);
     colorPantalla(sdl, color);
     dibujarFondo(sdl, boton_fondo, ce_fondo);
+    dibujarFlecha(sdl,flecha,4);
     dibujarTitulo(sdl);
     SDL_SetRenderDrawColor(sdl->renderer, 60, 60, 60, 180);
     SDL_RenderFillRect(sdl->renderer, &(SDL_Rect){220, 220, 300, 400});
     dibujar(sdl, boton, ce_normal);
+
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
 }
 
@@ -75,7 +77,7 @@ bool verificarCodigoKonami(unsigned int valor_boton, tKonami *codigo)
     return false;
 }
 
-unsigned int controlEventos(SDL_Event *evento, tBoton *botones, size_t ce, tBoton_fondo *boton_fondo, unsigned int estado_actual, tKonami *codigo)
+unsigned int controlEventos(SDL_Event *evento, tBoton *botones, size_t ce, tBoton_fondo *boton_fondo, unsigned int estado_actual, tKonami *codigo, tFlecha* flecha)
 {
     unsigned int bandera = estado_actual;
     while (SDL_PollEvent(evento))
@@ -83,14 +85,43 @@ unsigned int controlEventos(SDL_Event *evento, tBoton *botones, size_t ce, tBoto
         switch (evento->type)
         {
         case SDL_MOUSEMOTION:
-            for (tBoton *i = botones; i < botones + ce; i++)
+            for(tBoton *i = botones; i < botones + ce; i++)
             {
                 i->hover = _verificarMouseBoton(i->rectangulo, evento->motion.x, evento->motion.y);
             }
 
-            for (tBoton_fondo *i = boton_fondo; i < boton_fondo + 8; i++)
+            for(tBoton_fondo *i = boton_fondo; i < boton_fondo + 8; i++)
             {
-                i->hover = _verificarMouseBoton(i->rectangulo, evento->button.x, evento->button.y);
+                i->hover = _verificarMouseBoton(i->rectangulo, evento->motion.x, evento->motion.y);
+            }
+
+            for(tFlecha* i = flecha; i < flecha + 4; i++)
+            {
+                int indice_flecha = i - flecha;
+                    //Artesanal ajajaja
+
+                int indice_boton;
+                switch(indice_flecha)
+                {
+                case 0:
+                    indice_boton = 4;
+                    break; // Flecha derecha
+                case 1:
+                    indice_boton = 3;
+                    break; // Flecha izquierda
+                case 2:
+                    indice_boton = 6;
+                    break; // Flecha abajo
+                case 3:
+                    indice_boton = 1;
+                    break; // Flecha arriba
+                default:
+                    indice_boton = 0;
+                }
+
+
+                SDL_Rect hitbox = boton_fondo[indice_boton].rectangulo;
+                i->hover = _verificarMouseBoton(hitbox, evento->motion.x, evento->motion.y);
             }
             break;
         case SDL_MOUSEBUTTONDOWN:
@@ -124,12 +155,44 @@ unsigned int controlEventos(SDL_Event *evento, tBoton *botones, size_t ce, tBoto
                         break;
                     }
                 }
+                for(tFlecha *i = flecha; i < flecha + 4; i++)
+                {
+                    int indice_flecha = i - flecha;
+                    //Artesanal ajajaja
+
+                    int indice_boton;
+                    switch(indice_flecha)
+                    {
+                    case 0:
+                        indice_boton = 4;
+                        break; // Flecha derecha
+                    case 1:
+                        indice_boton = 3;
+                        break; // Flecha izquierda
+                    case 2:
+                        indice_boton = 6;
+                        break; // Flecha abajo
+                    case 3:
+                        indice_boton = 1;
+                        break; // Flecha arriba
+                    default:
+                        indice_boton = 0;
+                    }
+
+
+                    SDL_Rect hitbox = boton_fondo[indice_boton].rectangulo;
+                    i->apretado = _verificarMouseBoton(hitbox, evento->motion.x, evento->motion.y);
+                }
             }
             break;
         case SDL_MOUSEBUTTONUP:
             if (evento->button.button == SDL_BUTTON_LEFT)
             {
                 for (tBoton_fondo *i = boton_fondo; i < boton_fondo + 8; i++)
+                {
+                    i->apretado = false;
+                }
+                for(tFlecha* i = flecha; i < flecha + 4; i++)
                 {
                     i->apretado = false;
                 }
@@ -247,3 +310,104 @@ void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color *colores, SDL_C
         j++;
     }
 }
+void inicializarFlecha(tFlecha* flecha)
+{
+    flecha[0].apretado = false;
+    flecha[0].hover = false;
+    flecha[0].posicion = (SDL_Point){550, 300};
+    flecha[0].direccion = 0;
+
+    flecha[1].apretado = false;
+    flecha[1].hover = false;
+    flecha[1].posicion = (SDL_Point){45, 300};
+    flecha[1].direccion = 1;
+
+    flecha[2].apretado = false;
+    flecha[2].hover = false;
+    flecha[2].posicion = (SDL_Point){300, 550};
+    flecha[2].direccion = 2;
+
+    flecha[3].apretado = false;
+    flecha[3].hover = false;
+    flecha[3].posicion = (SDL_Point){300, 45};
+    flecha[3].direccion = 3;
+}
+
+
+void dibujarFlecha(tSistemaSDL *sdl, tFlecha* flecha, size_t ce)
+{
+    const int flecha_dibujo[12][12] =
+    {
+        {T, T, T, T, T, T, T, T, T, T, T, T},
+        {T, T, T, T, T, T, BR, BR, T, T, T, T},
+        {T, T, T, T, T, T, BR, R, BR, T, T, T},
+        {T, BR, BR, BR, BR, BR, BR, R, R, BR, T, T},
+        {BR, R, R, R, R, R, R, R, R, R, BR, T},
+        {BR, R, R, R, R, R, R, R, R, R, R, BR},
+        {BR, R, R, R, R, R, R, R, R, R, R, BR},
+        {BR, R, R, R, R, R, R, R, R, R, BR, T},
+        {T, BR, BR, BR, BR, BR, BR, R, R, BR, T, T},
+        {T, T, T, T, T, T, BR, R, BR, T, T, T},
+        {T, T, T, T, T, T, BR, BR, T, T, T, T},
+        {T, T, T, T, T, T, T, T, T, T, T, T}
+    };
+
+    SDL_Color color;
+
+    for(int i = 0; i < ce; i++)
+    {
+        for(int py = 0; py < 12; py++)
+        {
+            for(int px = 0; px < 12; px++)
+            {
+                SDL_Rect pixel = {flecha[i].posicion.x + px * 12, flecha[i].posicion.y + py *12,12,12};
+
+                int valor;
+
+                switch(flecha[i].direccion)
+                {
+                case 0:
+                    valor = flecha_dibujo[py][px]; //derecha
+                    break;
+
+                case 1:
+                    valor = flecha_dibujo[py][11 - px]; //izquierda
+                    break;
+
+                case 2:
+                    valor = flecha_dibujo[11 - px][py]; //arriba
+                    break;
+
+                case 3:
+                    valor = flecha_dibujo[px][11-py]; //abajo
+                }
+
+                if(valor == R)
+                {
+                    if(flecha[i].apretado == true)
+                    {
+                        color = (SDL_Color){80, 80, 80, 255};
+                    }
+                    else if(flecha[i].hover == true)
+                    {
+                        color = (SDL_Color){255,255,255,255};
+                    }
+                    else
+                    {
+                        color = (SDL_Color){170, 170, 190, 255};
+                    }
+                    SDL_SetRenderDrawColor(sdl->renderer, color.r,color.g, color.b, color.a);
+                    SDL_RenderFillRect(sdl->renderer, &pixel);
+                }
+                else if(valor == BR)
+                {
+                    color = (SDL_Color){0, 0, 0, 255};
+                    SDL_SetRenderDrawColor(sdl->renderer, color.r,color.g, color.b, color.a);
+                    SDL_RenderFillRect(sdl->renderer, &pixel);
+                }
+            }
+        }
+
+    }
+}
+

@@ -449,11 +449,6 @@ void dibujarBotonesTriangulares(tSistemaSDL *sdl, tBoton_triangular* botones_tri
                     SDL_SetRenderDrawColor(sdl->renderer, botones_triangular[i].color_bordes.r,botones_triangular[i].color_bordes.g, botones_triangular[i].color_bordes.b, botones_triangular[i].color_bordes.a);
                     SDL_RenderFillRect(sdl->renderer, &pixel);
                 }
-                else
-                {
-                    SDL_SetRenderDrawColor(sdl->renderer, 0, 0, 0, 0); // Negro
-                    SDL_RenderFillRect(sdl->renderer, &pixel);
-                }
             }
         }
 

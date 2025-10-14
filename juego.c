@@ -473,11 +473,11 @@ size_t buscarMaximo(tSecuencia *vec)
 
 // Pantalla Perdiste
 
-void pantalla_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo, SDL_Color color, tConfeti *confeti)
+void pantalla_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo, SDL_Color color)
 {
     colorpantalla_juego(sdl, color);
-    actualizarConfeti(confeti);
-    dibujarConfeti(sdl, confeti);
+    //actualizarConfeti(confeti);
+    //dibujarConfeti(sdl, confeti);
     mostrarTexto_juego(sdl, jugador, modo);
 }
 
@@ -568,7 +568,6 @@ void colorpantalla_juego(tSistemaSDL *sdl, SDL_Color color)
     SDL_Rect pantalla_completa = {0, 0, ANCHO, LARGO};
     SDL_RenderFillRect(sdl->renderer, &pantalla_completa);
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
-    SDL_RenderClear(sdl->renderer);
 }
 
 void inicializarConfeti(tConfeti *confeti)
