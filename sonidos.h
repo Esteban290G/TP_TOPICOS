@@ -25,6 +25,7 @@
 #define FREC_LAB 415.30
 #define FREC_MIB 311.13
 
+Mix_Chunk* cargarSonido(const char *path);
 Mix_Chunk* crearTono(float frecuencia);
 void crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones);
 void destruirTono();

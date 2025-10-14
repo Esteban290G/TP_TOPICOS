@@ -29,7 +29,7 @@ typedef struct
     float gravedad;
     int tam;
     float rotacion;
-}tConfeti;
+} tConfeti;
 
 typedef struct
 {
@@ -76,20 +76,22 @@ int agregarElemSecuencia(tSecuencia *secuencia, size_t cant_botones);
 bool validarJugador(tJugador *jugador, tSecuencia *sec);
 void reiniciarJuego(tSecuencia *sec);
 
+///
+void inicializarSecuenciaDesafio(tSecuencia* secuencia);
+void agregarDesafioSecuencia(tSecuencia *secuencia,  unsigned int valor);
+void agregarSecuenciaArchivo(tSecuencia *secuencia,  char* archivo);
 
-void pantalla_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo, SDL_Color color,tConfeti* confeti);
-void mostrarTexto_juego(tSistemaSDL* sdl,tJugador* jugador, bool modo);
-unsigned int controlEventosPantalla_juego(SDL_Event* evento, unsigned int estado_actual, bool modo);
+void pantalla_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo, SDL_Color color, tConfeti *confeti);
+void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo);
+unsigned int controlEventosPantalla_juego(SDL_Event *evento, unsigned int estado_actual, bool modo);
 
-void colorpantalla_juego(tSistemaSDL* sdl,SDL_Color);
+void colorpantalla_juego(tSistemaSDL *sdl, SDL_Color);
 
+void colorpantalla_juego(tSistemaSDL *sdl, SDL_Color);
 
-void colorpantalla_juego(tSistemaSDL* sdl,SDL_Color);
-
-void inicializarConfeti(tConfeti* confeti);
-void actualizarConfeti(tConfeti* confeti);
-void dibujarConfeti(tSistemaSDL* sdl, tConfeti* confeti);
-
+void inicializarConfeti(tConfeti *confeti);
+void actualizarConfeti(tConfeti *confeti);
+void dibujarConfeti(tSistemaSDL *sdl, tConfeti *confeti);
 
 unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[], tSecuencia *secuencia, float deltaTime, tJugador *jugador);
 

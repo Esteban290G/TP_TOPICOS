@@ -60,9 +60,7 @@ void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador)
 {
     strcpy(jugador->nombre, pantalla->texto_ingresado);
     jugador->Score = 0;
-    jugador->modo_juego = SCHONBERG;
     jugador->valorBoton = -1;
-    jugador->cheat = false;
     jugador->vidas = 0;
 }
 

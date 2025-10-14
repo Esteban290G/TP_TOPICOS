@@ -8,7 +8,6 @@
 #include "sistemasSDL.h"
 #include "constantes.h"
 
-
 typedef struct
 {
     SDL_Color color;
@@ -18,7 +17,7 @@ typedef struct
     bool apretado;
     bool hover;
     unsigned int valor_boton;
-}tBoton_fondo;
+} tBoton_fondo;
 
 typedef struct
 {
@@ -28,8 +27,8 @@ typedef struct
     bool hover;
     SDL_Color color_texto_normal;
     SDL_Color color_texto_hover;
-}tBoton;
-
+    Mix_Chunk* snd_enter;
+} tBoton;
 
 typedef struct
 {
@@ -38,37 +37,37 @@ typedef struct
     float velocidad;
     bool activo;
     Uint32 tiempo;
-}tCrab;
+} tCrab;
 
 typedef struct
 {
     tCrab crabs[MAX_CRAB];
     Uint32 ultimo_tiempo;
     int intervalo_creacion;
-}tSistemaCrab;
+} tSistemaCrab;
 
 typedef struct
 {
     int longitud;
     int indice;
-}tKonami;
+    bool cheat;
+    Mix_Chunk* sonido_ok;
+} tKonami;
 
+void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce_normal, tBoton_fondo *boton_fondo, size_t ce_fondo, unsigned int estado);
 
-void mostrarPantalla(tSistemaSDL *sdl, SDL_Color color, tBoton *boton, size_t ce_normal, tBoton_fondo *boton_fondo, size_t ce_fondo ,unsigned int estado);
-
-//Konami
+// Konami
 void inicializarKonami(tKonami *codigo);
 bool verificarCodigoKonami(unsigned int valor_boton, tKonami *codigo);
 
-unsigned int controlEventos(SDL_Event *evento, tBoton *botones,size_t ce,tBoton_fondo* boton_fondo,unsigned int estado_actual,tKonami *codigo);
-void dibujarTitulo(tSistemaSDL* sdl);
+unsigned int controlEventos(SDL_Event *evento, tBoton *botones, size_t ce, tBoton_fondo *boton_fondo, unsigned int estado_actual, tKonami *codigo);
+void dibujarTitulo(tSistemaSDL *sdl);
 
-void cargarDatosBotones(tBoton *boton, size_t ce, SDL_Color *colores,int vector_valores[],char* txt[]);
+void cargarDatosBotones(tBoton *boton, size_t ce, SDL_Color *colores, int vector_valores[], char *txt[]);
 
-///Por si necesitamos sacarlo o realizar modificaciones
+/// Por si necesitamos sacarlo o realizar modificaciones
 
-void dibujarFondo(tSistemaSDL *sdl, tBoton_fondo* boton_fondo, size_t ce_fondo);
-void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color* colores, SDL_Color* color_hover, SDL_Color* color_apretado,int *v_valor);
-
+void dibujarFondo(tSistemaSDL *sdl, tBoton_fondo *boton_fondo, size_t ce_fondo);
+void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color *colores, SDL_Color *color_hover, SDL_Color *color_apretado, int *v_valor);
 
 #endif // MENUS_H_INCLUDED

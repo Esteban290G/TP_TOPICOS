@@ -12,11 +12,9 @@ typedef struct
 {
     char nombre[MAX_LETRAS];
     int Score;
-    int modo_juego;
     int valorBoton;
     int vidas;
-    bool cheat;
-}tJugador;
+} tJugador;
 
 typedef struct
 {
@@ -31,17 +29,16 @@ typedef struct
     SDL_Color color_texto_ingresado;
     char texto_ingresado[MAX_LETRAS];
     bool input_activo;
-}tPantallaJugador;
+} tPantallaJugador;
 
+void inicializarPantallaJugador(tPantallaJugador *pantalla);
+void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador);
 
-void inicializarPantallaJugador(tPantallaJugador* pantalla);
-void inicializarJugador(tPantallaJugador *pantalla, tJugador* jugador);
-
-///AUX
-void mostrarPantallaJuego(tSistemaSDL *sdl,tPantallaJugador* pantalla);
-void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador* pantalla);
+/// AUX
+void mostrarPantallaJuego(tSistemaSDL *sdl, tPantallaJugador *pantalla);
+void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador *pantalla);
 bool validarNombreJugador(const char *texto);
-unsigned int controlEventosPantallaJuego(SDL_Event* evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador);
-void dibujarTextoIngresado(tSistemaSDL* sdl, tPantallaJugador* pantalla);
+unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador);
+void dibujarTextoIngresado(tSistemaSDL *sdl, tPantallaJugador *pantalla);
 
 #endif // JUGADOR_H_INCLUDED
