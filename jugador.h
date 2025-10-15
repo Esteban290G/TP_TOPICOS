@@ -29,6 +29,10 @@ typedef struct
     SDL_Color color_texto_ingresado;
     char texto_ingresado[MAX_LETRAS];
     bool input_activo;
+    bool ingreso_nombre;
+    char texto_no_ingresado[MAX_LETRAS_ERROR];
+    bool hay_secuencia;
+    char texto_no_secuencia[MAX_LETRAS_ERROR];
 } tPantallaJugador;
 
 void inicializarPantallaJugador(tPantallaJugador *pantalla);
@@ -40,5 +44,6 @@ void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador *pantalla);
 bool validarNombreJugador(const char *texto);
 unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador);
 void dibujarTextoIngresado(tSistemaSDL *sdl, tPantallaJugador *pantalla);
+void mostrarTextoError(tSistemaSDL* sdl, tPantallaJugador *pantalla);
 
 #endif // JUGADOR_H_INCLUDED

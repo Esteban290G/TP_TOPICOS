@@ -54,6 +54,12 @@ void inicializarPantallaJugador(tPantallaJugador *pantalla)
     pantalla->botones[1].color_texto_hover = (SDL_Color){0, 255, 0, 255};
     pantalla->botones[2].color_texto_hover = (SDL_Color){0, 0, 255, 255};
     pantalla->botones[3].color_texto_hover = (SDL_Color){255, 0, 255, 255};
+
+    pantalla->ingreso_nombre = true;
+    pantalla->hay_secuencia = true;
+
+    strcpy(pantalla->texto_no_secuencia,"*No hay secuencia creada*");
+    strcpy(pantalla->texto_no_ingresado,"*Por favor ingrese un nombre*");
 }
 
 void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador)
@@ -78,6 +84,12 @@ void mostrarPantallaJuego(tSistemaSDL *sdl, tPantallaJugador *pantalla)
 
     dibujar(sdl, pantalla->botones, pantalla->ce_botones);
     mostrarTitulo(sdl, pantalla);
+
+    if(!pantalla->ingreso_nombre || !pantalla->hay_secuencia)
+    {
+        mostrarTextoError(sdl,pantalla);
+    }
+
 }
 
 void mostrarTitulo(tSistemaSDL *sdl, tPantallaJugador *pantalla)
@@ -158,11 +170,12 @@ unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pa
                         {
                             printf("Hiciste clic al boton numero %d\n", i->valor_boton);
                             strcpy(jugador->nombre,pantalla->texto_ingresado);
+                            pantalla->ingreso_nombre = true;
                             estado = i->valor_boton;
                         }
                         else
                         {
-                            printf("Ingrese un nombre por favor\n");
+                            pantalla->ingreso_nombre = false;
                         }
                     }
                 }
@@ -243,4 +256,35 @@ void dibujarTextoIngresado(tSistemaSDL *sdl, tPantallaJugador *pantalla)
 
         SDL_RenderFillRect(sdl->renderer, &cursor);
     }
+}
+
+void mostrarTextoError(tSistemaSDL* sdl, tPantallaJugador *pantalla)
+{
+    int x,y;
+
+    SDL_Color color = (SDL_Color){255,0,0,255};
+    char* texto_impri;
+
+    if(!pantalla->ingreso_nombre)
+    {
+        texto_impri = pantalla->texto_no_ingresado;
+    }
+    else if(!pantalla->hay_secuencia)
+    {
+        texto_impri = pantalla->texto_no_secuencia;
+    }
+
+    TTF_Font *fuente = sdl->fuente2;
+
+    SDL_Surface *superficie = TTF_RenderText_Blended(fuente, texto_impri, color);
+    SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer, superficie);
+
+    x = (ANCHO - superficie->w) / 2;
+    y = 300;
+
+    SDL_Rect rectangulo = {x, y, superficie->w, superficie->h};
+    SDL_RenderCopy(sdl->renderer, textura, NULL, &rectangulo);
+
+    SDL_DestroyTexture(textura);
+    SDL_FreeSurface(superficie);
 }

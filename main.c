@@ -149,6 +149,7 @@ int main(int argc, char *argv[])
         switch (estado)
         {
         case MENU:
+            pantalla_jugador.hay_secuencia = true;
             estado = controlEventos(&evento, botones_menu, CANTIDAD_BOTON_MENU, boton_fondo, estado, &codigo,flecha);
 
             if (codigo.cheat)
@@ -278,6 +279,7 @@ int main(int argc, char *argv[])
                 inicializarSecuenciaMozart(&sec, ce_mozart);
                 if ((copiarSecuenciaMozart(&sec, archivo_sec, ce_mozart) == FORMATO_ERROR))
                 {
+                    pantalla_jugador.hay_secuencia = false;
                     printf("\nSecuencia con formato invalido.\n");
                     estado = JUGAR;
                 }
