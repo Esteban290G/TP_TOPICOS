@@ -10,8 +10,8 @@ void inicializarNULL(tSistemaSDL* sistema)
     sistema->fuente_titulo = NULL;
     sistema->musica_menu = NULL;
     sistema->audio_inicializado = false;
+    sistema->imagen_inicializada = false;
 }
-
 
 bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, int largo)
 {
@@ -21,7 +21,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
 
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0)
     {
-        printf("Error al inicializar SDL_Init %s\n",SDL_GetError());
+        printf("\nError al inicializar SDL_Init %s\n",SDL_GetError());
         return false;
     }
 
@@ -29,7 +29,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
 
     if(sistema->ventana == NULL)
     {
-        printf("Error al crear la ventana %s\n",SDL_GetError());
+        printf("\nError al crear la ventana %s\n",SDL_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -38,7 +38,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
 
     if(sistema->renderer == NULL)
     {
-        printf("Error al crear el renderer %s\n",SDL_GetError());
+        printf("\nError al crear el renderer %s\n",SDL_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -47,7 +47,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
 
     if(!sistema->audio_inicializado)
     {
-        printf("Error al inicializar el audio %s",Mix_GetError());
+        printf("\nError al inicializar el audio %s",Mix_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -55,14 +55,14 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
 
     if(sistema->musica_menu == NULL)
     {
-        printf("Error al cargar la musica %s\n",Mix_GetError());
+        printf("\nError al cargar la musica %s\n",Mix_GetError());
         limpiarSDL(sistema);
         return false;
     }
 
     if(TTF_Init() == -1)
     {
-        printf("Error al inicializar TTF_Init %s\n",TTF_GetError());
+        printf("\nError al inicializar TTF_Init %s\n",TTF_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -70,7 +70,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
     sistema->fuente = TTF_OpenFont("fnt/8bitOperatorPlus8-Regular.ttf", 28);
     if(sistema->fuente == NULL)
     {
-        printf("Error al inicializar la fuente %s\n",TTF_GetError());
+        printf("\nError al inicializar la fuente %s\n",TTF_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -78,7 +78,7 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
     sistema->fuente2 = TTF_OpenFont("fnt/8bitOperatorPlus8-Regular.ttf", 35);
     if(sistema->fuente2 == NULL)
     {
-        printf("Error al inicializar la fuente 2 %s\n",TTF_GetError());
+        printf("\nError al inicializar la fuente 2 %s\n",TTF_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -86,7 +86,15 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
     sistema->fuente_titulo = TTF_OpenFont("fnt/8bitOperatorPlus8-Bold.ttf",50);
     if(sistema->fuente_titulo == NULL)
     {
-        printf("Error al inicializar la fuente titulo %s\n",TTF_GetError());
+        printf("\nError al inicializar la fuente titulo %s\n",TTF_GetError());
+        limpiarSDL(sistema);
+        return false;
+    }
+
+    sistema->imagen_inicializada = 0;
+    if(sistema->imagen_inicializada)
+    {
+        printf("\nError al inicializar SDL_image: %s\n", IMG_GetError());
         limpiarSDL(sistema);
         return false;
     }
@@ -112,6 +120,8 @@ void limpiarSDL(tSistemaSDL* sistema)
         Mix_FreeMusic(sistema->musica_menu);
     if(sistema->audio_inicializado)
         Mix_CloseAudio();
+    if (sistema->imagen_inicializada)
+        IMG_Quit();
 
     TTF_Quit();
     SDL_Quit();

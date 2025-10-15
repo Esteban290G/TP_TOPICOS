@@ -130,7 +130,7 @@ bool validarNombreJugador(const char *texto)
 
 unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pantalla, unsigned int estado_actual, tJugador *jugador)
 {
-    unsigned int bandera = estado_actual;
+    unsigned int estado = estado_actual;
 
     while (SDL_PollEvent(evento))
     {
@@ -158,7 +158,7 @@ unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pa
                         {
                             printf("Hiciste clic al boton numero %d\n", i->valor_boton);
                             strcpy(jugador->nombre,pantalla->texto_ingresado);
-                            bandera = i->valor_boton;
+                            estado = i->valor_boton;
                         }
                         else
                         {
@@ -198,9 +198,10 @@ unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pa
             break;
         }
     }
-    if (bandera == MENU)
+    if (estado == MENU)
         strcpy(pantalla->texto_ingresado, "");
-    return bandera;
+
+    return estado;
 }
 
 void dibujarTextoIngresado(tSistemaSDL *sdl, tPantallaJugador *pantalla)

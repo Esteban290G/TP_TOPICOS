@@ -104,26 +104,17 @@ void inicializarOpciones(tOpciones *op)
     op->boton->rectangulo = (SDL_Rect){30,680,LARGO_RECT,ANCHO_RECT};
     strcpy(op->boton->texto_boton,"Volver");
 
-   // op->boton_triangular[0].color_bordes = (SDL_Color){184, 134, 11, 255};
-    //op->boton_triangular[0].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[0].estado = SIGUIENTE;
     op->boton_triangular[0].posicion = (SDL_Point){600,180};
 
-    //op->boton_triangular[1].color_bordes = (SDL_Color){184, 134, 11, 255};
-    //op->boton_triangular[1].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[1].estado = ANTERIOR;
     op->boton_triangular[1].posicion = (SDL_Point){300,180};
 
-    //op->boton_triangular[2].color_bordes = (SDL_Color){184, 134, 11, 255};
-    //op->boton_triangular[2].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[2].estado = SIGUIENTE;
     op->boton_triangular[2].posicion = (SDL_Point){600,280};
 
-    //op->boton_triangular[3].color_bordes = (SDL_Color){184, 134, 11, 255};
-     //op->boton_triangular[3].color_relleno = (SDL_Color){255, 200, 50, 255};
     op->boton_triangular[3].estado = ANTERIOR;
     op->boton_triangular[3].posicion = (SDL_Point){300,280};
-
 
     op->boton_triangular[0].apretado = false;
     op->boton_triangular[1].apretado = false;
@@ -169,7 +160,6 @@ void inicializarOpciones(tOpciones *op)
 
 void mostrarPantallaOpciones(tSistemaSDL* sdl, tOpciones* op)
 {
-    //colorPantalla(sdl,op->fondo);
     dibujarfondodegrade(sdl);
     dibujar(sdl,op->boton,CANTIDAD_BOTON_OPCIONES);
     mostrarTituloOpciones(sdl,op);
@@ -178,7 +168,6 @@ void mostrarPantallaOpciones(tSistemaSDL* sdl, tOpciones* op)
     dibujarMenuDespregable(sdl,&op->menu_sonido);
     dibujarLineasSeparadoras(sdl,150);
     dibujarLineasSeparadoras(sdl,450);
-
 }
 
 void mostrarTituloOpciones(tSistemaSDL* sdl, tOpciones* op)
@@ -407,12 +396,10 @@ unsigned int eventosOpciones(SDL_Event* evento, tOpciones *op, unsigned int esta
 void dibujarMenuDespregable(tSistemaSDL* sdl, tOpciones_despregable* menu_despregable)
 {
     SDL_Color color_boton = {184, 134, 11, 255};
-    SDL_Color color_boton_hover = {255, 215, 0, 255};
     SDL_Color color_opcion = {160, 120, 40, 255};
     SDL_Color color_opcion_seleccionada = {255, 200, 50, 255};
     SDL_Color color_texto = {255, 255, 255, 255};
     SDL_Color color_borde = {160, 120, 40, 255};
-
 
     TTF_Font* fuente = sdl->fuente;
 
@@ -531,10 +518,10 @@ void dibujarfondodegrade(tSistemaSDL*sdl)
         SDL_RenderDrawLine(sdl->renderer, 0, y, ANCHO, y);
     }
 }
+
 void dibujarLineasSeparadoras(tSistemaSDL*sdl, int y)
 {
     SDL_Color color_linea = {184, 134, 11, 255};
     SDL_SetRenderDrawColor(sdl->renderer, color_linea.r, color_linea.g, color_linea.b, color_linea.a);
     SDL_RenderDrawLine(sdl->renderer, 50, y, ANCHO - 40, y);
 }
-

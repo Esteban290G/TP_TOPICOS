@@ -10,7 +10,6 @@
 #include "menus.h"
 #include "juego.h"
 
-
 typedef struct
 {
     SDL_Rect rectangulo;
@@ -42,7 +41,6 @@ typedef struct
     tOpciones_despregable menu_sonido;
 }tOpciones;
 
-
 void inicializarOpciones(tOpciones *op);
 void mostrarPantallaOpciones(tSistemaSDL* sdl, tOpciones* op);
 void mostrarTituloOpciones(tSistemaSDL* sdl, tOpciones* op);
@@ -50,8 +48,6 @@ void mostrarTextos(tSistemaSDL* sdl, tOpciones* op);
 void mostrarTextosopciones(tSistemaSDL* sdl, tOpciones * op,char*opciones);
 unsigned int eventosOpciones(SDL_Event* evento, tOpciones *op, unsigned int estado_actual, tConfigJuego *configJuego);
 void dibujarMenuDespregable(tSistemaSDL* sdl, tOpciones_despregable* menu_despregable);
-
-
 void dibujarfondodegrade(tSistemaSDL*sdl);
 void dibujarLineasSeparadoras(tSistemaSDL*sdl, int y);
 

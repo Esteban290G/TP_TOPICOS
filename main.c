@@ -18,6 +18,7 @@ Entrega: Si
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 #include "graficos.h"
 #include "menus.h"
 #include "sistemasSDL.h"
@@ -37,74 +38,33 @@ int main(int argc, char *argv[])
 
     // Variables para el tiempo
     Uint32 tiempoAnterior = SDL_GetTicks();
-    float deltaTime = 0;
+    float delta_time = 0;
 
     // Inicializar SDL
     tSistemaSDL sdl;
 
     if (!inicializarSDL(&sdl, nombreVentana, ANCHO, LARGO))
     {
-        printf("Error, no se pudo inicializar SDL\n");
+        printf("\nError, no se pudo inicializar SDL\n");
         return 1;
     }
 
-    /// reproducirMusica(&sdl);
+    reproducirMusica(&sdl);
 
     // Cargar y generar los sonidos
     Mix_Chunk *sonidos[8];
     Mix_Chunk *sonido_error = cargarSonido("snd/sonido_error.wav");
 
     Mix_Chunk *armas[8];
-    // Sonidos Counter
-    Mix_Chunk *counter_01 = cargarSonido("snd/counter_01.wav");
-    Mix_Chunk *counter_02 = cargarSonido("snd/counter_02.wav");
-    Mix_Chunk *counter_03 = cargarSonido("snd/counter_03.wav");
-    Mix_Chunk *counter_04 = cargarSonido("snd/counter_04.wav");
-    Mix_Chunk *counter_05 = cargarSonido("snd/counter_05.wav");
-    Mix_Chunk *counter_06 = cargarSonido("snd/counter_06.wav");
-    Mix_Chunk *counter_07 = cargarSonido("snd/counter_07.wav");
-    Mix_Chunk *counter_08 = cargarSonido("snd/counter_08.wav");
-
-    armas[0] = counter_01;
-    armas[1] = counter_02;
-    armas[2] = counter_03;
-    armas[3] = counter_04;
-    armas[4] = counter_05;
-    armas[5] = counter_06;
-    armas[6] = counter_07;
-    armas[7] = counter_08;
+    cargarSonidosCounter(armas);
 
     Mix_Chunk *mine[8];
-
-    Mix_Chunk *mine_01 = cargarSonido("snd/minecraft_01.wav");
-    Mix_Chunk *mine_02 = cargarSonido("snd/minecraft_02.wav");
-    Mix_Chunk *mine_03 = cargarSonido("snd/minecraft_03.wav");
-    Mix_Chunk *mine_04 = cargarSonido("snd/minecraft_04.wav");
-    Mix_Chunk *mine_05 = cargarSonido("snd/minecraft_05.wav");
-    Mix_Chunk *mine_06 = cargarSonido("snd/minecraft_06.wav");
-    Mix_Chunk *mine_07 = cargarSonido("snd/minecraft_07.wav");
-    Mix_Chunk *mine_08 = cargarSonido("snd/minecraft_08.wav");
-
-    mine[0] = mine_01;
-    mine[1] = mine_02;
-    mine[2] = mine_03;
-    mine[3] = mine_04;
-    mine[4] = mine_05;
-    mine[5] = mine_06;
-    mine[6] = mine_07;
-    mine[7] = mine_08;
-
-    // Estructura secuencia
-    tSecuencia sec;
+    cargarSonidosMinecraft(mine);
 
     //  Colores Rojo - Verde - Azul - Magenta - Amarillo - Cian - Naranja - Morado
-    SDL_Color colores[8] = {{191, 0, 0, 255}, {0, 191, 0, 255}, {0, 0, 191, 255}, {191, 0, 191, 255}, {191, 191, 0, 255}, {0, 191, 191, 255}, {191, 124, 0, 255}, {65, 26, 75, 255}};
-    SDL_Color colores_luz[8] = {{236, 83, 83, 255}, {83, 236, 83, 255}, {83, 83, 236, 255}, {236, 83, 236, 255}, {236, 236, 83, 255}, {83, 236, 236, 255}, {236, 182, 83, 255}, {104, 52, 117, 255}};
-    SDL_Color fondo = (SDL_Color){
-        115, 115, 115, 128};
-
-    //SDL_Color colores_hover[] = {{255, 70, 70, 255}, {70, 255, 70, 255}, {70, 70, 255, 255}, {255, 70, 255, 255}, {255, 255, 70, 255}, {70, 255, 255, 255}, {255, 190, 70, 255}, {120, 60, 130, 255}};
-
+    SDL_Color colores[] = {{191, 0, 0, 255}, {0, 191, 0, 255}, {0, 0, 191, 255}, {191, 0, 191, 255}, {191, 191, 0, 255}, {0, 191, 191, 255}, {191, 124, 0, 255}, {65, 26, 75, 255}};
+    SDL_Color colores_luz[] = {{236, 83, 83, 255}, {83, 236, 83, 255}, {83, 83, 236, 255}, {236, 83, 236, 255}, {236, 236, 83, 255}, {83, 236, 236, 255}, {236, 182, 83, 255}, {104, 52, 117, 255}};
+    SDL_Color fondo = (SDL_Color){115, 115, 115, 128};
     SDL_Color colores_apretado[] = {{100, 0, 0, 255}, {0, 100, 0, 255}, {0, 0, 100, 255}, {100, 0, 100, 255}, {120, 120, 0, 255}, {0, 100, 100, 255}, {120, 70, 0, 255}, {30, 10, 40, 255}};
 
     size_t cant_simon_menu = 8; // Para los botones de colores que aparecen en menu ppal
@@ -115,102 +75,75 @@ int main(int argc, char *argv[])
     tJugador jugador;
     tEstadistica pantalla_estadistica;
     tOpciones opciones;
+    tSecuencia sec; // secuencia del simon
+    tKonami codigo;
+    tConfigJuego configuracion;
+    tBotonSimon boton_simon[8];
 
     inicializarPantallaJugador(&pantalla_jugador);
     inicializarJugador(&pantalla_jugador, &jugador);
     inicializarPantallaEstadistica(&pantalla_estadistica);
     inicializarOpciones(&opciones);
+    inicializarKonami(&codigo);
 
-    tSistemaCrab bicho_crab;
-    inicializartSistemaCrab(&bicho_crab);
+    // Cargar archivos para estadisticas
+    const char* stats_schon = "top_schonberg.dat";
+    const char* stats_mozart = "top_mozart.dat";
+    char* archivo_sec = "secuencia.txt";
 
-    cargarTopDesdeArchivo(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
-    cargarTopDesdeArchivo(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, "top_mozart.dat");
+    cargarTopDesdeArchivo(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, stats_schon);
+    cargarTopDesdeArchivo(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, stats_mozart);
 
-    /// Datos de botones y texto REVISAR
+    /// Datos de botones y texto
     int vector_valores_menu[] = {JUGAR, OPCIONES, ESTADISTICA, SALIR};
-    // int vector_valores_opciones[] = {OPCIONES_BOTONES, MENU};
-    int vector_valores_estadistica[] = {MENU};
-    int vector_valores_jugar[] = {SCHONBERG, MOZART, DESAFIO, MENU};
     int vector_valores_simon[] = {BOTON_1, BOTON_2, BOTON_3, BOTON_4, BOTON_5, BOTON_6, BOTON_7, BOTON_8};
-    // int vector_valores_fondo[] = {BOTON_111,BOTON_112,BOTON_113,BOTON_114,BOTON_115,BOTON_116,BOTON_117,BOTON_118};
-    int vector_valores_aux_simon[] = {JUGAR, SALIR}; /// AUX
-    int vector_valores_aux_desafio[] = {JUGAR, GUARDAR};
+    int vector_valores_menu_simon[] = {JUGAR, SALIR};
+    int vector_valores_desafio[] = {JUGAR, GUARDAR};
 
-    char *texto_menu[] = {"jugar", "opciones", "estadistica", "salir"};
-    // char* texto_opciones[] = {"Modificar","Volver"};
-    char *texto_estadistica[] = {"Volver"};
-    char *texto_jugar[] = {"Modo Schonberg", "Modo Mozart", "Modo Desafio", "Volver"};
-    char *texto_aux_simon[] = {"Volver", "Salir"}; /// AUX
-    char *texto_aux_desafio[] = {"Volver", "Guardar"};
+    char *texto_menu[] = {"Jugar", "Opciones", "Estadisticas", "Salir"};
+    char *texto_simon[] = {"Volver", "Salir"};
+    char *texto_desafio[] = {"Volver", "Guardar"};
 
     // Cargar datos a los botones
     tBoton botones_menu[CANTIDAD_BOTON_MENU];
     cargarDatosBotones(botones_menu, CANTIDAD_BOTON_MENU, colores, vector_valores_menu, texto_menu);
 
-    // tBoton botones_opciones[CANTIDAD_BOTON_OPCIONES];
-    // cargarDatosBotones(botones_opciones, CANTIDAD_BOTON_OPCIONES, colores,vector_valores_opciones,texto_opciones);
-
-    tBoton botones_estadistica[CANTIDAD_BOTON_ESTADISTICA];
-    cargarDatosBotones(botones_estadistica, CANTIDAD_BOTON_ESTADISTICA, colores, vector_valores_estadistica, texto_estadistica);
-
-    tBoton botones_jugar[CANTIDAD_BOTON_JUGAR];
-    cargarDatosBotones(botones_jugar, CANTIDAD_BOTON_JUGAR, colores, vector_valores_jugar, texto_jugar);
-
-    /// AUX
+    // Botones de menu dentro del juego SE PUEDE HACER EN FUNCION CAPAZ
     tBoton botones_aux_simon[2];
-    cargarDatosBotones(botones_aux_simon, 2, colores, vector_valores_aux_simon, texto_aux_simon);
+    cargarDatosBotones(botones_aux_simon, 2, colores, vector_valores_menu_simon, texto_simon);
     botones_aux_simon[0].rectangulo.x = 10;
     botones_aux_simon[0].rectangulo.y = 10;
     botones_aux_simon[1].rectangulo.x = 500;
     botones_aux_simon[1].rectangulo.y = 10;
 
     tBoton botones_aux_desafio[2];
-    cargarDatosBotones(botones_aux_desafio, 2, colores, vector_valores_aux_desafio, texto_aux_desafio);
+    cargarDatosBotones(botones_aux_desafio, 2, colores, vector_valores_desafio, texto_desafio);
     botones_aux_desafio[0].rectangulo.x = 10;
     botones_aux_desafio[0].rectangulo.y = 10;
     botones_aux_desafio[1].rectangulo.x = 500;
     botones_aux_desafio[1].rectangulo.y = 10;
 
-    // Cargamos los datos al boton_simon
-    tBotonSimon boton_simon[8];
-
-    tConfigJuego configuracion;
-    configuracion.cant_botones = 3;
-    configuracion.duracion_inicial = 2000;
-    bool cargar_botones = true;
-    bool cargar_sonidos = true;
-
-    /// AUX FONDO
-
+    // Botones de fondo del menu principal
     tBoton_fondo boton_fondo[8];
-
-    inicializarBoton_fondo(boton_fondo, colores, colores_luz, colores_apretado, vector_valores_simon);
-
-    /*for(int i = 0; i< 8; i++)
-    {
-        printf("(%d - %d -%d) - ",boton_fondo[i].valor_boton, boton_fondo[i].rectangulo.x, boton_fondo[i].rectangulo.y);
-    }*/
-
     tFlecha flecha[4];
 
+    inicializarBoton_fondo(boton_fondo, colores, colores_luz, colores_apretado, vector_valores_simon);
     inicializarFlecha(flecha);
 
-    ///
-
-    tConfeti confeti[MAX_CONFETI];
-    inicializarConfeti(confeti);
-
+    // variables necesarias para la logica
     bool modo = true;
     bool win = false;
-
-    tKonami codigo;
-    inicializarKonami(&codigo);
+    bool cargar_botones = true;
+    bool cargar_sonidos = true;
     int cant_tonos = 0;
+    configuracion.cant_botones = 3;
+    configuracion.duracion_inicial = 2000;
+
     while (corriendo)
     {
+        // variables para manejar tiempos
         Uint32 tiempoActual = SDL_GetTicks();
-        deltaTime = tiempoActual - tiempoAnterior;
+        delta_time = tiempoActual - tiempoAnterior;
         tiempoAnterior = tiempoActual;
 
         switch (estado)
@@ -227,7 +160,7 @@ int main(int argc, char *argv[])
             break;
 
         case JUGAR:
-            /// reanudarMusica(&sdl);
+            reanudarMusica(&sdl);
             cargar_botones = true;
             sec.primera_vez = true;
             sec.primer_boton = true;
@@ -241,7 +174,7 @@ int main(int argc, char *argv[])
 
             if(opciones.config.es_counter)
             {
-                for(int i = 0; i<8;i++)
+                for(int i = 0; i<8; i++)
                 {
                     sonidos[i] = armas[i];
                 }
@@ -249,7 +182,7 @@ int main(int argc, char *argv[])
             }
             else if(opciones.config.es_minecraft)
             {
-                for(int i = 0; i<8;i++)
+                for(int i = 0; i<8; i++)
                 {
                     sonidos[i] = mine[i];
                 }
@@ -268,8 +201,8 @@ int main(int argc, char *argv[])
             break;
 
         case SCHONBERG:
-            /// pausarMusica(&sdl);
-            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_simon, 2, sonidos, &sec, deltaTime, &jugador);
+            pausarMusica(&sdl);
+            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_simon, 2, sonidos, &sec, delta_time, &jugador);
 
             if(cargar_sonidos)
             {
@@ -294,7 +227,7 @@ int main(int argc, char *argv[])
                 }
             }
 
-            reproducirSecuencia(&sdl, sonidos, boton_simon, configuracion.cant_botones, fondo, botones_aux_simon, 2, deltaTime, &sec, configuracion.duracion_inicial, -1);
+            reproducirSecuencia(&sdl, sonidos, boton_simon, configuracion.cant_botones, fondo, botones_aux_simon, 2, delta_time, &sec, configuracion.duracion_inicial, -1);
 
             if (!sec.reproduciendo)
             {
@@ -324,7 +257,7 @@ int main(int argc, char *argv[])
 
                     insertarEnTop(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, jugador);
 
-                    guardarTopEnArchivo(pantalla_estadistica.jugador, pantalla_estadistica.ce_jugadores, "top_schonberg.dat");
+                    guardarTopEnArchivo(pantalla_estadistica.jugador, pantalla_estadistica.ce_jugadores, stats_schon);
 
                     estado = PERDISTE;
                 }
@@ -338,12 +271,12 @@ int main(int argc, char *argv[])
             break;
 
         case MOZART:
-            /// pausarMusica(&sdl);
+            pausarMusica(&sdl);
             if (sec.primera_vez)
             {
-                size_t ce_mozart = contarElemSecuencia("secuencia.txt");
+                size_t ce_mozart = contarElemSecuencia(archivo_sec);
                 inicializarSecuenciaMozart(&sec, ce_mozart);
-                if ((copiarSecuenciaMozart(&sec, "secuencia.txt", ce_mozart) == FORMATO_ERROR))
+                if ((copiarSecuenciaMozart(&sec, archivo_sec, ce_mozart) == FORMATO_ERROR))
                 {
                     printf("\nSecuencia con formato invalido.\n");
                     estado = JUGAR;
@@ -360,7 +293,7 @@ int main(int argc, char *argv[])
                 cant_botones = cant_aux;
             }
 
-            estado = controlEventosSimon(&evento, boton_simon, cant_botones, estado, botones_aux_simon, 2, sonidos, &sec, deltaTime, &jugador);
+            estado = controlEventosSimon(&evento, boton_simon, cant_botones, estado, botones_aux_simon, 2, sonidos, &sec, delta_time, &jugador);
 
             if(cargar_sonidos)
             {
@@ -375,7 +308,7 @@ int main(int argc, char *argv[])
             }
             dibujarPantallaJuego(&sdl, fondo, boton_simon, cant_botones, botones_aux_simon, 2);
 
-            reproducirSecuencia(&sdl, sonidos, boton_simon, cant_botones, fondo, botones_aux_simon, 2, deltaTime, &sec, configuracion.duracion_inicial, sec.mozart_actual);
+            reproducirSecuencia(&sdl, sonidos, boton_simon, cant_botones, fondo, botones_aux_simon, 2, delta_time, &sec, configuracion.duracion_inicial, sec.mozart_actual);
 
             if (!sec.reproduciendo)
             {
@@ -399,7 +332,7 @@ int main(int argc, char *argv[])
                         else
                         {
                             insertarEnTop(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, jugador);
-                            guardarTopEnArchivo(pantalla_estadistica.jugador_mo, pantalla_estadistica.ce_jugadores_mo, "top_mozart.dat");
+                            guardarTopEnArchivo(pantalla_estadistica.jugador_mo, pantalla_estadistica.ce_jugadores_mo, stats_mozart);
                             sec.mozart_actual = 1;
                             sec.indice = 0;
                             sec.reproduciendo = true;
@@ -415,7 +348,7 @@ int main(int argc, char *argv[])
 
                     insertarEnTop(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, jugador);
 
-                    guardarTopEnArchivo(pantalla_estadistica.jugador_mo, pantalla_estadistica.ce_jugadores_mo, "top_mozart.dat");
+                    guardarTopEnArchivo(pantalla_estadistica.jugador_mo, pantalla_estadistica.ce_jugadores_mo, stats_mozart);
 
                     estado = PERDISTE;
                     sec.mozart_actual = 1;
@@ -429,14 +362,14 @@ int main(int argc, char *argv[])
             break;
 
         case DESAFIO:
-
+            pausarMusica(&sdl);
             if(sec.primera_vez)
             {
                 inicializarSecuenciaDesafio(&sec);
                 sec.primera_vez = false;
             }
 
-            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_desafio, 2, sonidos, &sec, deltaTime, &jugador);
+            estado = controlEventosSimon(&evento, boton_simon, configuracion.cant_botones, estado, botones_aux_desafio, 2, sonidos, &sec, delta_time, &jugador);
 
             if(cargar_sonidos)
             {
@@ -452,7 +385,7 @@ int main(int argc, char *argv[])
 
             if (estado == GUARDAR)
             {
-                agregarSecuenciaArchivo(&sec,"secuencia.txt");
+                agregarSecuenciaArchivo(&sec,archivo_sec);
                 estado = MENU;
 
             }
@@ -469,7 +402,7 @@ int main(int argc, char *argv[])
             cargar_botones = true;
             SDL_Color color_perdiste = (SDL_Color){255, 0, 0, 3};
             pantalla_juego(&sdl, &jugador, win, color_perdiste);
-            estado = controlEventosPantalla_juego(&evento, estado, modo); // REVISAR CLIC IZQUIERDA
+            estado = controlEventosPantalla_juego(&evento, estado, modo);
             break;
 
         case GANASTE:
@@ -486,11 +419,12 @@ int main(int argc, char *argv[])
             break;
         }
 
-        //printf("\nCantidad de tonos : %d",cant_tonos);
         SDL_RenderPresent(sdl.renderer);
         SDL_Delay(16);
     }
 
+    // Limpiar memoria
+    cant_tonos = crearArrayTonos(sonidos, 8); // Para que no haya problemas con destruirArrayTonos
     destruirArrayTonos(sonidos,cant_tonos);
     destruirArraySonido(armas);
     destruirArraySonido(mine);

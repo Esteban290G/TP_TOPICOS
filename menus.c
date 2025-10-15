@@ -208,11 +208,6 @@ unsigned int controlEventos(SDL_Event *evento, tBoton *botones, size_t ce, tBoto
     return bandera;
 }
 
-/// IMPORTANTE
-// Habria que modificar la funcion para que pueda recibir distintos tiutlos
-// Y de esa manera poder evitar tener que identificar si se trata de un boton u otro
-// Y mejorar la logica obviamente
-// Pensar quizas una structura pantalla (una idea)
 void dibujarTitulo(tSistemaSDL *sdl)
 {
     int x, y;
@@ -274,7 +269,6 @@ void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color *colores, SDL_C
     int j = 0;
     for (tBoton_fondo *i = boton_fondo; i < boton_fondo + 8; i++)
     {
-
         i->color = *colores;
         i->color_apretado = *color_apretadoo;
         i->color_hover = *color_hoverr;
@@ -332,7 +326,6 @@ void inicializarFlecha(tFlecha* flecha)
     flecha[3].posicion = (SDL_Point){300, 45};
     flecha[3].direccion = 3;
 }
-
 
 void dibujarFlecha(tSistemaSDL *sdl, tFlecha* flecha, size_t ce)
 {

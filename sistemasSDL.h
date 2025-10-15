@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_image.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
@@ -15,6 +16,7 @@ typedef struct
     TTF_Font* fuente2;
     TTF_Font* fuente_titulo;
     bool audio_inicializado;
+    bool imagen_inicializada;
     Mix_Music* musica_menu;
 }tSistemaSDL;
 

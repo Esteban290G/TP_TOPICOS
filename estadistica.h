@@ -48,10 +48,6 @@ typedef struct
     char texto_est[MAX_LETRAS];
 }tEstadistica;
 
-
-///Logica para crear y agregar al archivo
-///Logica para ordenar el vector de los puntos
-
 /////////////
 
 bool cargarTopDesdeArchivo(tJugador *vec, size_t *ce, const char *nombre_archivo);
@@ -59,7 +55,6 @@ void guardarTopEnArchivo(tJugador *vec, size_t ce, const char *nombre_archivo);
 void insertarEnTop(tJugador *vec, size_t *ce, tJugador nuevo);
 
 ///////////
-
 
 ///Parte visual de la estadistica
 

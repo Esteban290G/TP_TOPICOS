@@ -131,7 +131,6 @@ void destruirTono(Mix_Chunk *tono)
     free(tono);
 }
 
-
 void destruirArraySonido(Mix_Chunk *sonidos[])
 {
     if (sonidos == NULL)
@@ -143,7 +142,6 @@ void destruirArraySonido(Mix_Chunk *sonidos[])
     {
         if (sonidos[i] != NULL)
         {
-            //printf("liberando\n");
             Mix_FreeChunk(sonidos[i]);
             sonidos[i] = NULL;
         }
@@ -155,6 +153,47 @@ void destruirArrayTonos(Mix_Chunk* sonidos[], int cant_tonos)
     for(int i = 0; i< cant_tonos; i++)
     {
         destruirTono(sonidos[i]);
-        //printf("\ntono %d libreado\n",i);
     }
+}
+
+void cargarSonidosCounter(Mix_Chunk* armas[])
+{
+    Mix_Chunk *counter_01 = cargarSonido("snd/counter_01.wav");
+    Mix_Chunk *counter_02 = cargarSonido("snd/counter_02.wav");
+    Mix_Chunk *counter_03 = cargarSonido("snd/counter_03.wav");
+    Mix_Chunk *counter_04 = cargarSonido("snd/counter_04.wav");
+    Mix_Chunk *counter_05 = cargarSonido("snd/counter_05.wav");
+    Mix_Chunk *counter_06 = cargarSonido("snd/counter_06.wav");
+    Mix_Chunk *counter_07 = cargarSonido("snd/counter_07.wav");
+    Mix_Chunk *counter_08 = cargarSonido("snd/counter_08.wav");
+
+    armas[0] = counter_01;
+    armas[1] = counter_02;
+    armas[2] = counter_03;
+    armas[3] = counter_04;
+    armas[4] = counter_05;
+    armas[5] = counter_06;
+    armas[6] = counter_07;
+    armas[7] = counter_08;
+}
+
+void cargarSonidosMinecraft(Mix_Chunk* mine[])
+{
+    Mix_Chunk *mine_01 = cargarSonido("snd/minecraft_01.wav");
+    Mix_Chunk *mine_02 = cargarSonido("snd/minecraft_02.wav");
+    Mix_Chunk *mine_03 = cargarSonido("snd/minecraft_03.wav");
+    Mix_Chunk *mine_04 = cargarSonido("snd/minecraft_04.wav");
+    Mix_Chunk *mine_05 = cargarSonido("snd/minecraft_05.wav");
+    Mix_Chunk *mine_06 = cargarSonido("snd/minecraft_06.wav");
+    Mix_Chunk *mine_07 = cargarSonido("snd/minecraft_07.wav");
+    Mix_Chunk *mine_08 = cargarSonido("snd/minecraft_08.wav");
+
+    mine[0] = mine_01;
+    mine[1] = mine_02;
+    mine[2] = mine_03;
+    mine[3] = mine_04;
+    mine[4] = mine_05;
+    mine[5] = mine_06;
+    mine[6] = mine_07;
+    mine[7] = mine_08;
 }

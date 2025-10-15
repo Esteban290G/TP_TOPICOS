@@ -92,7 +92,8 @@ void dibujarBoton(tSistemaSDL *sdl, tBotonSimon *boton, size_t cant_botones)
 
 void dibujarPantallaJuego(tSistemaSDL *sdl, SDL_Color color, tBotonSimon *boton_simon, size_t cant_botones, tBoton *boton_normal, size_t ce_normal)
 {
-    colorPantalla(sdl, color);
+    //colorPantalla(sdl, color);
+    cargarFondobmp(sdl);
     dibujar(sdl, boton_normal, ce_normal);
     dibujarBoton(sdl, boton_simon, cant_botones);
 }
@@ -205,6 +206,7 @@ void cargarBotonSimon(tBotonSimon *boton_simon, SDL_Color *color_1, SDL_Color *c
     }
 }
 
+// Schonberg
 int inicializarSecuencia(tSecuencia *secuencia, size_t cant_botones)
 {
     secuencia->longitud = LONG_INICIAL;
@@ -260,8 +262,6 @@ void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk *sonidos[], tBotonSimon *bo
     float tiempoApagadoBase = duracion_inicial * 0.3f;
     float tiempoEsperaInicio = 1500;
 
-    // printf("\nTiempo original = %.2f \nTiempo Prendio = %.2f \nTiempoApagado = %.2f",duracion_inicial,tiempoPrendidoBase,tiempoApagadoBase);
-
     float acelerador = 0.03f * (secuencia->longitud - 1);
 
     // un tope para que no se pase a negativo la resta
@@ -272,8 +272,6 @@ void reproducirSecuencia(tSistemaSDL *sdl, Mix_Chunk *sonidos[], tBotonSimon *bo
 
     float tiempoPrendido = tiempoPrendidoBase * (1.0f - acelerador);
     float tiempoApagado = tiempoApagadoBase * (1.0f - acelerador);
-
-    // printf("\ntiempo prendido actual = %.2f \ntiempo apagado actual = %.2f",tiempoPrendido, tiempoApagado);
 
     if (secuencia->primer_boton && secuencia->tiempo_acumulado <= tiempoEsperaInicio)
     {
@@ -356,10 +354,10 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
                             i->color_base = i->color_sonando;
                             i->sonando = true;
                             i->presionado = true;
-
                             jugador->valorBoton = i->valor_boton;
                         }
                     }
+
                     i_sonido++;
                 }
                 for (tBoton *i = boton_normal; i < boton_normal + ce_normal; i++)
@@ -395,7 +393,6 @@ unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, si
 
         case SDL_QUIT:
             estado = SALIR;
-            printf("\nEstado actual: Menu Saliendo\n");
             break;
         }
     }
@@ -414,10 +411,6 @@ bool validarJugador(tJugador *jugador, tSecuencia *sec)
             printf("CORRECTO\n");
             correcto = true;
             sec->indice++;
-        }
-        else
-        {
-            printf("INCORRECTO\n");
         }
     }
 
@@ -438,7 +431,6 @@ void reiniciarJuego(tSecuencia *sec)
 }
 
 // Mozart
-
 void inicializarSecuenciaMozart(tSecuencia *secuencia, size_t cant_elem)
 {
     secuencia->indice = 0;
@@ -456,7 +448,7 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
     vec->vecSecuencia = malloc(sizeof(int) * cant_elem);
     if (!vec->vecSecuencia)
     {
-        printf("Error de memoria.\n");
+        printf("\nError de memoria.\n");
         return MEM_ERROR;
     }
 
@@ -476,7 +468,7 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
     {
         if (num_leido < BOTON_1 || num_leido > BOTON_8)
         {
-            printf("Error de formato.\n");
+            printf("\nError de formato.\n");
             fclose(pf);
             free(vec->vecSecuencia);
             vec->vecSecuencia = NULL;
@@ -490,7 +482,7 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
 
     if (cant_valores == 0)
     {
-        printf("Error de formato.\n");
+        printf("\nError de formato.\n");
         fclose(pf);
         free(vec->vecSecuencia);
         vec->vecSecuencia = NULL;
@@ -498,9 +490,7 @@ int copiarSecuenciaMozart(tSecuencia *vec, char *nombre_archivo, size_t cant_ele
     }
 
     fclose(pf);
-
     vec->longitud = i;
-
     return FILE_OK;
 }
 
@@ -553,8 +543,6 @@ size_t buscarMaximo(tSecuencia *vec)
 void pantalla_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo, SDL_Color color)
 {
     colorpantalla_juego(sdl, color);
-    //actualizarConfeti(confeti);
-    //dibujarConfeti(sdl, confeti);
     mostrarTexto_juego(sdl, jugador, modo);
 }
 
@@ -565,15 +553,15 @@ void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo)
     SDL_Color color = (SDL_Color){255, 255, 255, 255};
     char texto_jugador[500];
     char texto_parrafo[500];
-    char texto_titulo[500];
+    char texto_titulo[15];
 
     if (modo == false)
     {
-        strcpy(texto_titulo, "¡PERDISTEE!");
+        strcpy(texto_titulo, "PERDISTEE!");
     }
     else
     {
-        strcpy(texto_titulo, "¡GANASTE!");
+        strcpy(texto_titulo, "GANASTE!");
     }
     sprintf(texto_jugador, "Nombre: %s | Score: %d", jugador->nombre, jugador->Score);
     strcpy(texto_parrafo, "Clic izquierdo para volver al menu de juego");
@@ -604,13 +592,13 @@ void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo)
     SDL_RenderCopy(sdl->renderer, textura_jugador, NULL, &rect_jugador);
     SDL_RenderCopy(sdl->renderer, textura_parrafo, NULL, &rect_parrafo);
 
-    SDL_FreeSurface(superficie_jugador);
-    SDL_FreeSurface(superficie_parrafo);
-    SDL_FreeSurface(superficie_titulo);
-
     SDL_DestroyTexture(textura_titulo);
     SDL_DestroyTexture(textura_jugador);
     SDL_DestroyTexture(textura_parrafo);
+
+    SDL_FreeSurface(superficie_jugador);
+    SDL_FreeSurface(superficie_parrafo);
+    SDL_FreeSurface(superficie_titulo);
 }
 unsigned int controlEventosPantalla_juego(SDL_Event *evento, unsigned int estado_actual, bool modo)
 {
@@ -630,7 +618,6 @@ unsigned int controlEventosPantalla_juego(SDL_Event *evento, unsigned int estado
             break;
         case SDL_QUIT:
             estado = SALIR;
-            printf("\nEstado actual: Menu Saliendo\n");
             break;
         }
     }
@@ -647,87 +634,8 @@ void colorpantalla_juego(tSistemaSDL *sdl, SDL_Color color)
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
 }
 
-void inicializarConfeti(tConfeti *confeti)
-{
-
-    SDL_Color colores[] = {
-        {255, 50, 50, 255},  // Rojo
-        {50, 255, 50, 255},  // Verde
-        {50, 50, 255, 255},  // Azul
-        {255, 255, 50, 255}, // Amarillo
-        {255, 50, 255, 255}, // Rosa
-        {50, 255, 255, 255}  // Cyan
-    };
-
-    for (int i = 0; i < MAX_CONFETI; i++)
-    {
-        confeti[i].tam = rand() % 8 + 4;
-        confeti[i].pos.x = rand() % 740;
-        confeti[i].pos.y = -(rand() % 200);
-        confeti[i].pos.w = confeti[i].tam;
-        confeti[i].pos.h = confeti[i].tam;
-
-        confeti[i].color = colores[rand() % 6];
-
-        confeti[i].velocidad_y = rand() % 5 + 2.0f;
-        confeti[i].velocidad_x = (rand() % 10 - 5) / 2.0f;
-        confeti[i].gravedad = 0.1f;
-        confeti[i].rotacion = rand() % 360;
-    }
-}
-
-void actualizarConfeti(tConfeti *confeti)
-{
-    for (int i = 0; i < MAX_CONFETI; i++)
-    {
-        confeti[i].velocidad_y += confeti[i].gravedad;
-
-        confeti[i].pos.y += confeti[i].velocidad_y;
-        confeti[i].pos.x += confeti[i].velocidad_x;
-
-        confeti[i].rotacion += confeti[i].velocidad_x;
-
-        if (confeti[i].pos.x < 0 || confeti[i].pos.x > 740 - confeti[i].tam)
-        {
-            confeti[i].velocidad_x *= -0.8f;
-        }
-
-        if (confeti[i].pos.y > 740)
-        {
-            confeti[i].pos.y = -confeti[i].tam;
-            confeti[i].pos.x = rand() % 740;
-            confeti[i].velocidad_y = rand() % 3 + 1.0f;
-        }
-    }
-}
-
-void dibujarConfeti(tSistemaSDL *sdl, tConfeti *confeti)
-{
-    for (int i = 0; i < MAX_CONFETI; i++)
-    {
-        SDL_SetRenderDrawColor(sdl->renderer,
-                               confeti[i].color.r,
-                               confeti[i].color.g,
-                               confeti[i].color.b,
-                               confeti[i].color.a);
-
-        // Dibujar como peque�o rect�ngulo (podr�as hacer formas m�s interesantes)
-        SDL_RenderFillRect(sdl->renderer, &confeti[i].pos);
-
-        // Opcional: dibujar borde
-        SDL_SetRenderDrawColor(sdl->renderer, 255, 255, 255, 128);
-        SDL_RenderDrawRect(sdl->renderer, &confeti[i].pos);
-    }
-}
-
 void inicializarSecuenciaDesafio(tSecuencia* secuencia)
 {
-    /*if (secuencia->vecSecuencia != NULL)
-    {
-        printf("DEBUG2");
-        free(secuencia->vecSecuencia);
-        secuencia->vecSecuencia = NULL;
-    }*/
     secuencia->longitud = 0;
     secuencia->indice = 0;
     secuencia->primera_vez = false;
@@ -742,7 +650,6 @@ void inicializarSecuenciaDesafio(tSecuencia* secuencia)
     }
 }
 
-
 void agregarDesafioSecuencia(tSecuencia *secuencia, unsigned int valor)
 {
     int *aux = realloc(secuencia->vecSecuencia, sizeof(int) * (secuencia->longitud + 1));
@@ -753,7 +660,6 @@ void agregarDesafioSecuencia(tSecuencia *secuencia, unsigned int valor)
     }
 
     secuencia->vecSecuencia = aux;
-
     secuencia->vecSecuencia[secuencia->longitud] = valor;
     secuencia->longitud++;
 }
@@ -774,4 +680,31 @@ void agregarSecuenciaArchivo(tSecuencia *secuencia, char* archivo)
     }
 
     fclose(pf);
+}
+
+void cargarFondobmp(tSistemaSDL *sdl)
+{
+    sdl->imagen_inicializada = true;
+
+    SDL_Surface *superficie = SDL_LoadBMP("fondo.bmp");
+
+    if(superficie == NULL)
+    {
+        printf("Error al inicializar la superficie %s\n", SDL_GetError());
+        limpiarSDL(sdl);
+        return;
+    }
+
+    SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer,superficie);
+
+    if(textura == NULL)
+    {
+        printf("Error al inicializar la textura %s\n", SDL_GetError());
+        limpiarSDL(sdl);
+        return;
+    }
+    SDL_RenderCopy(sdl->renderer,textura,NULL,NULL);
+
+    SDL_DestroyTexture(textura);
+    SDL_FreeSurface(superficie);
 }

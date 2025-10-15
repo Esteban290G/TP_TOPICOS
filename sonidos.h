@@ -31,6 +31,8 @@ int crearArrayTonos(Mix_Chunk* sonidos[],size_t cant_botones);
 void destruirTono();
 void destruirArraySonido(Mix_Chunk *sonidos[]);
 void destruirArrayTonos(Mix_Chunk* sonidos[], int cant_tonos);
+void cargarSonidosCounter(Mix_Chunk* armas[]);
+void cargarSonidosMinecraft(Mix_Chunk* mine[]);
 
 
 #endif // SONIDOS_H_INCLUDED

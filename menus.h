@@ -40,22 +40,6 @@ typedef struct
 
 typedef struct
 {
-    SDL_Point posicion;
-    float transparencia;
-    float velocidad;
-    bool activo;
-    Uint32 tiempo;
-} tCrab;
-
-typedef struct
-{
-    tCrab crabs[MAX_CRAB];
-    Uint32 ultimo_tiempo;
-    int intervalo_creacion;
-} tSistemaCrab;
-
-typedef struct
-{
     int longitud;
     int indice;
     bool cheat;
@@ -77,7 +61,6 @@ void cargarDatosBotones(tBoton *boton, size_t ce, SDL_Color *colores, int vector
 
 void dibujarFondo(tSistemaSDL *sdl, tBoton_fondo *boton_fondo, size_t ce_fondo);
 void inicializarBoton_fondo(tBoton_fondo *boton_fondo, SDL_Color *colores, SDL_Color *color_hover, SDL_Color *color_apretado, int *v_valor);
-
 
 void inicializarFlecha(tFlecha* flecha);
 void dibujarFlecha(tSistemaSDL *sdl, tFlecha* flecha, size_t ce);

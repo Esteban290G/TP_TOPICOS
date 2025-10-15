@@ -33,7 +33,7 @@
 #define CANTIDAD_BOTON_OPCIONES 1
 #define CANTIDAD_BOTON_ESTADISTICA 1
 
-// Constantes tama�o de pantalla
+// Constantes tamaño de pantalla
 #define TAM_PIXEL 10
 #define PIXELES_X_LADO 12
 #define TAM_GRILLA 6
@@ -45,8 +45,7 @@
 #define MAX_LETRAS 20
 #define MAX_BOTONES 4
 
-// crab
-#define MAX_CRAB 10
+// Constantes para matrices de pixel
 #define T 0
 #define R 1
 #define BR 2 // Borde

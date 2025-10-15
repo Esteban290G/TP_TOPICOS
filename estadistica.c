@@ -19,7 +19,7 @@ void guardarTopEnArchivo(tJugador *vec, size_t ce, const char *nombre_archivo)
     FILE *pf = fopen(nombre_archivo, "wb");
     if (!pf)
     {
-        perror("Error al guardar el archivo de top");
+        printf("Error al guardar el archivo de top");
         return;
     }
 
@@ -29,7 +29,7 @@ void guardarTopEnArchivo(tJugador *vec, size_t ce, const char *nombre_archivo)
 
 void insertarEnTop(tJugador *vec, size_t *ce, tJugador nuevo)
 {
-    // Si el vector está vacío
+    // Si el vector esta vacio
     if (*ce == 0)
     {
         vec[0] = nuevo;
@@ -37,7 +37,7 @@ void insertarEnTop(tJugador *vec, size_t *ce, tJugador nuevo)
         return;
     }
 
-    // Si hay menos de 5 jugadores, insertar normalmente
+    // Si hay menos de 5 jugadores insertar normalmente
     if (*ce < MAX_JUGADORES)
     {
         vec[*ce] = nuevo;
@@ -45,7 +45,7 @@ void insertarEnTop(tJugador *vec, size_t *ce, tJugador nuevo)
     }
     else if (nuevo.Score > vec[*ce - 1].Score)
     {
-        vec[*ce - 1] = nuevo; // reemplaza al último
+        vec[*ce - 1] = nuevo; // reemplaza al ultimo
     }
 
     // Ordenar de mayor a menor
@@ -113,7 +113,7 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
     estadistica->botones[0].color_texto_normal = (SDL_Color){255,255,255,255};
     estadistica->botones[0].color_texto_hover = (SDL_Color){255,255,0,255};
     estadistica->botones[0].hover = false;
-    strcpy(estadistica->botones[0].texto_boton,"volver");
+    strcpy(estadistica->botones[0].texto_boton,"Volver");
     estadistica->botones[0].rectangulo = (SDL_Rect)
     {
         30,
@@ -128,12 +128,6 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
     estadistica->fondo = (SDL_Color){0,0,0,255};
     estadistica->color_titulo = (SDL_Color){255,255,255,255};
     estadistica->color_texto = (SDL_Color){255,255,255,255};
-
-    //estadistica->botones_triangulares[0].color_relleno = (SDL_Color){255,255,255,255};
-    //estadistica->botones_triangulares[1].color_relleno = (SDL_Color){255,255,255,255};
-
-    //estadistica->botones_triangulares[0].color_bordes = (SDL_Color){255,255,0,255};
-    //estadistica->botones_triangulares[1].color_bordes = (SDL_Color){255,255,0,255};
 
     estadistica->botones_triangulares[0].apretado = false;
     estadistica->botones_triangulares[1].apretado = false;
@@ -156,7 +150,7 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
         ANCHO_RECT * 7
     };
 
-    strcpy(estadistica->titulo,"Estadistica");
+    strcpy(estadistica->titulo,"Estadisticas");
 
     ///AUX
 
@@ -255,7 +249,7 @@ void mostrarTituloEstadistica(tSistemaSDL* sdl, tEstadistica* estadistica)
 unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadistica, unsigned int estado_actual)
 {
 
-   unsigned int bandera = estado_actual;
+   unsigned int estado = estado_actual;
     while(SDL_PollEvent(evento))
     {
         switch(evento->type)
@@ -281,7 +275,7 @@ unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadist
                     if(_verificarMouseBoton(i->rectangulo,evento->button.x,evento->button.y))
                     {
                         printf("\nHiciste clic al boton numero %d\n",i->valor_boton);
-                        bandera = i->valor_boton;
+                        estado = i->valor_boton;
 
                     }
                 }
@@ -292,9 +286,9 @@ unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadist
                     {
                         printf("Hiciste click en el triangulo");
                         if(estadistica->botones_triangulares[i].estado == SCHONBERG)
-                            bandera = EST_SCHO;
+                            estado = EST_SCHO;
                         else if(estadistica->botones_triangulares[i].estado == MOZART)
-                            bandera = EST_MO;
+                            estado = EST_MO;
 
                         estadistica->botones_triangulares[i].apretado = true;
                     }
@@ -314,22 +308,23 @@ unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadist
             break;
 
         case SDL_QUIT:
-            bandera = SALIR;
+            estado = SALIR;
             printf("\nEstado actual: Menu Saliendo\n");
             break;
         }
     }
-    if(bandera == EST_MO)
+    if(estado == EST_MO)
     {
         estadistica->es_schon = false;
-        bandera = estado_actual;
+        estado = estado_actual;
     }
-    if(bandera == EST_SCHO)
+    if(estado == EST_SCHO)
     {
         estadistica->es_schon = true;
-        bandera = estado_actual;
+        estado = estado_actual;
     }
-    return bandera;
+
+    return estado;
 }
 
 void mostrarJugadores(tSistemaSDL* sdl, tEstadistica* estadistica)

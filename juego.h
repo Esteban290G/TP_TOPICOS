@@ -22,17 +22,6 @@
 
 typedef struct
 {
-    SDL_Rect pos;
-    SDL_Color color;
-    float velocidad_y;
-    float velocidad_x;
-    float gravedad;
-    int tam;
-    float rotacion;
-} tConfeti;
-
-typedef struct
-{
     size_t cant_botones;
     float duracion_inicial;
     bool es_counter;
@@ -91,12 +80,8 @@ unsigned int controlEventosPantalla_juego(SDL_Event *evento, unsigned int estado
 
 void colorpantalla_juego(tSistemaSDL *sdl, SDL_Color);
 
-void colorpantalla_juego(tSistemaSDL *sdl, SDL_Color);
-
-void inicializarConfeti(tConfeti *confeti);
-void actualizarConfeti(tConfeti *confeti);
-void dibujarConfeti(tSistemaSDL *sdl, tConfeti *confeti);
-
 unsigned int controlEventosSimon(SDL_Event *evento, tBotonSimon *boton_simon, size_t cant_botones, unsigned int estado_actual, tBoton *boton_normal, size_t ce_normal, Mix_Chunk *sonidos[], tSecuencia *secuencia, float deltaTime, tJugador *jugador);
+
+void cargarFondobmp(tSistemaSDL *sdl);
 
 #endif // JUEGO_H_INCLUDED
