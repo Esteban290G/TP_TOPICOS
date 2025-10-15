@@ -122,7 +122,7 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
         ANCHO_RECT
     };
 
-    estadistica->rec_fondo = (SDL_Color){255,255,255,150};
+    estadistica->rec_fondo = (SDL_Color){0,0,0,50};
     estadistica->rec_bordes = (SDL_Color){0,0,0,255};
     estadistica->ce_botones_normales = CANTIDAD_BOTON_ESTADISTICA;
     estadistica->fondo = (SDL_Color){0,0,0,255};
@@ -144,15 +144,14 @@ void inicializarPantallaEstadistica(tEstadistica* estadistica)
 
     estadistica->rec_estadistica = (SDL_Rect)
     {
+        130,
         180,
-        180,
-        LARGO_RECT * 2,
+        500,
         ANCHO_RECT * 7
     };
 
     strcpy(estadistica->titulo,"Estadisticas");
 
-    ///AUX
 
     estadistica->es_schon = true;
 }
@@ -186,7 +185,7 @@ void mostrarPantallaEstadistica(tSistemaSDL*sdl ,tEstadistica* estadistica)
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_BLEND);
     if(estadistica->es_schon)
     {
-        colorPantalla(sdl,estadistica->fondo);
+        dibujarfondoDegradeEst(sdl);
         SDL_SetRenderDrawColor(sdl->renderer, estadistica->rec_fondo.r,estadistica->rec_fondo.g,estadistica->rec_fondo.b,estadistica->rec_fondo.a);
         SDL_RenderFillRect(sdl->renderer, &estadistica->rec_estadistica);
 
@@ -201,10 +200,11 @@ void mostrarPantallaEstadistica(tSistemaSDL*sdl ,tEstadistica* estadistica)
         dibujarBotonesTriangulares(sdl,estadistica->botones_triangulares,2);
 
         mostrarTextoEst(sdl,estadistica,"Schonberg");
+        dibujarLineaVertical(sdl);
     }
     else
     {
-        colorPantalla(sdl,estadistica->fondo);
+        dibujarfondoDegradeEst(sdl);
         SDL_SetRenderDrawColor(sdl->renderer, estadistica->rec_fondo.r,estadistica->rec_fondo.g,estadistica->rec_fondo.b,estadistica->rec_fondo.a);
         SDL_RenderFillRect(sdl->renderer, &estadistica->rec_estadistica);
 
@@ -218,6 +218,7 @@ void mostrarPantallaEstadistica(tSistemaSDL*sdl ,tEstadistica* estadistica)
         dibujarBotonesTriangulares(sdl,estadistica->botones_triangulares,2);
 
         mostrarTextoEst(sdl,estadistica,"Mozart");
+        dibujarLineaVertical(sdl);
     }
     SDL_SetRenderDrawBlendMode(sdl->renderer, SDL_BLENDMODE_NONE);
 }
@@ -309,7 +310,6 @@ unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadist
 
         case SDL_QUIT:
             estado = SALIR;
-            printf("\nEstado actual: Menu Saliendo\n");
             break;
         }
     }
@@ -329,24 +329,68 @@ unsigned int controlEventosEstadistica(SDL_Event* evento, tEstadistica* estadist
 
 void mostrarJugadores(tSistemaSDL* sdl, tEstadistica* estadistica)
 {
-    int x = estadistica->rec_estadistica.x + 10;
-    int y = estadistica->rec_estadistica.y + 30;
+    int x1 = estadistica->rec_estadistica.x + 30;
+    int y1 = estadistica->rec_estadistica.y + 40;
+    int x2 = estadistica->rec_estadistica.x + 370;
+    int y2 = estadistica->rec_estadistica.y + 40;
+
+    int x3 = estadistica->rec_estadistica.x + 30;
+    int y3 = estadistica->rec_estadistica.y - 30;
+    int x4 = estadistica->rec_estadistica.x + 330;
+    int y4 = estadistica->rec_estadistica.y - 30;
+
     int separador = 40;
 
-    char texto[200];
+    char texto_nombre[MAX_LETRAS];
+    char texto_pts[MAX_LETRAS];
+
+    char subtitlo_nombre[MAX_LETRAS];
+    char subtitulo_pts[MAX_LETRAS];
+
+    strcpy(subtitlo_nombre,"NOMBRES");
+    strcpy(subtitulo_pts,"PUNTOS");
+
+    SDL_Surface *superficie_sub_nombre = TTF_RenderText_Blended(sdl->fuente2,subtitlo_nombre,estadistica->color_texto);
+    SDL_Texture *textura_sub_nombre = SDL_CreateTextureFromSurface(sdl->renderer,superficie_sub_nombre);
+
+    SDL_Surface *superficie_sub_pts = TTF_RenderText_Blended(sdl->fuente2,subtitulo_pts,estadistica->color_texto);
+    SDL_Texture *textura_sub_pts = SDL_CreateTextureFromSurface(sdl->renderer,superficie_sub_pts);
+
+    SDL_Rect rect_sub_nombre = {x3, y3, superficie_sub_nombre->w, superficie_sub_nombre->h};
+    SDL_RenderCopy(sdl->renderer,textura_sub_nombre,NULL,&rect_sub_nombre);
+
+    SDL_Rect rect_sub_pts = {x4, y4, superficie_sub_pts->w, superficie_sub_pts->h};
+    SDL_RenderCopy(sdl->renderer,textura_sub_pts,NULL,&rect_sub_pts);
+
+    SDL_DestroyTexture(textura_sub_nombre);
+    SDL_FreeSurface(superficie_sub_nombre);
+
+    SDL_DestroyTexture(textura_sub_pts);
+    SDL_FreeSurface(superficie_sub_pts);
+
 
     for(tJugador *i = estadistica->jugador; i < estadistica->jugador + estadistica->ce_jugadores; i++)
     {
-        sprintf(texto,"%-15s %6d pts",i->nombre,i->Score);
+        strcpy(texto_nombre,i->nombre);
+        sprintf(texto_pts,"%d",i->Score);
 
-        SDL_Surface *superficie = TTF_RenderText_Blended(sdl->fuente,texto,estadistica->color_texto);
-        SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer,superficie);
+        SDL_Surface *superficie_nombre = TTF_RenderText_Blended(sdl->fuente,texto_nombre,estadistica->color_texto);
+        SDL_Texture *textura_nombre = SDL_CreateTextureFromSurface(sdl->renderer,superficie_nombre);
 
-        SDL_Rect rect = {x, y + separador, superficie->w, superficie->h};
-        SDL_RenderCopy(sdl->renderer,textura,NULL,&rect);
+        SDL_Surface *superficie_pts = TTF_RenderText_Blended(sdl->fuente,texto_pts,estadistica->color_texto);
+        SDL_Texture *textura_pts = SDL_CreateTextureFromSurface(sdl->renderer,superficie_pts);
 
-        SDL_FreeSurface(superficie);
-        SDL_DestroyTexture(textura);
+        SDL_Rect rect_nombre = {x1, y1 + separador, superficie_nombre->w, superficie_nombre->h};
+        SDL_RenderCopy(sdl->renderer,textura_nombre,NULL,&rect_nombre);
+
+        SDL_Rect rect_pts = {x2, y2 + separador, superficie_pts->w, superficie_pts->h};
+        SDL_RenderCopy(sdl->renderer,textura_pts,NULL,&rect_pts);
+
+        SDL_DestroyTexture(textura_nombre);
+        SDL_FreeSurface(superficie_nombre);
+
+        SDL_DestroyTexture(textura_pts);
+        SDL_FreeSurface(superficie_pts);
 
         separador += 40;
     }
@@ -354,24 +398,68 @@ void mostrarJugadores(tSistemaSDL* sdl, tEstadistica* estadistica)
 
 void mostrarJugadores_mo(tSistemaSDL* sdl, tEstadistica* estadistica)
 {
-    int x = estadistica->rec_estadistica.x + 10;
-    int y = estadistica->rec_estadistica.y + 30;
+    int x1 = estadistica->rec_estadistica.x + 30;
+    int y1 = estadistica->rec_estadistica.y + 40;
+    int x2 = estadistica->rec_estadistica.x + 370;
+    int y2 = estadistica->rec_estadistica.y + 40;
+
+    int x3 = estadistica->rec_estadistica.x + 30;
+    int y3 = estadistica->rec_estadistica.y - 30;
+    int x4 = estadistica->rec_estadistica.x + 330;
+    int y4 = estadistica->rec_estadistica.y - 30;
+
     int separador = 40;
 
-    char texto[200];
+    char texto_nombre[MAX_LETRAS];
+    char texto_pts[MAX_LETRAS];
+
+    char subtitlo_nombre[MAX_LETRAS];
+    char subtitulo_pts[MAX_LETRAS];
+
+    strcpy(subtitlo_nombre,"NOMBRES");
+    strcpy(subtitulo_pts,"PUNTOS");
+
+    SDL_Surface *superficie_sub_nombre = TTF_RenderText_Blended(sdl->fuente2,subtitlo_nombre,estadistica->color_texto);
+    SDL_Texture *textura_sub_nombre = SDL_CreateTextureFromSurface(sdl->renderer,superficie_sub_nombre);
+
+    SDL_Surface *superficie_sub_pts = TTF_RenderText_Blended(sdl->fuente2,subtitulo_pts,estadistica->color_texto);
+    SDL_Texture *textura_sub_pts = SDL_CreateTextureFromSurface(sdl->renderer,superficie_sub_pts);
+
+    SDL_Rect rect_sub_nombre = {x3, y3, superficie_sub_nombre->w, superficie_sub_nombre->h};
+    SDL_RenderCopy(sdl->renderer,textura_sub_nombre,NULL,&rect_sub_nombre);
+
+    SDL_Rect rect_sub_pts = {x4, y4, superficie_sub_pts->w, superficie_sub_pts->h};
+    SDL_RenderCopy(sdl->renderer,textura_sub_pts,NULL,&rect_sub_pts);
+
+    SDL_DestroyTexture(textura_sub_nombre);
+    SDL_FreeSurface(superficie_sub_nombre);
+
+    SDL_DestroyTexture(textura_sub_pts);
+    SDL_FreeSurface(superficie_sub_pts);
+
 
     for(tJugador *i = estadistica->jugador_mo; i < estadistica->jugador_mo + estadistica->ce_jugadores_mo; i++)
     {
-        sprintf(texto,"%-15s  %3d pts",i->nombre,i->Score);
+        strcpy(texto_nombre,i->nombre);
+        sprintf(texto_pts,"%d",i->Score);
 
-        SDL_Surface *superficie = TTF_RenderText_Blended(sdl->fuente,texto,estadistica->color_texto);
-        SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer,superficie);
+        SDL_Surface *superficie_nombre = TTF_RenderText_Blended(sdl->fuente,texto_nombre,estadistica->color_texto);
+        SDL_Texture *textura_nombre = SDL_CreateTextureFromSurface(sdl->renderer,superficie_nombre);
 
-        SDL_Rect rect = {x, y + separador, superficie->w, superficie->h};
-        SDL_RenderCopy(sdl->renderer,textura,NULL,&rect);
+        SDL_Surface *superficie_pts = TTF_RenderText_Blended(sdl->fuente,texto_pts,estadistica->color_texto);
+        SDL_Texture *textura_pts = SDL_CreateTextureFromSurface(sdl->renderer,superficie_pts);
 
-        SDL_FreeSurface(superficie);
-        SDL_DestroyTexture(textura);
+        SDL_Rect rect_nombre = {x1, y1 + separador, superficie_nombre->w, superficie_nombre->h};
+        SDL_RenderCopy(sdl->renderer,textura_nombre,NULL,&rect_nombre);
+
+        SDL_Rect rect_pts = {x2, y2 + separador, superficie_pts->w, superficie_pts->h};
+        SDL_RenderCopy(sdl->renderer,textura_pts,NULL,&rect_pts);
+
+        SDL_DestroyTexture(textura_nombre);
+        SDL_FreeSurface(superficie_nombre);
+
+        SDL_DestroyTexture(textura_pts);
+        SDL_FreeSurface(superficie_pts);
 
         separador += 40;
     }
@@ -447,5 +535,30 @@ void dibujarBotonesTriangulares(tSistemaSDL *sdl, tBoton_triangular* botones_tri
             }
         }
 
+    }
+}
+
+void dibujarLineaVertical(tSistemaSDL *sdl)
+{
+    int x = ANCHO / 2 + 50;
+    SDL_SetRenderDrawColor(sdl->renderer, 0, 0, 0, 255);
+    SDL_RenderDrawLine(sdl->renderer, x, 180, x, 528);
+}
+
+void dibujarfondoDegradeEst(tSistemaSDL *sdl)
+{
+    int alto = LARGO;
+    SDL_Color color_inicio = {120, 200, 120, 255};
+    SDL_Color color_fin    = {30, 80, 30, 255};
+
+    for(int y = 0; y < alto; y++)
+    {
+        float t = (float)y / alto;
+        Uint8 r = (Uint8)(color_inicio.r + t * (color_fin.r - color_inicio.r));
+        Uint8 g = (Uint8)(color_inicio.g + t * (color_fin.g - color_inicio.g));
+        Uint8 b = (Uint8)(color_inicio.b + t * (color_fin.b - color_inicio.b));
+
+        SDL_SetRenderDrawColor(sdl->renderer, r, g, b, 255);
+        SDL_RenderDrawLine(sdl->renderer, 0, y, ANCHO, y);
     }
 }

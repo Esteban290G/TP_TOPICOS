@@ -45,6 +45,7 @@
 #define MAX_LETRAS 20
 #define MAX_BOTONES 4
 #define MAX_LETRAS_ERROR 30
+#define MAX_NOMBRE 16
 
 // Constantes para matrices de pixel
 #define T 0

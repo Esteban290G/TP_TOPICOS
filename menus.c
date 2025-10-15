@@ -232,8 +232,33 @@ void dibujarTitulo(tSistemaSDL *sdl)
     SDL_Rect rectangulo = {x, y, superficie->w, superficie->h};
     SDL_RenderCopy(sdl->renderer, textura, NULL, &rectangulo);
 
+
+    ///Lo necesario para dibujar bordes al titulo
+    SDL_Color negro = {0, 0, 0, 255};
+    SDL_Surface *borde = TTF_RenderText_Blended(fuente_titulo, texto, negro);
+    SDL_Texture *textura_borde = SDL_CreateTextureFromSurface(sdl->renderer, borde);
+
+
+    int desplazamiento = 2;
+    for (int dx = -desplazamiento; dx <= desplazamiento; dx++)
+    {
+        for (int dy = -desplazamiento; dy <= desplazamiento; dy++)
+        {
+            if (dx != 0 && dy != 0)
+            {
+                SDL_Rect rect_borde = {x + dx, y + dy, borde->w, borde->h};
+                SDL_RenderCopy(sdl->renderer, textura_borde, NULL, &rect_borde);
+            }
+        }
+    }
+
+    SDL_RenderCopy(sdl->renderer, textura, NULL, &rectangulo);
+
+
     SDL_DestroyTexture(textura);
+    SDL_DestroyTexture(textura_borde);
     SDL_FreeSurface(superficie);
+    SDL_FreeSurface(borde);
 }
 
 void dibujarFondo(tSistemaSDL *sdl, tBoton_fondo *boton_fondo, size_t ce_fondo)

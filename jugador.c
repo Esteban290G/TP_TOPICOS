@@ -72,7 +72,9 @@ void inicializarJugador(tPantallaJugador *pantalla, tJugador *jugador)
 
 void mostrarPantallaJuego(tSistemaSDL *sdl, tPantallaJugador *pantalla)
 {
-    colorPantalla(sdl, pantalla->color_fondo);
+   // colorPantalla(sdl, pantalla->color_fondo);
+
+    dibujarFondoDegradeJugar(sdl);
 
     SDL_SetRenderDrawColor(sdl->renderer, pantalla->rect_color.r, pantalla->rect_color.g, pantalla->rect_color.b, pantalla->rect_color.a);
     SDL_RenderFillRect(sdl->renderer, &pantalla->rect_ingreso_nombre);
@@ -89,6 +91,10 @@ void mostrarPantallaJuego(tSistemaSDL *sdl, tPantallaJugador *pantalla)
     {
         mostrarTextoError(sdl,pantalla);
     }
+    dibujarLineasSeparadorasJugar(sdl,420);
+    dibujarLineasSeparadorasJugar(sdl,500);
+    dibujarLineasSeparadorasJugar(sdl,580);
+    dibujarLineasSeparadorasJugar(sdl,660);
 
 }
 
@@ -209,6 +215,10 @@ unsigned int controlEventosPantallaJuego(SDL_Event *evento, tPantallaJugador *pa
                 }
             }
             break;
+
+        case SDL_QUIT:
+            estado = SALIR;
+            break;
         }
     }
     if (estado == MENU)
@@ -287,4 +297,29 @@ void mostrarTextoError(tSistemaSDL* sdl, tPantallaJugador *pantalla)
 
     SDL_DestroyTexture(textura);
     SDL_FreeSurface(superficie);
+}
+
+void dibujarFondoDegradeJugar(tSistemaSDL *sdl)
+{
+    SDL_Color color_inicio = {60, 60, 60, 255};
+    SDL_Color color_fin    = {0, 0, 0, 255};
+
+    for (int y = 0; y < LARGO; y++)
+    {
+        float t = (float)y / LARGO;
+        Uint8 r = (Uint8)(color_inicio.r + t * (color_fin.r - color_inicio.r));
+        Uint8 g = (Uint8)(color_inicio.g + t * (color_fin.g - color_inicio.g));
+        Uint8 b = (Uint8)(color_inicio.b + t * (color_fin.b - color_inicio.b));
+
+        SDL_SetRenderDrawColor(sdl->renderer, r, g, b, 255);
+        SDL_RenderDrawLine(sdl->renderer, 0, y, ANCHO, y);
+    }
+}
+
+
+void dibujarLineasSeparadorasJugar(tSistemaSDL*sdl, int y)
+{
+    SDL_Color color_linea = {80, 80, 80, 255};
+    SDL_SetRenderDrawColor(sdl->renderer, color_linea.r, color_linea.g, color_linea.b, color_linea.a);
+    SDL_RenderDrawLine(sdl->renderer, 250, y, ANCHO - 250, y);
 }

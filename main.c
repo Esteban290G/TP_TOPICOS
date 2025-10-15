@@ -91,6 +91,7 @@ int main(int argc, char *argv[])
     const char* stats_mozart = "top_mozart.dat";
     char* archivo_sec = "secuencia.txt";
 
+
     cargarTopDesdeArchivo(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, stats_schon);
     cargarTopDesdeArchivo(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, stats_mozart);
 

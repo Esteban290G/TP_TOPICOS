@@ -65,6 +65,8 @@ unsigned int controlEventosEstadistica(SDL_Event* eventos, tEstadistica* estadis
 void mostrarJugadores_mo(tSistemaSDL* sdl, tEstadistica* estadistica);
 void mostrarJugadores(tSistemaSDL* sdl, tEstadistica* estadistica);
 void mostrarTextoEst(tSistemaSDL* sdl, tEstadistica* estadistica, char* texto_est);
+void dibujarLineaVertical(tSistemaSDL *sdl);
+void dibujarfondoDegradeEst(tSistemaSDL *sdl);
 
 ///Logica botones triangulares
 void dibujarBotonesTriangulares(tSistemaSDL *sdl, tBoton_triangular* botones, size_t ce);
