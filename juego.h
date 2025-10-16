@@ -55,6 +55,7 @@ typedef struct
     int mozart_actual; // para modo mozart
 } tSecuencia;
 
+int crearArchivoSecuencia(const char *nombre_archivo);
 void inicializarSecuenciaMozart(tSecuencia *secuencia, size_t cant_elem);
 size_t contarElemSecuencia(char *nombre_archivo);
 size_t buscarMaximo(tSecuencia *vec);

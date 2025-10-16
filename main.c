@@ -18,7 +18,6 @@ Entrega: Si
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
 #include "graficos.h"
 #include "menus.h"
 #include "sistemasSDL.h"
@@ -90,6 +89,7 @@ int main(int argc, char *argv[])
     const char* stats_schon = "top_schonberg.dat";
     const char* stats_mozart = "top_mozart.dat";
     char* archivo_sec = "secuencia.txt";
+    crearArchivoSecuencia(archivo_sec);
 
 
     cargarTopDesdeArchivo(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, stats_schon);
@@ -150,6 +150,7 @@ int main(int argc, char *argv[])
         switch (estado)
         {
         case MENU:
+            reanudarMusica(&sdl);
             pantalla_jugador.hay_secuencia = true;
             estado = controlEventos(&evento, botones_menu, CANTIDAD_BOTON_MENU, boton_fondo, estado, &codigo,flecha);
 
@@ -260,7 +261,6 @@ int main(int argc, char *argv[])
                     insertarEnTop(pantalla_estadistica.jugador, &pantalla_estadistica.ce_jugadores, jugador);
 
                     guardarTopEnArchivo(pantalla_estadistica.jugador, pantalla_estadistica.ce_jugadores, stats_schon);
-
                     estado = PERDISTE;
                 }
                 else if (jugador.valorBoton != -1 && codigo.cheat)
@@ -352,7 +352,6 @@ int main(int argc, char *argv[])
                     insertarEnTop(pantalla_estadistica.jugador_mo, &pantalla_estadistica.ce_jugadores_mo, jugador);
 
                     guardarTopEnArchivo(pantalla_estadistica.jugador_mo, pantalla_estadistica.ce_jugadores_mo, stats_mozart);
-
                     estado = PERDISTE;
                     sec.mozart_actual = 1;
                 }

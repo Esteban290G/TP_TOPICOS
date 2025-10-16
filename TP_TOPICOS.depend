@@ -1,12 +1,11 @@
 # depslib dependency file v1.0
-1760511626 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
+1760573597 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
 	<SDL2/SDL_ttf.h>
-	<SDL2/SDL_image.h>
 	"graficos.h"
 	"menus.h"
 	"sistemasSDL.h"
@@ -17,7 +16,7 @@
 	"estadistica.h"
 	"opciones.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
 	"SDL_stdinc.h"
 	"SDL_assert.h"
@@ -55,12 +54,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_main.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_main.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_stdinc.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_stdinc.h
 	"SDL_config.h"
 	<sys/types.h>
 	<stdio.h>
@@ -92,7 +91,7 @@
 	<stdio.h>
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config.h
 	"SDL_platform.h"
 	"SDL_config_windows.h"
 	"SDL_config_winrt.h"
@@ -106,7 +105,7 @@
 	"SDL_config_ngage.h"
 	"SDL_config_minimal.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_platform.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_platform.h
 	<AvailabilityMacros.h>
 	<TargetConditionals.h>
 	<TargetConditionals.h>
@@ -114,55 +113,55 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\begin_code.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\begin_code.h
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\close_code.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\close_code.h
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_windows.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_windows.h
 	"SDL_platform.h"
 	<winsdkver.h>
 	<sdkddkver.h>
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_winrt.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_winrt.h
 	"SDL_platform.h"
 	<sdkddkver.h>
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_wingdk.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_wingdk.h
 	"SDL_platform.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_xbox.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_xbox.h
 	"SDL_platform.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_macosx.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_macosx.h
 	"SDL_platform.h"
 	<AvailabilityMacros.h>
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_iphoneos.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_iphoneos.h
 	"SDL_platform.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_android.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_android.h
 	"SDL_platform.h"
 	<stdarg.h>
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_os2.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_os2.h
 	"SDL_platform.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_emscripten.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_emscripten.h
 	"SDL_platform.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_ngage.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_ngage.h
 	"SDL_platform.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_minimal.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_config_minimal.h
 	"SDL_platform.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_assert.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_assert.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	<signal.h>
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_atomic.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_atomic.h
 	"SDL_stdinc.h"
 	"SDL_platform.h"
 	"begin_code.h"
@@ -170,7 +169,7 @@
 	<mbarrier.h>
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_audio.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_audio.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_endian.h"
@@ -180,12 +179,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_error.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_error.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_endian.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_endian.h
 	"SDL_stdinc.h"
 	<intrin.h>
 	<endian.h>
@@ -195,13 +194,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_mutex.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_mutex.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_thread.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_thread.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_atomic.h"
@@ -212,18 +211,18 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_rwops.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_rwops.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_clipboard.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_clipboard.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_cpuinfo.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_cpuinfo.h
 	"SDL_stdinc.h"
 	<intrin.h>
 	<intrin.h>
@@ -245,7 +244,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_events.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_events.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -259,7 +258,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_video.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_video.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -267,13 +266,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_pixels.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_pixels.h
 	"SDL_stdinc.h"
 	"SDL_endian.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_rect.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_rect.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_pixels.h"
@@ -281,7 +280,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_surface.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_surface.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -290,11 +289,11 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_blendmode.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_blendmode.h
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_keyboard.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_keyboard.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_keycode.h"
@@ -302,21 +301,21 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_keycode.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_keycode.h
 	"SDL_stdinc.h"
 	"SDL_scancode.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_scancode.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_scancode.h
 	"SDL_stdinc.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_mouse.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_mouse.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_joystick.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_joystick.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_guid.h"
@@ -324,13 +323,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_guid.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_guid.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_gamecontroller.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_gamecontroller.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_rwops.h"
@@ -339,17 +338,17 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_sensor.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_sensor.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_quit.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_quit.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_gesture.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_gesture.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -357,70 +356,70 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_touch.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_touch.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_filesystem.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_filesystem.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_haptic.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_haptic.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_joystick.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_hidapi.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_hidapi.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_hints.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_hints.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_loadso.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_loadso.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_log.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_log.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_messagebox.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_messagebox.h
 	"SDL_stdinc.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_metal.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_metal.h
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_power.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_power.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_render.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_render.h
 	"SDL_stdinc.h"
 	"SDL_rect.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_shape.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_shape.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -429,7 +428,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_system.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_system.h
 	"SDL_stdinc.h"
 	"SDL_keyboard.h"
 	"SDL_render.h"
@@ -437,32 +436,32 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_timer.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_timer.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_version.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_version.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_locale.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_locale.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_misc.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2-2.32.8\x86_64-w64-mingw32\include\sdl2\sdl_misc.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760507379 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.c
+1760570829 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.c
 	"graficos.h"
 
-1760507607 c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\graficos.h
 	<SDL2/SDL.h>
 	<time.h>
 	<math.h>
@@ -470,10 +469,10 @@
 	"sistemasSDL.h"
 	"constantes.h"
 
-1760508943 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
+1760570829 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.c
 	"sonidos.h"
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
 	"SDL_stdinc.h"
 	"SDL_rwops.h"
 	"SDL_audio.h"
@@ -482,7 +481,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760508593 c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.h
 	<SDL2/SDL.h>
 	<stdio.h>
 	<stdbool.h>
@@ -490,7 +489,7 @@
 	"sistemasSDL.h"
 	"constantes.h"
 
-1760507095 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.c
+1760572265 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\menus.c
 	"menus.h"
 	"graficos.h"
 	"sonidos.h"
@@ -1016,28 +1015,27 @@
 	"menus.h"
 	"graficos.h"
 
-1760510748 c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
-	<SDL2/SDL_image.h>
 	<stdbool.h>
 	<stdio.h>
 	<time.h>
 
-1760225681 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_ttf-2.24.0\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\lib\sdl2_ttf-2.24.0\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
 	"SDL.h"
 	"begin_code.h"
 	"close_code.h"
 
-1760508593 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\constantes.h
 
-1760511083 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
+1760576264 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
 
-1760510849 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
+1760574243 c:\users\usuario\desktop\tp_topicos\tp_topicos\juego.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
@@ -1049,11 +1047,11 @@
 	"graficos.h"
 	"jugador.h"
 
-1760510701 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.c
+1760570829 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\sistemassdl.c
 	"sistemasSDL.h"
 	"sonidos.h"
 
-1760502021 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\sonidos.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
 	<stdio.h>
@@ -1613,10 +1611,10 @@
 
 1759811158 source:c:\program files (x86)\codeblock\proyecto\trabajo2\boton.c
 
-1760509403 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.c
+1760570829 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.c
 	"jugador.h"
 
-1760399083 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\jugador.h
 	<stdio.h>
 	<stdbool.h>
 	<string.h>
@@ -1624,10 +1622,10 @@
 	"sistemasSDL.h"
 	"graficos.h"
 
-1760511384 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.c
+1760570829 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.c
 	"estadistica.h"
 
-1760510236 c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\estadistica.h
 	<string.h>
 	<stdio.h>
 	<stdbool.h>
@@ -1636,10 +1634,10 @@
 	"jugador.h"
 	"sistemasSDL.h"
 
-1760507850 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.c
+1760570829 source:c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.c
 	"opciones.h"
 
-1760507868 c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.h
+1760570829 c:\users\usuario\desktop\tp_topicos\tp_topicos\opciones.h
 	"constantes.h"
 	<stdio.h>
 	<stdlib.h>
@@ -3264,11 +3262,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1760539746 c:\users\lucas\documents\version11\tp_topicos\sistemassdl.h
+1760568570 c:\users\lucas\documents\version11\tp_topicos\sistemassdl.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<SDL2/SDL_mixer.h>
-	<SDL2/SDL_image.h>
 	<stdbool.h>
 	<stdio.h>
 	<time.h>
@@ -3306,7 +3303,7 @@
 1760539745 source:c:\users\lucas\documents\version11\tp_topicos\graficos.c
 	"graficos.h"
 
-1760539745 source:c:\users\lucas\documents\version11\tp_topicos\juego.c
+1760565192 source:c:\users\lucas\documents\version11\tp_topicos\juego.c
 	"juego.h"
 	"menus.h"
 	"graficos.h"
@@ -3326,14 +3323,13 @@
 1760551147 source:c:\users\lucas\documents\version11\tp_topicos\jugador.c
 	"jugador.h"
 
-1760553358 source:c:\users\lucas\documents\version11\tp_topicos\main.c
+1760568690 source:c:\users\lucas\documents\version11\tp_topicos\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL_mixer.h>
 	<SDL2/SDL_ttf.h>
-	<SDL2/SDL_image.h>
 	"graficos.h"
 	"menus.h"
 	"sistemasSDL.h"
@@ -3368,7 +3364,7 @@
 1760539746 source:c:\users\lucas\documents\version11\tp_topicos\opciones.c
 	"opciones.h"
 
-1760539746 source:c:\users\lucas\documents\version11\tp_topicos\sistemassdl.c
+1760568682 source:c:\users\lucas\documents\version11\tp_topicos\sistemassdl.c
 	"sistemasSDL.h"
 	"sonidos.h"
 

@@ -221,7 +221,7 @@ void dibujarTitulo(tSistemaSDL *sdl)
     color = (SDL_Color){255 * factor, 255 * (1 - factor), 128 + 127 * sin(tiempo_actual / 600.0f), 255};
     TTF_Font *fuente_titulo = sdl->fuente_titulo;
 
-    const char *texto = "SIMON: OUTBREAK";
+    const char *texto = "SIMON: VIRUS";
 
     SDL_Surface *superficie = TTF_RenderText_Blended(fuente_titulo, texto, color);
     SDL_Texture *textura = SDL_CreateTextureFromSurface(sdl->renderer, superficie);

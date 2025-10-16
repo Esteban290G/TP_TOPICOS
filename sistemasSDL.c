@@ -91,13 +91,6 @@ bool inicializarSDL(tSistemaSDL* sistema,const char* nombre_ventana, int ancho, 
         return false;
     }
 
-    sistema->imagen_inicializada = 0;
-    if(sistema->imagen_inicializada)
-    {
-        printf("\nError al inicializar SDL_image: %s\n", IMG_GetError());
-        limpiarSDL(sistema);
-        return false;
-    }
 
     SDL_SetRenderDrawBlendMode(sistema->renderer,SDL_BLENDMODE_BLEND);
 
@@ -120,8 +113,6 @@ void limpiarSDL(tSistemaSDL* sistema)
         Mix_FreeMusic(sistema->musica_menu);
     if(sistema->audio_inicializado)
         Mix_CloseAudio();
-    if (sistema->imagen_inicializada)
-        IMG_Quit();
 
     TTF_Quit();
     SDL_Quit();

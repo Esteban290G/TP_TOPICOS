@@ -431,6 +431,30 @@ void reiniciarJuego(tSecuencia *sec)
 }
 
 // Mozart
+int crearArchivoSecuencia(const char *nombre_archivo)
+{
+    FILE *pf = fopen(nombre_archivo, "r");
+    if (pf != NULL)
+    {
+        printf("\nArchivo de secuencias encontrado.\n");
+        fclose(pf);
+        return FILE_OK;
+    }
+
+    pf = fopen(nombre_archivo, "w");
+
+    if(!pf)
+    {
+        printf("\nError de archivo.\n");
+        fclose(pf);
+        return FILE_ERROR;
+    }
+
+    printf("\nArchivo de secuencias creado.\n");
+    fclose(pf);
+    return FILE_OK;
+}
+
 void inicializarSecuenciaMozart(tSecuencia *secuencia, size_t cant_elem)
 {
     secuencia->indice = 0;
@@ -561,7 +585,7 @@ void mostrarTexto_juego(tSistemaSDL *sdl, tJugador *jugador, bool modo)
     }
     else
     {
-        strcpy(texto_titulo, "GANASTE!");
+        strcpy(texto_titulo, "GANASTEEE!");
     }
     sprintf(texto_jugador, "Nombre: %s | Score: %d", jugador->nombre, jugador->Score);
     strcpy(texto_parrafo, "Clic izquierdo para volver al menu de juego");
@@ -686,7 +710,7 @@ void cargarFondobmp(tSistemaSDL *sdl)
 {
     sdl->imagen_inicializada = true;
 
-    SDL_Surface *superficie = SDL_LoadBMP("fondo.bmp");
+    SDL_Surface *superficie = SDL_LoadBMP("docs/fondo.bmp");
 
     if(superficie == NULL)
     {
