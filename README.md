@@ -1,0 +1,27 @@
+SIMON: VIRUS
+
+Instrucciones:
+
+Jugar: Se pueden elegir tres modos:
+
+-Modo Schonberg: jugar con secuencias aleatorias e infinitas.
+
+-Modo Mozart:	Jugar con una secuencia cargada previamente.
+		Para cargar la secuencia debe abrir el archivo "secuencias.txt" y cargar los valores entre 0 y 7 separados por espacios.
+
+-Modo Desafio:	Se pueden guardar secuencias directamente desde el juego sin necesidad de escribir la secuencia en un archivo.
+
+Opciones: Se pueden configurar las siguientes opciones: 
+
+-Cantidad de botones: Elegir entre 3 y 8 colores con sus respectivos tonos.
+
+-Duración: Elegir entre 2 segundos de duracion inicial hasta 5 segundos.
+
+-Sonidos: Elegir entre dos tipos de sonidos:
+		Tonos creados.
+		Sonidos precargados (Counter Strike o Minecraft).
+
+Estadisticas: Visualiza los 5 mejores puntajes de cada modo de juego.
+
+Secreto:
+-Cheat: En la pantalla principal presionar los botones de colores con la siguiente secuencia para obtener 3 vidas: arriba, arriba, abajo, abajo, izquierda, derecha, izquierda, derecha, rojo(B), morado(A).
